@@ -1,4 +1,4 @@
-import { clothingItems } from '../model/ClothingItem.js';
+import { clothingItems } from '../models/ClothingItem.js';
 import { getWeather } from './weatherApi.js';
 
 function matchBestItems(selectedCategories, tagLocations, tagActivityTypes, minTemp, maxTemp, clothingItems) {

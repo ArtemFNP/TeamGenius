@@ -1,4 +1,6 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
+dotenv.config({ path: '../../.env' });
+
 
 const apiKey = process.env.WEATHER_KEY; // Your OpenWeatherMap API key
 const city = 'Antwerp'; // Changed to Antwerp

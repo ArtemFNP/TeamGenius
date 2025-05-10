@@ -1,0 +1,24 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# SQLite database
+backend/database/db.sqlite
+
+# Build output
+build/
+dist/
+
+# Logs
+*.log
+
+# Mac system files
+.DS_Store
+
+# Coverage
+coverage/
+
+# React build
+frontend/build/

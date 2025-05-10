@@ -1,0 +1,12 @@
+{
+  "name": "back_end",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@google/genai": "^1.2.3",
+    "dotenv": "^16.4.5"
+  },
+  "scripts": {
+    "start": "node your-script.js"
+  }
+}

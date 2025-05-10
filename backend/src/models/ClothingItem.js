@@ -16,7 +16,7 @@ class ClothingItem {
 }
 
 // Example usage:
-const clothingSamples = [
+export const clothingItems = [
     new ClothingItem(
         1, "images/tshirt.png", "t-shirt", { min: 15, max: 30 },
         ["casual", "sports"], ["university", "park", "cafe"], ["outdoor", "mixed"]
@@ -59,5 +59,5 @@ const clothingSamples = [
     )
 ];
 
-console.log(clothingSamples);
-console.log(clothingSamples[0].isSuitableForTemperature(5)); // Output: true
+// console.log(clothingItems);
+// console.log(clothingItems[0].isSuitableForTemperature(5)); // Output: true

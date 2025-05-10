@@ -10,16 +10,17 @@ const exclude = 'minutely,hourly'; // Optional: exclude data parts you don't nee
 // const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&appid=${apiKey}&units=metric`;
 //it needs subscription
 
-console.log(url);
-
-fetch(url)
-    .then(response => response.json())
-    .then(data => {
-        console.log(data.main);
-        console.log(data.main.temp_min);
-        console.log(data.main.temp_max);
-    })
-    .catch(error => {
+export async function getWeather() {
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        // console.log("Weather Data:", data.main);
+        // console.log("Min Temp:", data.main.temp_min);
+        // console.log("Max Temp:", data.main.temp_max);
+        return data.main; // Return weather data
+    } catch (error) {
         console.error('Error fetching weather data:', error);
+        return { error: "Failed to fetch weather data" };
+    }
+}
 
-    });

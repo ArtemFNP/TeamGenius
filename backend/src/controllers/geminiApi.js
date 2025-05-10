@@ -4,7 +4,7 @@ import 'dotenv/config';
 const apiKey = process.env.GEMINI_KEY;
 const ai = new GoogleGenAI({apiKey});
 
-async function getAIResponse(contents) {
+export async function getAIResponse(contents) {
     try {
         // const model = ai.model({ model: "gemini-pro" });
         const result = await ai.models.generateContent({
@@ -20,7 +20,7 @@ async function getAIResponse(contents) {
 
 // console.log(await getAIResponse("weather in antwerp?"));
 
-async function tagNewClothingItem(
+export async function tagNewClothingItem(
     fabric_details,
     brand,
     barcode,
@@ -38,7 +38,7 @@ async function tagNewClothingItem(
     - recommended_occasion (string)`;
 
     try {
-        const result =  getAIResponse(prompt);
+        const result =  await getAIResponse(prompt);
         return result;
     } catch (e) {
         console.error("Error parsing JSON:" + e);

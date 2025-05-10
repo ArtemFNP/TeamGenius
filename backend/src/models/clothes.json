@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "image": "images/tshirt.png",
+    "category": "t-shirt",
+    "temperatureRange": { "min": 15, "max": 30 },
+    "occasions": ["casual", "sports"],
+    "locations": ["university", "park", "cafe"],
+    "activity_types": ["outdoor", "mixed"]
+  },
+  {
+    "id": 2,
+    "image": "images/tshirt.png",
+    "category": "t-shirt",
+    "temperatureRange": { "min": 18, "max": 28 },
+    "occasions": ["casual"],
+    "locations": ["office", "library"],
+    "activity_types": ["indoor"]
+  },
+  {
+    "id": 3,
+    "image": "images/tshirt.png",
+    "category": "t-shirt",
+    "temperatureRange": { "min": 20, "max": 35 },
+    "occasions": ["party", "casual"],
+    "locations": ["club", "restaurant"],
+    "activity_types": ["indoor", "mixed"]
+  },
+  {
+    "id": 4,
+    "image": "images/tshirt.png",
+    "category": "t-shirt",
+    "temperatureRange": { "min": 10, "max": 25 },
+    "occasions": ["formal"],
+    "locations": ["office", "museum"],
+    "activity_types": ["indoor"]
+  }
+] 

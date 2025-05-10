@@ -12,12 +12,15 @@ function matchBestItems(selectedCategories, tagLocations, tagActivityTypes, minT
 
 
 
-// User input
-const selectedCategories = ["t-shirt", "jeans"];
-const tagLocations = ["university", "park"];
-const tagActivityTypes = ["outdoor", "mixed"];
+// User input 1
+// const selectedCategories = ["t-shirt", "jeans"];
+// const tagLocations = ["university", "park"];
+// const tagActivityTypes = ["outdoor", "mixed"];
 
-
+// User input 2
+const selectedCategories = ["sneakers", "jeans"];
+const tagLocations = ["festival", "park"];
+const tagActivityTypes = ["outdoor"];
 // Async function to fetch weather data and find best clothing matches
 async function fetchAndMatchClothing() {
     try {

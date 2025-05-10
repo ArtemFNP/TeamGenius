@@ -1,0 +1,80 @@
+/* TimelineSelector.css */
+.timeline-page {
+    max-width: 800px;
+    margin: 2rem auto;
+    font-family: var(--font-sans);
+  }
+  
+  .timeline-page h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;   /* increased gap below title */
+  }
+  
+  /* Timeline container styling */
+  .timeline {
+    position: relative;
+    height: 60px;
+    background: #e2e8f0;
+    border-radius: var(--radius);
+    user-select: none;
+    cursor: crosshair;
+    margin-top: 1.5rem;       /* added gap above timeline */
+    padding: 0.5rem 0;        /* optional vertical padding */
+  }
+  
+  /* Hour markers */
+  .timeline-hour {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    background: #cbd5e1;
+  }
+  .timeline-hour span {
+    position: absolute;
+    top: -1.25rem;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: var(--color-muted);
+  }
+  
+  /* Drag selection preview */
+  .timeline-drag {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: rgba(79, 140, 255, 0.3);
+    border-radius: var(--radius);
+  }
+  
+  /* Saved time blocks */
+  .timeline-block {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: rgba(79, 140, 255, 0.6);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .block-label {
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    white-space: nowrap;
+    color: #fff;
+  }
+  
+  /* Summary of blocks */
+  .blocks-summary {
+    margin-top: 2rem;        /* extra space above summary */
+  }
+  .block-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
+  }
+  .block-item:last-child {
+    border-bottom: none;
+  }
+  

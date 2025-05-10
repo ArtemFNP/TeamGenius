@@ -108,7 +108,12 @@ export default function WeatherDashboard() {
 
       {/* Daily alert */}
       <div className="daily-alert-row wide">
-        <div className="daily-alert-clickable calendar wide">
+        <div
+          className="daily-alert-clickable calendar wide"
+          role="button"
+          tabIndex={0}
+          onClick={() => navigate('/timeline')}
+        >
           <img src={calendarIcon} alt="calendar" className="calendar-icon-large wide" />
           <div>
             <div className="alert-title schedule wide"><b>Adjust your day schedule</b></div>

@@ -5,6 +5,7 @@ import OutfitSelector from './OutfitSelector';
 import Closet from './Closet';
 import OutfitPage from './OutfitPage';
 import '../styles/App.css';
+import TimelineSelector from './TimelineSelector';
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
         <Route path="/outfit-selector" element={<OutfitSelector />} />
         <Route path="/closet" element={<Closet />} />
         <Route path="/outfit" element={<OutfitPage />} />
+        <Route path="/timeline" element={<TimelineSelector />} />
+
       </Routes>
     </Router>
   );

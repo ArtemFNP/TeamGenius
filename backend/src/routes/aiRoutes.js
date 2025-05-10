@@ -1,5 +1,6 @@
 import express from 'express';
 import { getAIResponse } from '../controllers/geminiApi.js';
+import { getTimelineSuggestion } from '../controllers/timelineController.js';
 const router = express.Router();
 
 // POST /ai/prompt
@@ -13,5 +14,8 @@ router.post('/prompt', async (req, res) => {
     res.status(500).json({ error: 'AI error' });
   }
 });
+
+// POST /ai/timeline-suggestion
+router.post('/timeline-suggestion', getTimelineSuggestion);
 
 export default router; 

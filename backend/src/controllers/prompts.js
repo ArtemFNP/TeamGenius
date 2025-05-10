@@ -38,3 +38,5 @@ const categories = [
     "shoes", "sneakers", "boots", "sandals", "heels", "flats", "loafers", "slippers", "accessories",
     "hat", "scarf", "gloves", "belt", "socks", "bag", "watch", "sunglasses", "jewelry"
 ];
+
+export { prompts };

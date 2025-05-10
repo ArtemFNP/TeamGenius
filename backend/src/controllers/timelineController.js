@@ -1,11 +1,12 @@
 import { getWeather } from './weatherApi.js';
 import { getAIResponse } from './geminiApi.js';
+import { prompts } from './prompts.js';
 
 export async function getTimelineSuggestion(req, res) {
   try {
-    const { city, startTime, endTime } = req.body;
-    if (!city || !startTime || !endTime) {
-      return res.status(400).json({ error: 'city, startTime, and endTime are required' });
+    const { city, startTime, endTime, goal } = req.body;
+    if (!city || !startTime || !endTime || !goal) {
+      return res.status(400).json({ error: 'city, startTime, endTime, and goal are required' });
     }
 
     // Fetch weather forecast for the city
@@ -29,8 +30,11 @@ export async function getTimelineSuggestion(req, res) {
     const conditions = [...new Set(selectedHours.map(h => h.description))].join(', ');
     const weatherSummary = `${avgTemp}°C, ${conditions}`;
 
-    // Build prompt
-    const prompt = `Suggest an outfit for being outside in ${city} from ${startTime} to ${endTime}. The weather will be: ${weatherSummary}.`;
+    // Use prompt template from prompts.js
+    const promptTemplate = prompts[0][1].prompt;
+    // Build the prompt string
+    const prompt = `${promptTemplate}\nDestination: ${goal}\nCity: ${city}\nTime: ${startTime} to ${endTime}\nWeather: ${weatherSummary}`;
+
     const aiResult = await getAIResponse(prompt);
     res.json({ suggestion: aiResult, prompt });
   } catch (error) {

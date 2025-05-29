@@ -1,0 +1,32 @@
+/* frontend/src/styles/variables.css */
+:root {
+    --background-deep-purple: #3C2A70; /* Глубокий фиолетовый фон (подбирал по макету) */
+    --navbar-text-color: #EAE6FF;    /* Светлый текст для навбара и лого (подбирал по макету) */
+    --main-block-bg: #5A4194;         /* Фон основного блока с одеждой (твой HEX) */
+    --main-block-glow: rgba(130, 130, 255, 0.45); /* Голубовато-фиолетовое свечение (можно настроить интенсивность) */
+    --button-primary-bg: #7D64E1;     /* Фон кнопки "Add clothes" (твой HEX) */
+    --button-primary-text: #FFFFFF;   /* Текст на этой кнопке */
+    
+    --accent-black-bg: rgba(20, 20, 40, 0.65); /* Полупрозрачный темный фон для блоков даты/времени (чуть в синеву) */
+    --accent-black-text: #EAE6FF;     /* Текст на блоках даты/времени */
+  
+    --heart-icon-default: var(--navbar-text-color);
+    --heart-icon-active: #FF69B4;    /* Или любой другой яркий цвет для активного сердечка */
+  
+    --font-primary: 'Montserrat', sans-serif;
+    --navbar-link-font-size: 30px;
+    --main-block-border-radius: 40px; /* Для основного блока (Figma 75 -> CSS, подбираем визуально) */
+    --small-item-border-radius: 20px; /* Для более мелких элементов типа даты/времени */
+  
+    --navbar-padding-top: 25px; /* Отступ сверху для элементов навбара */
+    --logo-padding-left: 40px; /* Отступ слева для лого */
+    --profile-padding-right: 40px; /* Отступ справа для профиля */
+  }
+  
+  body {
+    background-color: var(--background-deep-purple);
+    font-family: var(--font-primary);
+    color: var(--navbar-text-color); /* Общий цвет текста для страницы, если не переопределен */
+    margin: 0;
+    padding: 0;
+  }

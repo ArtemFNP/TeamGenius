@@ -1,0 +1,72 @@
+/* frontend/src/components/Navbar.css */
+.navbar-container {
+    display: flex;
+    justify-content: space-between; /* Лого слева, ссылки по центру (блок ссылок), профиль справа */
+    align-items: center; /* Вертикальное выравнивание по центру */
+    padding-top: var(--navbar-padding-top);
+    padding-left: var(--logo-padding-left);
+    padding-right: var(--profile-padding-right);
+    padding-bottom: 20px; /* Небольшой отступ снизу для баланса */
+    width: 100%;
+    box-sizing: border-box; /* Чтобы padding не влиял на общую ширину */
+  }
+  
+  .navbar-logo a,
+  .navbar-link-item,
+  .navbar-profile {
+    font-family: var(--font-primary);
+    color: var(--navbar-text-color);
+    text-decoration: none;
+    font-weight: 600; /* Сделаем текст чуть жирнее, как на макете */
+  }
+  
+  .navbar-logo a {
+    font-size: 34px; /* Чуть больше для лого */
+    /* padding-left: var(--logo-padding-left); убрал, так как на контейнере */
+  }
+  
+  .navbar-links {
+    display: flex;
+    gap: 50px; /* Расстояние между кнопками HOME, WARDROBE, CLOTHES FITTER */
+    /* Для точного центрирования блока ссылок, если space-between не дает нужного эффекта:
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    */
+  }
+  
+  .navbar-link-item {
+    font-size: var(--navbar-link-font-size);
+    transition: color 0.3s ease;
+  }
+  
+  .navbar-link-item:hover {
+    color: var(--button-primary-bg); /* Подсветка при наведении */
+  }
+  
+  .navbar-profile {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 20px; /* Размер текста для "My Profile" */
+    font-weight: 500;
+  }
+  
+  /* Если у тебя есть SVG иконка для профиля */
+  /*
+  .profile-icon-svg {
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+    filter: invert(90%) sepia(10%) saturate(100%) hue-rotate(200deg) brightness(100%) contrast(90%); /* Попробуй подобрать фильтр для цвета иконки
+  }
+  */
+  
+  .profile-text {
+    margin-right: 8px; /* Если есть иконка фото, если нет - убери или оставь для стрелки */
+  }
+  
+  .profile-arrow {
+    font-size: 24px; /* Размер стрелки */
+    font-weight: bold;
+  }

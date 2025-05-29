@@ -9,6 +9,10 @@ import thunderIcon from '../assets/images/rain_storm.png';
 import cloudIcon from '../assets/images/cloud.png';
 import partlyCloudyIcon from '../assets/images/partly_cloudy.png';
 import allPhotos from '../assets/images/gallery';
+import hoodieImg from '../assets/images/hoodie.png';
+import tshirtBlackImg from '../assets/images/tshirtblack.png';
+import tshirtWhiteImg from '../assets/images/tshirtwhite123.jpg';
+import pantsImg from '../assets/images/2.png';
 
 const cities = ['Antwerp, Belgium', 'Berlin, Germany', 'Paris, France'];
 
@@ -33,6 +37,64 @@ export default function WeatherDashboard() {
     'Denim jacket with fleece lining',
     'Classic white sneakers',
   ];
+
+  // Read selected period from localStorage
+  const [selectedPeriod, setSelectedPeriod] = useState(() => {
+    const stored = localStorage.getItem('selectedPeriod');
+    return stored ? JSON.parse(stored) : null;
+  });
+
+  // Mock: get temperature for selected period (in real app, fetch from API)
+  const getMockTemp = (start, end) => {
+    // Just return a random temp for demo
+    return Math.floor(Math.random() * 16) + 10; // 10-25°C
+  };
+
+  // Mock: get outfit suggestion based on temp
+  const getOutfitSuggestion = (temp) => {
+    if (temp < 14) return 'Wear a jacket and pants';
+    if (temp < 20) return 'A t-shirt and jeans are fine';
+    return 'T-shirt and shorts!';
+  };
+
+  // Функция для выбора картинки по рекомендации
+  const getOutfitImage = (suggestion) => {
+    if (suggestion.toLowerCase().includes('hoodie')) return hoodieImg;
+    if (suggestion.toLowerCase().includes('black')) return tshirtBlackImg;
+    if (suggestion.toLowerCase().includes('white')) return tshirtWhiteImg;
+    if (suggestion.toLowerCase().includes('t-shirt')) {
+      // Рандомно белая или чёрная футболка
+      return Math.random() > 0.5 ? tshirtBlackImg : tshirtWhiteImg;
+    }
+    return tshirtWhiteImg;
+  };
+
+  // Сеты одежды для разных рекомендаций
+  const outfitSets = [
+    {
+      suggestion: 'T-shirt and hoodie would be a nice option!',
+      items: [
+        { img: hoodieImg, label: 'Hoodie' },
+        { img: tshirtWhiteImg, label: 'White T-shirt' },
+        { img: pantsImg, label: 'Pants' },
+      ]
+    },
+    {
+      suggestion: 'Black t-shirt would be a nice option!',
+      items: [
+        { img: tshirtBlackImg, label: 'Black T-shirt' },
+        { img: pantsImg, label: 'Pants' },
+      ]
+    },
+    {
+      suggestion: 'White t-shirt would be a nice option!',
+      items: [
+        { img: tshirtWhiteImg, label: 'White T-shirt' },
+        { img: pantsImg, label: 'Pants' },
+      ]
+    },
+  ];
+  const [setIndex, setSetIndex] = useState(0);
 
   if (loading) {
     return (
@@ -72,6 +134,49 @@ export default function WeatherDashboard() {
           <span>{new Date().toLocaleDateString()}</span>
           <span>{new Date().toLocaleTimeString()}</span>
         </div>
+
+        {selectedPeriod && (() => {
+          const temp = getMockTemp(selectedPeriod.start, selectedPeriod.end);
+          let suggestion = getOutfitSuggestion(temp);
+          // Улучшаем рекомендации для примера
+          let items = [];
+          if (temp < 15) {
+            suggestion = 'T-shirt and hoodie would be a nice option!';
+            items = [
+              { img: hoodieImg, label: 'Hoodie' },
+              { img: tshirtWhiteImg, label: 'White T-shirt' },
+              { img: pantsImg, label: 'Pants' },
+            ];
+          } else {
+            suggestion = 'White t-shirt would be a nice option!';
+            items = [
+              { img: tshirtWhiteImg, label: 'White T-shirt' },
+              { img: pantsImg, label: 'Pants' },
+            ];
+          }
+          return (
+            <div style={{ marginBottom: 24, fontSize: 20, fontWeight: 500 }}>
+              <div>
+                <span style={{ fontWeight: 700 }}>{selectedPeriod.start}–{selectedPeriod.end}</span> {selectedPeriod.desc}
+              </div>
+              <div style={{ marginTop: 8, display: 'flex', alignItems: 'center', gap: 16 }}>
+                {/* Сет одежды */}
+                <div style={{ display: 'flex', gap: 12 }}>
+                  {items.map((item, idx) => (
+                    <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      <img src={item.img} alt={item.label} style={{ width: 70, height: 70, borderRadius: 10, objectFit: 'cover', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+                      <span style={{ marginTop: 6, fontSize: 15 }}>{item.label}</span>
+                    </div>
+                  ))}
+                </div>
+                <span style={{ marginLeft: 24 }}>
+                  Temperature: <b>{temp}°C</b> —
+                  Suggestion: <b>{suggestion}</b>
+                </span>
+              </div>
+            </div>
+          );
+        })()}
 
         <div className="weather-main-content large wide">
           {/* Photo + dots */}

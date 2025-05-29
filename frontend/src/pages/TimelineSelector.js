@@ -34,7 +34,14 @@ export default function TimelineSelector() {
     const start = pxToTime(Math.min(startX, currentX));
     const end = pxToTime(Math.max(startX, currentX));
     const desc = prompt(`Describe period ${start}–${end}:`, '');
-    desc !== null && setBlocks(bs => [...bs, { start, end, desc }]);
+    if (desc !== null) {
+      const newBlock = { start, end, desc };
+      setBlocks(bs => [...bs, newBlock]);
+      // Save to localStorage for Home page
+      localStorage.setItem('selectedPeriod', JSON.stringify(newBlock));
+      // Redirect to Home
+      navigate('/');
+    }
     setDragInfo(null);
   };
 

@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import homeIcon from '../assets/images/home.png';
 import closetIcon from '../assets/images/closet1.png';
 import photoIcon from '../assets/images/photo.png';
+import OutfitDisplay from '../components/OutfitDisplay';
 import '../pages/WeatherDashboard.css';
+import '../styles/OutfitDisplay.css';
 
 export default function OutfitPage() {
   const navigate = useNavigate();
@@ -34,10 +36,11 @@ export default function OutfitPage() {
       </nav>
       <div style={{ margin: '48px auto', maxWidth: 900, textAlign: 'center' }}>
         <h2 style={{ marginBottom: 32 }}>Your Outfits</h2>
+        <OutfitDisplay />
         <button
           className="upload-btn"
           onClick={() => fileInput.current.click()}
-          style={{ padding: '16px 32px', fontSize: '1.2em', borderRadius: 12, background: '#4f8cff', color: '#fff', border: 'none', cursor: 'pointer', marginBottom: 32 }}
+          style={{ padding: '16px 32px', fontSize: '1.2em', borderRadius: 12, background: '#4f8cff', color: '#fff', border: 'none', cursor: 'pointer', marginTop: 32 }}
         >
           Upload Outfit Photo
         </button>

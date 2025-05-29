@@ -1,0 +1,51 @@
+.outfit-display {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.outfit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.outfit-item {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.outfit-image {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.outfit-description {
+  font-size: 16px;
+  color: #333;
+  margin: 0;
+}
+
+.update-button {
+  background: #4f8cff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: block;
+  margin: 0 auto;
+}
+
+.update-button:hover {
+  background: #3a7de0;
+} 

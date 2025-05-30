@@ -3,73 +3,193 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: var(--navbar-padding-top);
-    padding-left: var(--logo-padding-left);   /* Для отступа лого слева */
-    padding-right: var(--profile-padding-right); /* Для отступа профиля справа */
-    padding-bottom: 15px; /* Небольшой нижний отступ */
+    padding-top: var(--navbar-padding-top, 20px); /* Уменьшим немного по умолчанию */
+    padding-left: var(--logo-padding-left, 20px); /* Уменьшим отступы по умолчанию */
+    padding-right: var(--action-padding-right, 20px); /* Переименовал для ясности */
+    padding-bottom: 15px;
     width: 100%;
     box-sizing: border-box;
+    position: relative; /* Для абсолютного позиционирования мобильного меню */
+    z-index: 100; /* Чтобы навбар был выше другого контента */
   }
   
-  .navbar-logo a,
-  .navbar-link-item,
-  .navbar-profile {
+  .navbar-left-section { /* Контейнер для лого и гамбургера на мобильных */
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Расстояние между гамбургером и лого, если гамбургер не абсолютный */
+  }
+  
+  .hamburger-menu-button {
+    display: none; /* Скрыт по умолчанию на десктопах */
+    background: none;
+    border: none;
+    color: var(--navbar-text-color, #EAE6FF);
+    font-size: 28px; /* Размер иконки гамбургера/крестика */
+    cursor: pointer;
+    padding: 5px;
+    line-height: 1;
+    z-index: 110; /* Выше, чем мобильное меню, чтобы всегда был кликабелен */
+  }
+  
+  .navbar-logo-area {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none; 
+    color: var(--navbar-text-color, #EAE6FF);
+  }
+  
+  .dragon-logo-img {
+    height: 36px; /* Чуть меньше для баланса с текстом */
+    width: auto; 
+    margin-right: 8px;
+  }
+  
+  .smart-style-text {
     font-family: var(--font-primary);
-    color: var(--navbar-text-color);
-    text-decoration: none;
-    font-weight: 600; /* Сделаем чуть жирнее */
+    font-size: 30px; /* Немного уменьшим */
+    font-weight: 700; 
+    color: var(--navbar-text-color, #EAE6FF);
   }
   
-  .navbar-logo a {
-    font-size: 32px; /* Размер шрифта лого */
-    font-weight: 700; /* Лого обычно жирнее */
-  }
-  
+  /* Ссылки на десктопе */
   .navbar-links {
     display: flex;
-    gap: 60px; /* Расстояние между ссылками HOME, WARDROBE, CLOTHES FITTER */
-    /* Следующие два свойства нужны для того, чтобы этот блок был по центру, а лого и профиль по краям.
-       Альтернативно, если .navbar-container уже space-between, то этот блок ссылок должен быть просто flex-grow: 1 и text-align: center
-       Но для фиксированного gap и центрирования блока ссылок, такой подход лучше: */
-    position: absolute; /* Позволяет абсолютно позиционировать относительно navbar-container */
+    gap: 50px; /* Уменьшим немного */
+    position: absolute; 
     left: 50%;
-    transform: translateX(-50%); /* Центрирует блок ссылок */
+    transform: translateX(-50%); 
   }
   
   .navbar-link-item {
-    font-size: var(--navbar-link-font-size); /* 30px из variables */
+    font-family: var(--font-primary);
+    color: var(--navbar-text-color, #EAE6FF);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: calc(var(--navbar-link-font-size, 30px) * 0.9); /* Уменьшим немного, например 27px */
     transition: color 0.2s ease-in-out;
+    white-space: nowrap; /* Чтобы текст не переносился */
   }
   
   .navbar-link-item:hover {
-    color: var(--navbar-link-hover); /* Цвет при наведении */
+    color: var(--navbar-link-hover, #BDA5FF);
   }
   
-  .navbar-profile {
+  .navbar-action-icon {
+    cursor: pointer;
     display: flex;
     align-items: center;
-    cursor: pointer;
-    font-size: 22px; /* Размер текста "My Profile" */
-    font-weight: 500;
-    gap: 8px; /* Расстояние между иконкой/текстом и стрелкой */
+    justify-content: center;
+  }
+  .logout-icon-mobile-menu {
+    display: none; /* Скрыта по умолчанию */
+    align-items: center; /* Для текста рядом с иконкой в моб меню */
+    gap: 10px;
+    padding: 15px 20px;
+    font-size: 1.1em;
+  }
+  .logout-icon-mobile-menu .action-icon-img {
+    /* Размеры уже заданы для .action-icon-img */
   }
   
-  .profile-icon-img { /* Если используешь <img> для иконки профиля */
-    width: 30px;  /* Настроить размер иконки */
-    height: 30px;
-    /* filter: invert(90%) sepia(10%) saturate(100%) hue-rotate(200deg) brightness(100%) contrast(90%); для цвета иконки если она монохромная */
+  
+  .action-icon-img {
+    height: 28px; 
+    width: 28px;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+  }
+  .navbar-action-icon:hover .action-icon-img {
+    transform: scale(1.1);
   }
   
-  .profile-text {
-    /* margin-right: 8px; -- убрал, т.к. есть gap у родителя */
+  /* Медиа-запрос для планшетов и мобильных телефонов */
+  @media (max-width: 1200px) { /* Точка останова - подбери ее под свой дизайн */
+    .navbar-container {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  
+    .smart-style-text {
+      font-size: 26px; /* Еще меньше на мобильных */
+    }
+    .dragon-logo-img {
+      height: 32px;
+    }
+  
+    .navbar-links { /* Основные изменения для мобильного меню */
+      display: none; /* По умолчанию скрыты */
+      position: absolute;
+      top: 100%; /* Начинается сразу под навбаром */
+      left: 0;
+      right: 0;
+      background-color: var(--main-block-bg, #5A4194); /* Фон мобильного меню, можно взять --background-deep-purple */
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      gap: 0; /* Убираем gap, ссылки будут идти друг под другом */
+      transform: none; /* Отменяем центрирование */
+    }
+  
+    .navbar-links.open {
+      display: flex; /* Показываем, когда меню открыто */
+    }
+  
+    .navbar-link-item {
+      padding: 15px 20px; /* Увеличиваем кликабельную область */
+      width: 100%;
+      text-align: center;
+      font-size: 1.1em; /* Увеличиваем шрифт для мобильного меню */
+    }
+    .navbar-link-item:hover {
+      background-color: var(--navbar-link-hover, #7D64E1); /* Фон при наведении на ссылку в моб.меню */
+    }
+  
+  
+    .hamburger-menu-button {
+      display: block; /* Показываем кнопку гамбургера */
+    }
+  
+    /* Кнопка выхода на десктопе скрывается, а для мобильного меню появляется другая */
+    .logout-icon-desktop {
+      display: none;
+    }
+    .logout-icon-mobile-menu { /* Которая была в .navbar-links */
+      display: flex; 
+      color: var(--navbar-text-color); /* Чтобы текст logout был виден */
+      width: 100%;
+      justify-content: center;
+    }
+    .logout-icon-mobile-menu:hover {
+       background-color: var(--navbar-link-hover, #7D64E1);
+    }
   }
   
-  .profile-arrow {
-    font-size: 28px; /* Размер стрелки */
-    font-weight: bold;
-    transition: transform 0.2s ease-in-out;
-  }
-  
-  .navbar-profile:hover .profile-arrow {
-    transform: translateX(3px); /* Небольшой сдвиг стрелки при наведении */
+  @media (max-width: 480px) { /* Для очень маленьких экранов */
+    .navbar-container {
+      padding-top: 15px;
+      padding-bottom: 10px;
+    }
+    .smart-style-text {
+      font-size: 22px;
+    }
+    .dragon-logo-img {
+      height: 28px;
+      margin-right: 6px;
+    }
+    .hamburger-menu-button {
+      font-size: 24px;
+    }
+    .action-icon-img { /* Общая иконка выхода */
+      height: 24px;
+      width: 24px;
+    }
+    .navbar-left-section {
+        gap: 10px;
+    }
   }

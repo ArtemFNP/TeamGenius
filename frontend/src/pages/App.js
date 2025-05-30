@@ -14,13 +14,16 @@ import TimelineSelector from './TimelineSelector';
 function App() {
   return (
     <Router>
+       <div className="app-content-wrapper"> {/* Эта обертка для прижатия футера */}
       <Routes>
+          {/* <Navbar /> */} 
         <Route path="/" element={<WeatherDashboard />} />
         <Route path="/outfit-selector" element={<OutfitSelector />} />
         <Route path="/closet" element={<Closet />} />
         <Route path="/outfit" element={<OutfitPage />} />
         <Route path="/timeline" element={<TimelineSelector />} />
       </Routes>
+      </div>
     </Router>
   );
 }

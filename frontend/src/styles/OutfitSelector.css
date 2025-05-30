@@ -1,0 +1,372 @@
+/* src/styles/OutfitSelector.css */
+/* src/styles/OutfitSelector.css */
+.outfit-selector-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--background-deep-purple, #3C2A70);
+    color: var(--navbar-text-color, #EAE6FF);
+    font-family: var(--font-primary, 'Montserrat', sans-serif); 
+  }
+  
+  /* Заголовок страницы, если решишь добавить */
+  .os-page-title { 
+    font-family: var(--font-righteous, 'Righteous', cursive);
+    font-size: 2.8em; 
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: normal;
+  }
+  
+  .os-main-content {
+    flex-grow: 1;
+    display: flex;
+    padding: 25px; /* Увеличим общий padding */
+    gap: 25px; 
+  }
+
+/* --- Левая колонка --- */
+.os-left-sidebar {
+  flex: 0 0 300px; 
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+}
+
+.presets-dropdown-container { 
+  width: 100%; 
+  position: relative; 
+}
+
+.os-dropdown { 
+  width: 100%;
+  padding: 12px 40px 12px 18px; 
+  border-radius: 10px; 
+  border: none; 
+  background-color: var(--main-block-bg, #5A4194); 
+  color: var(--navbar-text-color, #EAE6FF);
+  font-family: var(--font-primary);
+  font-size: 1em;
+  font-weight: 500;
+  appearance: none; 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  background-image: url('../assets/images/dropdown-arrow.png'); 
+  background-repeat: no-repeat;
+  background-position: right 15px center; 
+  background-size: 16px 16px; 
+  outline: none; 
+  line-height: 1.5; 
+}
+.os-dropdown:focus {
+  box-shadow: 0 0 0 2px var(--button-primary-bg, #7D64E1); 
+}
+
+.os-sidebar-text { 
+  font-size: 0.9em;
+  color: var(--main-block-text-secondary, #D0C8FF);
+  line-height: 1.4;
+  padding-left: 5px; 
+}
+
+.os-mannequin-area {
+  flex-grow: 1; 
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+  background-color: var(--closet-preview-bg, #4A3F71); 
+  padding: 20px;
+  border-radius: 30px; 
+}
+
+.mannequin-slot {
+  background-color: var(--main-block-bg, #5A4194); 
+  border: 2px dashed var(--main-block-text-secondary, #D0C8FF); 
+  border-radius: 18px; 
+  min-height: 80px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--main-block-text-secondary, #D0C8FF);
+  font-size: 0.85em;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+  position: relative;
+}
+.mannequin-slot:hover {
+    border-color: var(--button-primary-bg);
+    background-color: color-mix(in srgb, var(--main-block-bg, #5A4194) 90%, black);
+}
+.mannequin-slot img {
+  width: 100%;
+  height: 100%;
+  max-height: 100px; 
+  object-fit: contain; 
+}
+.slot-placeholder {
+  opacity: 0.7;
+  padding: 10px;
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+}
+.slot-placeholder .plus-icon { 
+  font-size: 1.8em; 
+  font-weight: 300; 
+  line-height: 1;
+  color: var(--main-block-text-secondary);
+}
+
+.os-preset-controls {
+  margin-top: 20px; 
+  background-color: var(--closet-preview-bg, #4A3F71); 
+  padding: 20px;
+  border-radius: 30px;
+}
+.os-label { 
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1em;
+    font-weight: 500;
+    color: var(--navbar-text-color);
+}
+.visually-hidden { 
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; 
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+.os-input-group { 
+    display: flex;
+    gap: 10px;
+}
+.os-input {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: none; /* Убрали рамку */
+    background-color: rgba(255, 255, 255, 0.95); 
+    color: var(--background-deep-purple, #3C2A70);
+    font-family: var(--font-primary);
+    font-size: 1em;
+}
+.os-input::placeholder { color: #888; }
+.os-button-save {
+    padding: 10px 20px;
+    background-color: #36B97E; 
+    color: #FFFFFF; 
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-primary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.os-button-save:hover { background-color: #2DA06E; }
+  
+/* --- Центральная колонка --- */
+.os-center-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+}
+
+.os-clothing-grid-container {
+  flex-grow: 1; 
+  background-color: var(--main-block-bg); 
+  border-radius: var(--main-block-border-radius);
+  padding: 30px; 
+  overflow-y: auto; 
+  box-shadow: 0 0 35px 10px var(--main-block-glow); 
+  min-height: 450px; 
+  display: flex; 
+  flex-direction: column;
+}
+.os-empty-closet-message {
+    margin: auto; 
+    font-size: 1.1em;
+    color: var(--main-block-text-secondary);
+}
+  
+.os-clothing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); 
+  gap: 20px; 
+}
+.os-clothing-item-card:focus-visible .os-item-actions { 
+    opacity: 1;
+}
+  
+.os-clothing-item-card {
+  aspect-ratio: 1 / 1; 
+  background-color: var(--closet-item-bg, #5F5091); 
+  border-radius: 18px; 
+  overflow: hidden;
+  position: relative; 
+  cursor: pointer; 
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.os-clothing-item-card:hover, .os-clothing-item-card:focus-visible {
+    transform: scale(1.03);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+}
+  
+.os-item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block; 
+}
+.os-item-actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.65); 
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0; 
+  opacity: 0; 
+  transition: opacity 0.2s ease-in-out;
+  pointer-events: none; 
+}
+.os-clothing-item-card:hover .os-item-actions {
+  opacity: 1;
+  pointer-events: auto; 
+}
+.os-action-btn {
+  background: none;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 0.9em; 
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+.use-btn {
+    background-color: #36B97E; /* Зеленый для USE */
+}
+.use-btn:hover { background-color: #2DA06E; }
+.delete-btn { 
+    background-color: #f44336; /* Красный для DELETE */
+}
+.delete-btn:hover { background-color: #e53935; }
+
+.os-ai-action {
+  margin-top: auto; 
+  padding-top: 20px; 
+  display: flex;
+  justify-content: flex-end; 
+}
+.os-ai-button {
+  background-color: #35285A; 
+  color: var(--navbar-text-color);
+  border: none; 
+  padding: 10px 18px; 
+  border-radius: 20px; 
+  font-family: var(--font-righteous, 'Righteous', cursive); 
+  font-size: 1.05em; 
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+  box-shadow: 0 2px 7px rgba(0,0,0,0.2);
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+.os-ai-button:hover {
+  background-color: var(--button-primary-bg); 
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+.os-ai-button::after {
+  content: '✕'; 
+  font-size: 0.8em;
+  margin-left: 8px;
+  font-weight: bold;
+  color: var(--main-block-text-secondary); 
+  opacity: 0.7;
+}
+
+/* --- Адаптивность --- */
+@media (max-width: 1024px) { 
+  .os-main-content {
+    flex-direction: column;
+  }
+  .os-left-sidebar {
+    flex-basis: auto; 
+    width: 100%;   
+    order: 1; 
+    margin-bottom: 25px;
+  }
+  .os-center-content {
+    order: 2; 
+  }
+  .os-mannequin-area {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Уменьшаем мин.ширину слотов */
+    gap: 8px;
+  }
+  .mannequin-slot {
+      min-height: 100px; /* Адаптируем высоту слотов */
+  }
+  .presets-dropdown-container { /* Контейнер дропдауна в левом сайдбаре */
+      max-width: 400px; 
+      margin-left: auto;
+      margin-right: auto;
+  }
+  .os-sidebar-text {
+      text-align: center; 
+      padding-left: 0;
+  }
+  .os-clothing-grid-container {
+    min-height: 350px; 
+  }
+  .os-clothing-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Адаптируем карточки */
+  }
+  .os-ai-action {
+    justify-content: center; 
+  }
+}
+  
+@media (max-width: 600px) { 
+  .os-main-content {
+      padding: 15px;
+      gap: 15px;
+  }
+  .os-left-sidebar, .os-clothing-grid-container, .os-mannequin-area, .os-preset-controls {
+      padding: 15px;
+  }
+  .os-clothing-grid {
+      grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); 
+      gap: 10px;
+  }
+  .mannequin-slot {
+    min-height: 85px; 
+    font-size: 0.75em;
+  }
+  .slot-placeholder .plus-icon {
+    font-size: 1.3em;
+  }
+  .os-action-btn {
+      padding: 4px 8px;
+      font-size: 0.75em;
+  }
+  .os-ai-button {
+    font-size: 1em;
+    padding: 10px 15px;
+  }
+  .os-dropdown {
+    font-size: 0.95em;
+  }
+  .os-sidebar-text {
+    font-size: 0.85em;
+  }
+}

@@ -1,0 +1,207 @@
+/* src/styles/Closet.css */
+.closet-page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--background-deep-purple);
+    color: var(--navbar-text-color);
+    font-family: var(--font-righteous); /* Применяем Righteous для всей страницы */
+  }
+  
+  .closet-main-content {
+    flex-grow: 1;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .closet-title {
+    font-size: 2.5em; /* Увеличим немного */
+    font-weight: normal; /* Righteous сам по себе "жирный" */
+    margin-bottom: 40px;
+    max-width: 700px;
+    line-height: 1.3;
+  }
+  
+  /* Новый контейнер для лучшего контроля над расположением дропдауна и зоны загрузки */
+  .closet-upload-interaction-area {
+    display: flex;
+    align-items: flex-start; /* Выравнивание по верху */
+    justify-content: center; /* Центрируем всю эту группу */
+    gap: 40px; /* Увеличил расстояние между дропдауном и зоной загрузки */
+    margin-bottom: 15px; /* Уменьшил отступ до текста форматов */
+    width: 100%;
+  }
+  
+  .type-selector-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 220px; /* Чуть шире */
+    margin-top: 10px; /* Небольшой отступ сверху для выравнивания с увеличенной зоной загрузки */
+  }
+  
+  .cloth-type-label {
+    font-size: 1em; /* По умолчанию от Righteous, если нужно, то --font-closet-body */
+    font-family: var(--font-closet-body, 'Montserrat', sans-serif); /* Для читаемости лучше Montserrat */
+    margin-bottom: 10px;
+    color: #FF7B7B; 
+    font-weight: 500;
+  }
+  
+  .cloth-type-dropdown {
+    padding: 14px 18px; /* Чуть больше */
+    border-radius: 10px; /* Более скругленный */
+    border: 1px solid var(--main-block-text-secondary, #D0C8FF);
+    background-color: rgba(255, 255, 255, 0.95); 
+    color: var(--background-deep-purple, #3C2A70); 
+    font-family: var(--font-closet-body, 'Montserrat', sans-serif); /* Montserrat для опций */
+    font-size: 1.05em;
+    width: 100%; 
+    cursor: pointer;
+  }
+  .cloth-type-dropdown:focus {
+    outline: none;
+    border-color: var(--button-primary-bg, #7D64E1);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--button-primary-bg, #7D64E1) 30%, transparent);
+  }
+  
+  .upload-area {
+    width: 250px; /* Увеличена ширина */
+    height: 250px; /* Увеличена высота */
+    border-radius: 40px; /* Более выраженное скругление */
+    background-color: var(--main-block-bg, #5A4194); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 0 30px 7px var(--main-block-glow, rgba(100, 100, 220, 0.35)); /* Увеличил свечение */
+  }
+  .upload-area:hover, .upload-area:focus {
+    transform: scale(1.04);
+    box-shadow: 0 0 40px 10px var(--main-block-glow, rgba(100, 100, 220, 0.45));
+  }
+  
+  .upload-icon { /* Стили для твоей иконки uploadicon.png */
+    width: 80px; /* Подбери размер */
+    height: 80px;
+    object-fit: contain;
+  }
+  
+  .upload-instructions {
+    font-family: var(--font-closet-body, 'Montserrat', sans-serif);
+    font-size: 0.9em;
+    color: var(--main-block-text-secondary, #D0C8FF);
+    margin-top: 5px; /* Поближе к блоку загрузки */
+    margin-bottom: 25px;
+  }
+  
+  .item-appearance-text {
+    font-size: 1.3em;
+    color: var(--navbar-text-color);
+    margin-bottom: 30px;
+    font-weight: normal; /* Отменяем жирность от Righteous, если нужно */
+  }
+  
+  
+  /* Сетка для элементов гардероба */
+  .closet-items-grid {
+    display: grid;
+    /* Адаптивные колонки: минимум 150px шириной, максимум 1fr (равномерно делят пространство) */
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
+    gap: 25px; /* Пространство между карточками */
+    width: 100%;
+    max-width: 900px; /* Ограничение максимальной ширины сетки */
+    padding: 20px; /* Внутренние отступы, если фон сетки будет отличаться */
+    background-color: var(--closet-grid-bg, rgba(40, 30, 70, 0.5)); /* Полупрозрачный фон для всей сетки */
+    border-radius: 20px;
+    margin-top: 10px; /* Отступ от текста "It will appear..." */
+  }
+  
+  .closet-item-card {
+    background-color: var(--closet-item-bg, #5F5091);
+    border-radius: 15px;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex; /* Для центрирования картинки если она не занимает всю карточку */
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1; /* Делает карточки квадратными */
+    overflow: hidden; /* Обрезает изображение если оно выходит за рамки карточки */
+  }
+  .closet-item-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }
+  
+  .closet-item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Заполняет карточку, может обрезать */
+    /* или object-fit: contain; -- если нужно видеть всё изображение, тогда фон карточки будет виден */
+    border-radius: 10px; /* Небольшое скругление для самой картинки внутри карточки */
+  }
+  
+  /* Поп-ап */
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75); /* Затемняющий фон */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Поверх всего */
+    padding: 20px; /* Чтобы контент не прилипал к краям на маленьких экранах */
+  }
+  
+  .popup-content {
+    background-color: var(--main-block-bg, #5A4194);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 500px; /* Максимальная ширина поп-апа */
+    width: 90%; /* Для адаптивности */
+    max-height: 80vh; /* Ограничение высоты */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    color: var(--navbar-text-color);
+  }
+  
+  .popup-close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 2.2em;
+    color: var(--navbar-text-color);
+    cursor: pointer;
+    line-height: 1;
+  }
+  
+  .popup-image {
+    max-width: 100%;
+    max-height: 60vh; /* Чтобы картинка не была слишком большой */
+    border-radius: 10px;
+    margin-bottom: 20px;
+    object-fit: contain;
+  }
+  
+  .popup-item-name {
+    font-size: 1.6em;
+    font-weight: normal;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  /* Добавь переменную для фона сетки, если нужно */
+  /* --closet-grid-bg: rgba(40, 30, 70, 0.5); */

@@ -1,439 +1,403 @@
-/* ──────────────────────────────────────────────
-   Variables & Global Resets
-────────────────────────────────────────────── */
-:root {
-  --color-bg: #f7f8fa;
-  --color-card: #ffffff;
-  --color-primary: #4f8cff;
-  --color-accent: #fdeaea;
-  --color-text: #333;
-  --color-muted: #666;
-  --radius: 0.75rem;
-  --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.05);
-  --font-sans: 'Inter', sans-serif;
-}
+/* src/styles/WeatherDashboard.css */
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background-color: var(--color-bg);
-  font-family: var(--font-sans);
-  color: var(--color-text);
-}
-
-/* ──────────────────────────────────────────────
-   Top Navbar
-────────────────────────────────────────────── */
-.top-navbar {
+.weather-dashboard-container {
   display: flex;
-  justify-content: flex-end;
-  gap: 2rem;
-  padding: 1rem 2rem;
-  background: var(--color-card);
-  box-shadow: var(--shadow-light);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  flex-direction: column;
+  min-height: 100vh; /* Для прижатия футера к низу, если контента мало */
+  background-color: var(--background-deep-purple); /* Уже должно быть на body */
 }
 
-.top-navbar .nav-item {
-  position: relative;
-  cursor: pointer;
-  font-weight: 500;
-  text-transform: uppercase;
-  font-size: 0.9rem;
-  color: var(--color-muted);
-  padding-bottom: 0.25rem;
-  transition: color 0.2s;
-}
-
-.top-navbar .nav-item:hover,
-.top-navbar .nav-item.active {
-  color: var(--color-primary);
-}
-
-.top-navbar .nav-item.active::after {
-  content: '';
-  position: absolute;
-  height: 3px;
+.dashboard-content {
+  flex-grow: 1; /* Основной контент занимает доступное пространство */
+  padding: 20px;
+  max-width: 1200px; /* Ограничиваем ширину контента */
+  margin: 0 auto; /* Центрируем контент */
   width: 100%;
-  background: var(--color-primary);
-  bottom: -2px;
-  left: 0;
+  box-sizing: border-box;
 }
 
-/* hide old icons */
-.top-navbar .nav-icon {
-  display: none;
+.loading-message, .error-message {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.5em;
+  color: var(--navbar-text-color);
 }
 
-/* ──────────────────────────────────────────────
-   Search Bar
-────────────────────────────────────────────── */
-.search-bar-container {
-  width: 90%;
-  max-width: 600px;
-  margin: 2rem auto;
-  position: relative;
-  
-}
-
-.search-bar {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  padding-right: 2.5rem; 
-  border: 1px solid #ddd;
-  border-radius: var(--radius);
-  font-size: 1rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.search-bar:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(79, 140, 255, 0.2);
-}
-
-.search-bar-icon {
-  position: absolute;
-  top: 50%;
-  right: 0.8rem;     
-  transform: translateY(-50%);
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-/* ──────────────────────────────────────────────
-   Tabs
-────────────────────────────────────────────── */
 .tabs-container {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin: 0.5rem;
+  margin-bottom: 30px;
 }
 
 .tab {
-  position: relative;
-  padding: 0.5rem;
-  font-size: 1rem;
-  color: var(--color-muted);
+  padding: 10px 25px;
+  margin: 0 8px;
   cursor: pointer;
-  transition: color 0.2s;
+  color: var(--navbar-text-color);
+  font-size: 1.1em;
+  font-weight: 500;
+  border-bottom: 3px solid transparent;
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.tab:hover {
+  color: #FFFFFF;
 }
 
 .tab.active {
-  color: var(--color-primary);
+  color: #FFFFFF;
+  border-bottom-color: var(--button-primary-bg);
+  font-weight: 600;
 }
 
-.tab.active::after {
-  content: '';
-  position: absolute;
-  height: 3px;
-  width: 100%;
-  background: var(--color-primary);
-  bottom: -6px;
-  left: 0;
+/* Баннер с предложением от TimelineSelector */
+.timeline-suggestion-banner {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--navbar-text-color);
+  padding: 12px 20px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 0.95em;
+}
+.timeline-suggestion-banner span + span {
+  margin-left: 20px;
 }
 
-/* ──────────────────────────────────────────────
-   Main Card
-────────────────────────────────────────────── */
-.weather-main-card {
-  background: linear-gradient(120deg, var(--color-primary) 60%, #6ea8fe);
-  color: #fff;
-  border-radius: var(--radius);
-  padding: 2rem;
-  max-width: 900px;
-  margin: 0 auto 2rem;
-  box-shadow: var(--shadow-light);
-}
 
-.weather-date-time {
+/* Основная карточка с одеждой - НОВЫЙ СТИЛЬ */
+.outfit-display-card {
+  background-color: var(--main-block-bg);
+  border-radius: var(--main-block-border-radius);
+  padding: 30px; /* Внутренний отступ */
+  box-shadow: 0 0 40px 12px var(--main-block-glow); /* Свечение */
   display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
-  opacity: 0.9;
-  margin-bottom: 1.25rem;
+  flex-direction: column;
+  align-items: center; /* Центрирование по горизонтали */
+  position: relative; /* Для позиционирования сердца */
+  margin-bottom: 30px;
+  color: var(--main-block-text-primary);
 }
 
-.weather-main-content {
+.outfit-card-header-pills {
+  display: flex;
+  justify-content: space-between; /* Разносит пилюли по краям */
+  width: 100%; /* Чтобы пилюли заняли всю ширину карточки и разъехались */
+  max-width: 400px; /* Ограничиваем максимальную ширину для пилюль, чтобы они не были слишком далеко друг от друга */
+  margin: 0 auto 25px auto; /* Центрируем блок пилюль и добавляем отступ снизу */
+}
+
+.info-pill {
+  background-color: var(--info-pill-bg);
+  color: var(--info-pill-text);
+  padding: 8px 20px;
+  border-radius: var(--info-pill-border-radius);
+  font-size: 0.9em;
+  font-weight: 500;
+  text-align: center;
+}
+
+.outfit-card-body {
+  display: flex;
+  align-items: center; /* Выравнивание фото и текста по центру */
+  gap: 30px; /* Пространство между фото и деталями */
+  width: 100%;
+  justify-content: center; /* Центрируем контент если он уже чем карточка */
+}
+
+.outfit-image-carousel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.current-outfit-image {
+  max-width: 250px; /* Размер фото, подбери по макету */
+  max-height: 300px;
+  border-radius: 20px; /* Небольшое скругление для самого фото */
+  object-fit: cover;
+  margin-bottom: 15px; /* Отступ до точек карусели */
+}
+
+.carousel-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.carousel-dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.carousel-dots .dot.active {
+  background-color: #FFFFFF;
+}
+
+
+.outfit-details {
+  text-align: left; /* Текст слева, как на макете */
+  max-width: 350px;
+}
+
+.current-temperature {
+  font-size: 2.8em; /* Размер температуры "16° C" */
+  font-weight: 700;
+  color: var(--main-block-text-primary);
+  margin-bottom: 5px;
+}
+
+.outfit-name {
+  font-size: 1.8em; /* "H&M White T-Shirt" */
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--main-block-text-primary);
+}
+
+.outfit-subtext {
+  font-size: 1em; /* "That option is going to be good!" */
+  color: var(--main-block-text-secondary);
+  margin-bottom: 15px;
+}
+
+.weather-condition-summary { /* Если будешь использовать */
+  font-size: 0.95em;
+  color: var(--main-block-text-secondary);
+}
+
+.outfit-card-actions {
+  position: absolute;
+  bottom: 25px;
+  right: 30px; /* Позиция сердца */
+}
+
+.heart-icon {
+  font-size: 2.2em; /* Размер сердца */
+  color: var(--heart-icon-default);
+  cursor: pointer;
+  transition: color 0.3s, transform 0.3s;
+}
+.heart-icon:hover {
+  transform: scale(1.1);
+}
+.heart-icon.active { /* Добавить класс .active при клике */
+  color: var(--heart-icon-active);
+}
+
+
+/* Кнопка Add clothes */
+.add-clothes-button {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  justify-content: center;
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  border: none;
+  padding: 15px 30px;
+  border-radius: var(--info-pill-border-radius); /* Такой же радиус как у пилюль */
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin: 0 auto 30px auto; /* Центрирование кнопки */
+  gap: 10px;
+  min-width: 220px;
+}
+.add-clothes-button:hover {
+  background-color: color-mix(in srgb, var(--button-primary-bg) 90%, black);
+  transform: translateY(-2px);
+}
+.add-clothes-button .plus-icon { /* Если будешь использовать иконку */
+  width: 18px;
+  height: 18px;
 }
 
-.weather-tshirt {
-  width: 120px;
-  height: 120px;
-  border-radius: var(--radius);
-  background: #fff;
-  padding: 0.5rem;
-}
 
-.weather-info .weather-temp {
-  font-size: 2.5rem;
-  font-weight: 700;
-}
-
-.weather-info .weather-desc {
-  font-size: 1.25rem;
-  margin: 0.25rem 0;
-}
-
-.weather-info .weather-update,
-.weather-info .weather-extra-info {
-  font-size: 0.9rem;
-  opacity: 0.9;
-}
-
-/* ──────────────────────────────────────────────
-   Alert Section
-────────────────────────────────────────────── */
+/* Daily Alert Row - небольшая коррекция для консистентности */
 .daily-alert-row {
-  max-width: 900px;
-  margin: 0 auto 2rem;
+  margin-bottom: 30px;
 }
-
 .daily-alert-clickable {
   display: flex;
   align-items: center;
-  background: var(--color-accent);
-  padding: 1rem;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-light);
+  gap: 15px;
+  background-color: rgba(255, 255, 255, 0.05); /* Очень легкий фон */
+  padding: 15px 20px;
+  border-radius: 15px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background-color 0.3s;
+  color: var(--navbar-text-color);
 }
-
 .daily-alert-clickable:hover {
-  background: #f8d8d8;
+  background-color: rgba(255, 255, 255, 0.1);
 }
-
-.daily-alert-clickable img {
-  width: 64px;
-  height: 64px;
-  margin-right: 1rem;
+.calendar-icon-small {
+  width: 35px; /* Размер иконки календаря */
+  height: 35px;
 }
-
 .alert-title {
+  font-size: 1.1em;
   font-weight: 600;
-  font-size: 1.1rem;
+  margin-bottom: 3px;
 }
-
 .alert-desc {
-  font-size: 0.9rem;
-  color: var(--color-muted);
+  font-size: 0.9em;
+  color: var(--main-block-text-secondary);
 }
 
-/* ──────────────────────────────────────────────
-   Hourly Forecast
-────────────────────────────────────────────── */
-.weather-hourly {
-  max-width: 900px;
-  margin: 0 auto;
+/* Hourly Forecast - небольшая коррекция */
+.weather-hourly-forecast {
+  margin-bottom: 30px;
 }
-
-.weather-hourly-header {
+.forecast-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 15px;
+  color: var(--navbar-text-color);
 }
-
-.weather-hourly-header h2 {
-  font-size: 1.2rem;
-  font-weight: 600;
+.forecast-header h2 {
+  font-size: 1.4em;
+  margin: 0;
 }
-
-.location-right {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.5rem 1rem;
-  border: 1px solid #ddd;
-  border-radius: var(--radius);
+.location-dropdown-container {
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: box-shadow 0.2s, border-color 0.2s;
+  position: relative; /* для позиционирования дропдауна */
+  font-size: 1em;
+  padding: 5px 8px;
+  border-radius: 8px;
+  background-color: rgba(255,255,255,0.07);
 }
-
-.location-right:hover {
-  box-shadow: var(--shadow-light);
-  border-color: var(--color-primary);
-}
-
 .city-dropdown {
   position: absolute;
-  top: 110%;
+  top: 100%;
   right: 0;
-  background: var(--color-card);
-  border: 1px solid #ddd;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-light);
-  margin-top: 0.5rem;
-  overflow: hidden;
+  background-color: #4A3A75; /* Чуть светлее основного блока */
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  margin-top: 5px;
+  z-index: 10;
+  min-width: 180px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
-
 .city-dropdown-item {
-  padding: 0.75rem 1rem;
+  padding: 10px 15px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background-color 0.2s;
 }
-
 .city-dropdown-item:hover {
-  background: #f0f0f0;
+  background-color: var(--main-block-bg);
 }
 
-.hourly-list {
+.hourly-forecast-list {
   display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  padding-bottom: 0.5rem;
+  gap: 15px; /* Расстояние между карточками */
+  overflow-x: auto; /* Горизонтальный скролл если не помещаются */
+  padding-bottom: 10px; /* Для тени скроллбара если будет */
 }
 
-.hourly-item {
-  flex: 0 0 110px;
-  background: var(--color-card);
-  border-radius: var(--radius);
-  padding: 0.75rem;
+.hourly-forecast-item {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 12px;
   text-align: center;
-  box-shadow: var(--shadow-light);
-  min-width: 90px;
+  min-width: 90px; /* Минимальная ширина карточки */
+  color: var(--navbar-text-color);
 }
-
-@media (min-width: 1024px) {
-  .hourly-item {
-    flex: 0 0 136px;
-    padding: 1rem;
-  }
+.forecast-item-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 8px;
 }
-
-.hourly-item img {
-  width: auto;
-  height: 100px;
-  margin-bottom: 0.5rem;
-}
-
-.hourly-temp {
+.forecast-item-temp {
+  font-size: 1.2em;
   font-weight: 600;
-  margin-bottom: 0.25rem;
+  margin-bottom: 4px;
+}
+.forecast-item-time {
+  font-size: 0.85em;
+  color: var(--main-block-text-secondary);
 }
 
-.hourly-time {
-  font-size: 0.85rem;
-  color: var(--color-muted);
-}
 
-/* ──────────────────────────────────────────────
-   Responsive
-────────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .weather-main-content {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .weather-tshirt {
-    margin: 0 auto;
-  }
-
-  .weather-date-time {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-}
-
-/* make the carousel scroll vertically, one item tall */
-.photo-carousel {
-  display: flex;
-  flex-direction: column;         /* stack items vertically */
-  flex-wrap: nowrap;
-  height: 160px;                  /* ≃ item height + padding */
-  overflow-y: auto;               /* vertical scroll */
-  scroll-snap-type: y mandatory;  /* snap to each item */
-  
-  /* custom scrollbar so you can *see* your position */
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-primary) #eee;
-}
-
-.photo-carousel::-webkit-scrollbar {
-  width: 8px;
-}
-.photo-carousel::-webkit-scrollbar-track {
-  background: #eee;
-}
-.photo-carousel::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
-  border-radius: 4px;
-}
-
-/* each photo — snap into place, hide overflow */
-.photo-item {
-  flex: 0 0 auto;
-  width: 140px;
-  height: 140px;
-  margin-bottom: 1rem;
-  border-radius: var(--radius);
-  overflow: hidden;
-  scroll-snap-align: start;
-}
-
-/* img fills its box */
-.photo-item img {
+/* Футер */
+.app-footer {
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
+  padding: 30px 20px 15px; /* Верх/низ, Бока, затем маленький нижний отступ для копирайта */
+  text-align: center;
+  font-size: 0.9em;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  box-sizing: border-box;
+  margin-top: auto; /* Прижимает футер книзу */
+}
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start; /* Выравниваем по верху */
+  flex-wrap: wrap; /* Для мобильных */
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto 25px auto; /* Центрируем и отступ до копирайта */
+  text-align: left; /* Для блоков ссылок */
+}
+.footer-logo {
+  font-size: 1.5em;
+  font-weight: 600;
+  color: #FFFFFF; /* Ярче */
+  margin-bottom: 10px; /* Если в отдельной колонке */
+}
+.footer-links {
+  display: grid; /* Двухколончатая структура для ссылок */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 30px; /* Вертикальный и горизонтальный отступ между ссылками */
+  font-size: 0.95em;
+}
+.footer-links a {
+  color: var(--footer-text);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-links a:hover {
+  color: var(--footer-link-hover);
 }
 
-.photo-display {
-  position: relative;
-  width: 140px;
-  height: 140px;
-  margin-right: 2rem;
+.footer-social {
+  min-width: 200px; /* Чтобы выглядело аккуратно */
 }
-.photo-display img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: var(--radius);
+.footer-social span {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
 }
-.dots-container {
+.social-icons {
   display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 0.75rem;
+  gap: 15px;
 }
-.dot {
-  width: 8px;
-  height: 8px;
-  background: rgba(255,255,255,0.5);
+.social-icon.placeholder-icon { /* Стили для заглушек иконок соцсетей */
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background-color: rgba(255,255,255,0.15);
   border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s;
+  color: #FFFFFF;
+  text-align: center;
+  line-height: 32px;
+  font-weight: bold;
+  font-size: 0.9em;
+  transition: background-color 0.3s;
 }
-.dot.active {
-  background: #fff;
-}
-
-/* Loading and Error States */
-.loading, .error {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
-  font-size: 1.2rem;
-  color: var(--color-muted);
+.social-icon.placeholder-icon:hover {
+  background-color: var(--button-primary-bg);
 }
 
-.error {
-  color: #dc3545;
+.footer-copyright {
+  font-size: 0.8em;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--main-block-text-secondary); /* Светлее, чем обычный текст футера */
 }
-

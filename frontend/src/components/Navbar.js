@@ -1,43 +1,116 @@
 // src/components/Navbar.js
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react'; // Добавили useState, useEffect, useRef
 import { Link, useNavigate } from 'react-router-dom';
-import '../styles/Navbar.css'; // Путь к CSS файлу, который теперь в src/styles/
+import '../styles/Navbar.css'; 
 
-// Предположим иконка профиля как часть UI, либо текстовый вариант
-// import profileIconImage from '../assets/images/your-profile-icon.svg'; // Укажи свой путь
+import dragonLogoImg from '../assets/images/dragonlogo.png'; 
+import logoutIconImg from '../assets/images/logout.png';   
+
+// Можно использовать SVG для гамбургера или текстовый символ
+// import hamburgerIcon from '../assets/images/hamburger-icon.svg'; // Если есть SVG
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const mobileMenuRef = useRef(null); // Для закрытия меню по клику вне
 
-  // Маршруты, совпадающие с твоим App.js
   const navLinks = [
     { path: '/', text: 'HOME' },
-    { path: '/closet', text: 'WARDROBE' }, // /closet теперь
-    { path: '/outfit-selector', text: 'CLOTHES FITTER' }, // Предположим, это Clothes Fitter
+    { path: '/closet', text: 'WARDROBE' },
+    { path: '/outfit-selector', text: 'CLOTHES FITTER' },
   ];
 
-  const handleProfileClick = () => {
-    // navigate('/profile'); // Укажи путь к странице профиля, если она есть
-    console.log('Profile clicked - navigate to profile page');
+  const handleLogoutClick = () => {
+    console.log('Logout clicked - implement logout logic');
+    setIsMobileMenuOpen(false); // Закрыть меню при клике
+    // navigate('/login'); 
   };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+  
+  // Закрытие мобильного меню по клику вне его области
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Проверяем, что меню открыто, клик был не по кнопке гамбургера и не внутри самого меню
+      if (isMobileMenuOpen && mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
+        // Дополнительно проверим, что клик не был по самой кнопке гамбургера, 
+        // чтобы избежать немедленного закрытия при открытии
+        if (!event.target.closest('.hamburger-menu-button')) {
+           closeMobileMenu();
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMobileMenuOpen]);
+
 
   return (
     <header className="navbar-container">
-      <div className="navbar-logo">
-        <Link to="/">SMART STYLE</Link>
+      <div className="navbar-left-section"> {/* Объединим лого и гамбургер для мобилок */}
+        <button 
+          className="hamburger-menu-button" 
+          onClick={toggleMobileMenu}
+          aria-label="Toggle navigation menu"
+          aria-expanded={isMobileMenuOpen}
+        >
+          {/* Простой символ гамбургера или ваша SVG иконка */}
+          {isMobileMenuOpen ? <span>✕</span> : <span>☰</span>} {/* Крестик и гамбургер */}
+          {/* <img src={hamburgerIcon} alt="Menu" /> */}
+        </button>
+        <div className="navbar-logo-area">
+          <Link to="/" className="logo-link" onClick={closeMobileMenu}> 
+            <img src={dragonLogoImg} alt="Dragon Logo" className="dragon-logo-img" />
+            <span className="smart-style-text">SMART STYLE</span>
+          </Link>
+        </div>
       </div>
-      <nav className="navbar-links">
+      
+      {/* Для десктопа ссылки будут здесь, для мобильных они будут в выпадающем меню */}
+      <nav className={`navbar-links ${isMobileMenuOpen ? 'open' : ''}`} ref={mobileMenuRef}>
         {navLinks.map((link) => (
-          <Link key={link.text} to={link.path} className="navbar-link-item">
+          <Link 
+            key={link.text} 
+            to={link.path} 
+            className="navbar-link-item"
+            onClick={closeMobileMenu} // Закрывать меню при клике на ссылку
+          >
             {link.text}
           </Link>
         ))}
+        {/* Можно добавить кнопку выхода в мобильное меню, если она не видна отдельно */}
+        <div 
+          className="navbar-action-icon logout-icon-mobile-menu" 
+          onClick={handleLogoutClick} 
+          role="button" 
+          tabIndex={0}  
+          onKeyDown={(e) => e.key === 'Enter' && handleLogoutClick()}
+          aria-label="Logout"
+        >
+          <img src={logoutIconImg} alt="Logout" className="action-icon-img" />
+          <span>Logout</span>
+        </div>
       </nav>
-      <div className="navbar-profile" onClick={handleProfileClick} role="button" tabIndex={0}  onKeyDown={(e) => e.key === 'Enter' && handleProfileClick()}>
-        {/* <img src={profileIconImage} alt="Profile" className="profile-icon-img" /> */}
-        <span className="profile-text">My Profile</span>
-        <span className="profile-arrow"></span> {/* Это иконка "Login" из Material Icons, нужна установка шрифта или замена на SVG/текст "→" */}
-                                                         {/* Или простой текст "→" → */}
+
+      {/* Иконка выхода, видимая на десктопе */}
+      <div 
+        className="navbar-action-icon logout-icon-desktop" 
+        onClick={handleLogoutClick} 
+        role="button" 
+        tabIndex={0}  
+        onKeyDown={(e) => e.key === 'Enter' && handleLogoutClick()}
+        aria-label="Logout"
+      >
+        <img src={logoutIconImg} alt="Logout" className="action-icon-img" />
       </div>
     </header>
   );

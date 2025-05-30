@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import tshirtImage from '../assets/images/tshirt.png';
-import pantsImage from '../assets/images/2.png';
-import jacketImage from '../assets/images/3.png';
+import tshirtImage from './clothes/tshirt.png';
+import jacketImage from './clothes/jacket.png';
+import pantsImage from './clothes/2.png';
 
 const OutfitDisplay = () => {
   const [currentOutfit, setCurrentOutfit] = useState({

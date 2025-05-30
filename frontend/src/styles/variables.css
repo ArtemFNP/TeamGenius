@@ -24,10 +24,12 @@
     --heart-icon-default: #EAE6FF;
     --heart-icon-active: #FF69B4; 
   
-    /* Футер */
-    --footer-bg: rgba(25, 15, 45, 0.7); /* Темно-фиолетовый полупрозрачный фон */
+   
+    /* ... твои существующие переменные ... */
+    --footer-bg: rgba(25, 15, 45, 0.75); /* Фон чуть плотнее сделал */
     --footer-text: #B0A8CC;
     --footer-link-hover: #FFFFFF;
+
   
     --font-primary: 'Montserrat', sans-serif;
     --navbar-link-font-size: 30px;

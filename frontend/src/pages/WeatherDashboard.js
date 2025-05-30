@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWeather } from '../hooks/useWeather';
-import './WeatherDashboard.css';
+import '../styles/WeatherDashboard.css';
+import Navbar from '../components/Navbar';
+
 
 import calendarIcon from '../assets/images/calendar.png';
 import rainIcon from '../assets/images/rainy.png';
@@ -13,6 +15,8 @@ import hoodieImg from '../assets/images/hoodie.png';
 import tshirtBlackImg from '../assets/images/tshirtblack.png';
 import tshirtWhiteImg from '../assets/images/tshirtwhite123.jpg';
 import pantsImg from '../assets/images/2.png';
+
+
 
 const cities = ['Antwerp, Belgium', 'Berlin, Germany', 'Paris, France'];
 
@@ -114,13 +118,8 @@ export default function WeatherDashboard() {
 
   return (
     <div className="weather-dashboard wide">
-      {/* Top navbar */}
-      <nav className="top-navbar">
-        <div className="nav-item" onClick={() => navigate('/outfit-selector')}>Closet</div>
-        <div className="nav-item active" onClick={() => navigate('/')}>Home</div>
-        <div className="nav-item" onClick={() => navigate('/outfit')}>Add item</div>
-      </nav>
-
+      <Navbar />
+    
       {/* Tabs */}
       <div className="tabs-container">
         {['Inside','Mix','Outside'].map(tab => (

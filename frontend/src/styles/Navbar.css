@@ -1,14 +1,14 @@
-/* frontend/src/components/Navbar.css */
+/* src/styles/Navbar.css */
 .navbar-container {
     display: flex;
-    justify-content: space-between; /* Лого слева, ссылки по центру (блок ссылок), профиль справа */
-    align-items: center; /* Вертикальное выравнивание по центру */
+    justify-content: space-between;
+    align-items: center;
     padding-top: var(--navbar-padding-top);
-    padding-left: var(--logo-padding-left);
-    padding-right: var(--profile-padding-right);
-    padding-bottom: 20px; /* Небольшой отступ снизу для баланса */
+    padding-left: var(--logo-padding-left);   /* Для отступа лого слева */
+    padding-right: var(--profile-padding-right); /* Для отступа профиля справа */
+    padding-bottom: 15px; /* Небольшой нижний отступ */
     width: 100%;
-    box-sizing: border-box; /* Чтобы padding не влиял на общую ширину */
+    box-sizing: border-box;
   }
   
   .navbar-logo a,
@@ -17,56 +17,59 @@
     font-family: var(--font-primary);
     color: var(--navbar-text-color);
     text-decoration: none;
-    font-weight: 600; /* Сделаем текст чуть жирнее, как на макете */
+    font-weight: 600; /* Сделаем чуть жирнее */
   }
   
   .navbar-logo a {
-    font-size: 34px; /* Чуть больше для лого */
-    /* padding-left: var(--logo-padding-left); убрал, так как на контейнере */
+    font-size: 32px; /* Размер шрифта лого */
+    font-weight: 700; /* Лого обычно жирнее */
   }
   
   .navbar-links {
     display: flex;
-    gap: 50px; /* Расстояние между кнопками HOME, WARDROBE, CLOTHES FITTER */
-    /* Для точного центрирования блока ссылок, если space-between не дает нужного эффекта:
-    position: absolute;
+    gap: 60px; /* Расстояние между ссылками HOME, WARDROBE, CLOTHES FITTER */
+    /* Следующие два свойства нужны для того, чтобы этот блок был по центру, а лого и профиль по краям.
+       Альтернативно, если .navbar-container уже space-between, то этот блок ссылок должен быть просто flex-grow: 1 и text-align: center
+       Но для фиксированного gap и центрирования блока ссылок, такой подход лучше: */
+    position: absolute; /* Позволяет абсолютно позиционировать относительно navbar-container */
     left: 50%;
-    transform: translateX(-50%);
-    */
+    transform: translateX(-50%); /* Центрирует блок ссылок */
   }
   
   .navbar-link-item {
-    font-size: var(--navbar-link-font-size);
-    transition: color 0.3s ease;
+    font-size: var(--navbar-link-font-size); /* 30px из variables */
+    transition: color 0.2s ease-in-out;
   }
   
   .navbar-link-item:hover {
-    color: var(--button-primary-bg); /* Подсветка при наведении */
+    color: var(--navbar-link-hover); /* Цвет при наведении */
   }
   
   .navbar-profile {
     display: flex;
     align-items: center;
     cursor: pointer;
-    font-size: 20px; /* Размер текста для "My Profile" */
+    font-size: 22px; /* Размер текста "My Profile" */
     font-weight: 500;
+    gap: 8px; /* Расстояние между иконкой/текстом и стрелкой */
   }
   
-  /* Если у тебя есть SVG иконка для профиля */
-  /*
-  .profile-icon-svg {
-    width: 30px;
+  .profile-icon-img { /* Если используешь <img> для иконки профиля */
+    width: 30px;  /* Настроить размер иконки */
     height: 30px;
-    margin-right: 8px;
-    filter: invert(90%) sepia(10%) saturate(100%) hue-rotate(200deg) brightness(100%) contrast(90%); /* Попробуй подобрать фильтр для цвета иконки
+    /* filter: invert(90%) sepia(10%) saturate(100%) hue-rotate(200deg) brightness(100%) contrast(90%); для цвета иконки если она монохромная */
   }
-  */
   
   .profile-text {
-    margin-right: 8px; /* Если есть иконка фото, если нет - убери или оставь для стрелки */
+    /* margin-right: 8px; -- убрал, т.к. есть gap у родителя */
   }
   
   .profile-arrow {
-    font-size: 24px; /* Размер стрелки */
+    font-size: 28px; /* Размер стрелки */
     font-weight: bold;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .navbar-profile:hover .profile-arrow {
+    transform: translateX(3px); /* Небольшой сдвиг стрелки при наведении */
   }

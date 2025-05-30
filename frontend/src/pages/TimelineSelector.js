@@ -1,8 +1,9 @@
 // TimelineSelector.js
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './WeatherDashboard.css'; // keeps global styles
-import './TimelineSelector.css';
+import '../styles/WeatherDashboard.css'; // keeps global styles
+import '../styles/TimelineSelector.css';
+import Navbar from '../components/Navbar';
 
 export default function TimelineSelector() {
   const navigate = useNavigate();
@@ -50,12 +51,7 @@ export default function TimelineSelector() {
 
   return (
     <div className="weather-dashboard wide">
-      {/* Top navbar */}
-      <nav className="top-navbar">
-        <div className="nav-item" onClick={() => navigate('/outfit-selector')}>Closet</div>
-        <div className="nav-item" onClick={() => navigate('/')}>Home</div>
-        <div className="nav-item" onClick={() => navigate('/outfit')}>Add item</div>
-      </nav>
+      <Navbar />
 
       {/* Timeline card without search & tabs */}
       <section className="weather-main-card large wide">

@@ -1,5 +1,4 @@
 /* src/styles/OutfitSelector.css */
-/* src/styles/OutfitSelector.css */
 .outfit-selector-page {
     display: flex;
     flex-direction: column;
@@ -9,21 +8,20 @@
     font-family: var(--font-primary, 'Montserrat', sans-serif); 
   }
   
-  /* Заголовок страницы, если решишь добавить */
-  .os-page-title { 
+.os-page-title { /* Заголовок страницы, если он будет добавлен в JSX */
     font-family: var(--font-righteous, 'Righteous', cursive);
     font-size: 2.8em; 
     text-align: center;
     margin-bottom: 30px;
     font-weight: normal;
-  }
+}
   
-  .os-main-content {
+.os-main-content {
     flex-grow: 1;
     display: flex;
-    padding: 25px; /* Увеличим общий padding */
+    padding: 25px;
     gap: 25px; 
-  }
+}
 
 /* --- Левая колонка --- */
 .os-left-sidebar {
@@ -52,7 +50,7 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   cursor: pointer;
-  background-image: url('../assets/images/dropdown-arrow.png'); 
+  background-image: url('../assets/images/dropdown-arrow.png'); /* ПРОВЕРЬ ПУТЬ К ИКОНКЕ СТРЕЛКИ! */
   background-repeat: no-repeat;
   background-position: right 15px center; 
   background-size: 16px 16px; 
@@ -63,12 +61,13 @@
   box-shadow: 0 0 0 2px var(--button-primary-bg, #7D64E1); 
 }
 
-.os-sidebar-text { 
+/* Текст, который был под дропдауном в левой колонке (больше не используется в левой колонке, переехал в центр) */
+/* .os-sidebar-text { 
   font-size: 0.9em;
   color: var(--main-block-text-secondary, #D0C8FF);
   line-height: 1.4;
   padding-left: 5px; 
-}
+} */
 
 .os-mannequin-area {
   flex-grow: 1; 
@@ -142,17 +141,17 @@
     display: flex;
     gap: 10px;
 }
-.os-input {
+.os-input { /* ИЗМЕНЕН ФОН */
     flex-grow: 1;
     padding: 12px 15px;
     border-radius: 8px;
-    border: none; /* Убрали рамку */
-    background-color: rgba(255, 255, 255, 0.95); 
-    color: var(--background-deep-purple, #3C2A70);
+    border: none; 
+    background-color: var(--closet-item-bg, rgba(95, 80, 145, 0.8)); /* СЕРОВАТО-ФИОЛЕТОВЫЙ, можно rgba(200,200,210,0.2) для светло-серого */
+    color: var(--navbar-text-color); /* Белый текст на темном фоне */
     font-family: var(--font-primary);
     font-size: 1em;
 }
-.os-input::placeholder { color: #888; }
+.os-input::placeholder { color: var(--main-block-text-secondary); opacity: 0.7; }
 .os-button-save {
     padding: 10px 20px;
     background-color: #36B97E; 
@@ -171,8 +170,24 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  gap: 20px; 
+  gap: 15px; /* Уменьшил gap между intro-text и сеткой */
 }
+
+/* Новый контейнер для текста "You could pick..." над сеткой */
+.os-intro-text-container {
+    width: 100%;
+    padding: 0 5px; /* Небольшие боковые отступы */
+    box-sizing: border-box;
+    /* margin-bottom: 10px; убрал, так как gap у родителя */
+}
+
+.os-intro-text {
+    font-size: 0.95em; /* Размер как на макете os-sidebar-text */
+    color: var(--main-block-text-secondary, #D0C8FF);
+    line-height: 1.4;
+    text-align: left; /* По левому краю */
+}
+
 
 .os-clothing-grid-container {
   flex-grow: 1; 
@@ -181,7 +196,7 @@
   padding: 30px; 
   overflow-y: auto; 
   box-shadow: 0 0 35px 10px var(--main-block-glow); 
-  min-height: 450px; 
+  min-height: 400px; /* Уменьшил немного, т.к. есть текст сверху */
   display: flex; 
   flex-direction: column;
 }
@@ -250,19 +265,21 @@
   transition: background-color 0.2s;
 }
 .use-btn {
-    background-color: #36B97E; /* Зеленый для USE */
+    background-color: #36B97E; 
 }
 .use-btn:hover { background-color: #2DA06E; }
 .delete-btn { 
-    background-color: #f44336; /* Красный для DELETE */
+    background-color: #f44336; 
 }
 .delete-btn:hover { background-color: #e53935; }
 
 .os-ai-action {
-  margin-top: auto; 
+  margin-top: auto; /* Прижимает к низу .os-center-content */
   padding-top: 20px; 
   display: flex;
-  justify-content: flex-end; 
+  justify-content: center; /* Кнопка прижата вправо */
+  width: 100%; /* Чтобы flex-end работал относительно всей ширины центральной колонки */
+  box-sizing: border-box;
 }
 .os-ai-button {
   background-color: #35285A; 
@@ -310,26 +327,29 @@
   }
   .os-mannequin-area {
     display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Уменьшаем мин.ширину слотов */
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 8px;
   }
   .mannequin-slot {
-      min-height: 100px; /* Адаптируем высоту слотов */
+      min-height: 100px;
   }
-  .presets-dropdown-container { /* Контейнер дропдауна в левом сайдбаре */
-      max-width: 400px; 
-      margin-left: auto;
-      margin-right: auto;
+  .presets-dropdown-container { 
+      max-width: 100%; /* На мобильном может быть на всю ширину */
+      /* margin-left: auto; // Убрал авто-отступы если они не нужны */
+      /* margin-right: auto; */
   }
-  .os-sidebar-text {
-      text-align: center; 
+  .os-intro-text-container { /* Контейнер для текста над сеткой */
+      /* Можно добавить специфичные стили для мобильных если нужно */
+  }
+  .os-intro-text { /* Текст над сеткой */
+      text-align: center; /* По центру на мобильных */
       padding-left: 0;
   }
   .os-clothing-grid-container {
-    min-height: 350px; 
+    min-height: 300px; 
   }
   .os-clothing-grid {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Адаптируем карточки */
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); 
   }
   .os-ai-action {
     justify-content: center; 
@@ -366,7 +386,5 @@
   .os-dropdown {
     font-size: 0.95em;
   }
-  .os-sidebar-text {
-    font-size: 0.85em;
-  }
+  /* Убираем .os-sidebar-text, так как он стал .os-intro-text */
 }

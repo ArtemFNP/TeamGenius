@@ -1,32 +1,54 @@
-/* frontend/src/styles/variables.css */
+/* src/styles/variables.css */
 :root {
-    --background-deep-purple: #3C2A70; /* Глубокий фиолетовый фон (подбирал по макету) */
-    --navbar-text-color: #EAE6FF;    /* Светлый текст для навбара и лого (подбирал по макету) */
-    --main-block-bg: #5A4194;         /* Фон основного блока с одеждой (твой HEX) */
-    --main-block-glow: rgba(130, 130, 255, 0.45); /* Голубовато-фиолетовое свечение (можно настроить интенсивность) */
-    --button-primary-bg: #7D64E1;     /* Фон кнопки "Add clothes" (твой HEX) */
-    --button-primary-text: #FFFFFF;   /* Текст на этой кнопке */
+    --background-deep-purple: #3C2A70; 
+    --navbar-text-color: #EAE6FF;     
+    --navbar-link-hover: #BDA5FF;    
     
-    --accent-black-bg: rgba(20, 20, 40, 0.65); /* Полупрозрачный темный фон для блоков даты/времени (чуть в синеву) */
-    --accent-black-text: #EAE6FF;     /* Текст на блоках даты/времени */
+    /* Основной блок с одеждой */
+    --main-block-bg: #5A4194; /* Цвет фона из твоего скриншота */
+    --main-block-text-primary: #FFFFFF; /* Основной яркий текст на блоке */
+    --main-block-text-secondary: #D0C8FF; /* Менее яркий текст на блоке */
+    --main-block-glow: rgba(100, 100, 220, 0.45); /* Мягкое сине-фиолетовое свечение, интенсивность можно настроить */
+    --main-block-border-radius: 50px; /* "Rounded 75" из Figma (это значение для CSS может отличаться, 50px - хороший старт) */
   
-    --heart-icon-default: var(--navbar-text-color);
-    --heart-icon-active: #FF69B4;    /* Или любой другой яркий цвет для активного сердечка */
+    /* Блоки даты и времени на основной карточке */
+    --info-pill-bg: rgba(10, 5, 25, 0.65); /* Темный фон для "таблеток" даты/времени */
+    --info-pill-text: #E0D9FF;
+    --info-pill-border-radius: 25px; /* Делает их похожими на пилюли */
+  
+    /* Кнопка "Add Clothes" (уже может быть определена) */
+    --button-primary-bg: #7D64E1;     
+    --button-primary-text: #FFFFFF;  
+  
+    /* Сердечко */
+    --heart-icon-default: #EAE6FF;
+    --heart-icon-active: #FF69B4; 
+  
+    /* Футер */
+    --footer-bg: rgba(25, 15, 45, 0.7); /* Темно-фиолетовый полупрозрачный фон */
+    --footer-text: #B0A8CC;
+    --footer-link-hover: #FFFFFF;
   
     --font-primary: 'Montserrat', sans-serif;
     --navbar-link-font-size: 30px;
-    --main-block-border-radius: 40px; /* Для основного блока (Figma 75 -> CSS, подбираем визуально) */
-    --small-item-border-radius: 20px; /* Для более мелких элементов типа даты/времени */
   
-    --navbar-padding-top: 25px; /* Отступ сверху для элементов навбара */
-    --logo-padding-left: 40px; /* Отступ слева для лого */
-    --profile-padding-right: 40px; /* Отступ справа для профиля */
+    --navbar-padding-top: 25px;
+    --logo-padding-left: 40px;
+    --profile-padding-right: 40px;
   }
   
   body {
     background-color: var(--background-deep-purple);
     font-family: var(--font-primary);
-    color: var(--navbar-text-color); /* Общий цвет текста для страницы, если не переопределен */
+    color: var(--navbar-text-color); 
     margin: 0;
     padding: 0;
+    display: flex; /* Для прижатия футера книзу */
+    flex-direction: column; /* Для прижатия футера книзу */
+    min-height: 100vh; /* Для прижатия футера книзу */
+  }
+  
+  /* Глобальный контейнер для контента, чтобы футер прижался */
+  .app-content-wrapper {
+    flex-grow: 1; /* Занимает все доступное пространство */
   }

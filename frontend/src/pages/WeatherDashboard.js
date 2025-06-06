@@ -1,5 +1,5 @@
 // src/pages/WeatherDashboard.js
-import React, { useState, useEffect } from 'react'; // Добавил useEffect для динамического времени
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWeather } from '../hooks/useWeather';
 import '../styles/WeatherDashboard.css';
@@ -11,8 +11,8 @@ import rainIcon from '../assets/images/rainy.png';
 import thunderIcon from '../assets/images/rain_storm.png';
 import cloudIcon from '../assets/images/cloud.png';
 import partlyCloudyIcon from '../assets/images/partly_cloudy.png';
-import allPhotos from '../assets/images/gallery'; // Предположим, что это массив путей к изображениям
-// import plusIcon from '../assets/images/plusadd.png'; // Если нужен для кнопки Add Clothes
+// Переконайтеся, що імпортуємо те, що експортується з gallery.js
+import allPhotos from '../assets/images/gallery'; // Це тепер масив об'єктів { id, imageUrl, name }
 
 // Добавляем иконку сердца, если она будет использоваться
 // import heartIconOutline from '../assets/images/heart-outline.svg';
@@ -50,21 +50,26 @@ export default function WeatherDashboard() {
     return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }); // Формат "15:10"
   };
 
+  // --- ПОЧАТОК ВИПРАВЛЕНЬ ---
+  // Отримуємо поточний об'єкт вбрання з масиву allPhotos за індексом activePhoto
+  const currentOutfit = allPhotos && allPhotos.length > 0 && activePhoto < allPhotos.length
+                        ? allPhotos[activePhoto]
+                        : null;
 
-  // Используем фото из allPhotos для главного дисплея, если они есть. 
-  // Если нет, можно оставить статическое или одно из предложенных
-  const currentOutfitImage = allPhotos && allPhotos.length > 0 ? allPhotos[activePhoto] : tshirtWhiteImg; // Fallback to tshirtWhiteImg
-  const currentOutfitName = "H&M White T-Shirt"; // Пример названия, можно брать из массива captions если allPhotos используется
-  const currentOutfitSubtext = "That option is going to be good!";
+  // Визначаємо зображення, назву та підтекст
+  // Якщо немає об'єктів у allPhotos, використовуємо заглушки.
+  // partslyCloudyIcon тут використовується як приклад заглушки зображення.
+  // В ідеалі варто мати окремий файл з плейсхолдером "без зображення".
+  const defaultPlaceholderImage = partlyCloudyIcon; // Або будь-яка інша імпортована заглушка
+  const defaultPlaceholderName = "No outfit available";
+  const defaultPlaceholderSubtext = "Add clothes to your closet to see suggestions!";
+
+  const currentOutfitImage = currentOutfit ? currentOutfit.imageUrl : defaultPlaceholderImage;
+  const currentOutfitName = currentOutfit ? currentOutfit.name : defaultPlaceholderName;
+  // Підтекст можна змінювати залежно від того, чи доступний об'єкт вбрання
+  const currentOutfitSubtext = currentOutfit ? "That option is going to be good!" : defaultPlaceholderSubtext;
+  // --- КІНЕЦЬ ВИПРАВЛЕНЬ ---
   
-  // captions array должен соответствовать allPhotos, если он используется
-  // const captions = [ 
-  //   'Light beige cotton T-shirt',
-  //   'Denim jacket with fleece lining',
-  //   'Classic white sneakers',
-  // ];
-
-
   // Read selected period from localStorage
   const [selectedPeriod, setSelectedPeriod] = useState(() => {
     const stored = localStorage.getItem('selectedPeriod');
@@ -132,10 +137,10 @@ export default function WeatherDashboard() {
 
           <div className="outfit-card-body">
             <div className="outfit-image-carousel">
-              {/* Карусель изображений (если есть несколько, сейчас одно) */}
+              {/* Карусель изображений */}
               <img 
-                src={currentOutfitImage} 
-                alt={currentOutfitName} 
+                src={currentOutfitImage} // Использовать currentOutfitImage, определенное выше
+                alt={currentOutfitName} // Использовать currentOutfitName, определенное выше
                 className="current-outfit-image"
               />
               {/* Точки для навигации по карусели, если фото больше одного */}
@@ -155,8 +160,8 @@ export default function WeatherDashboard() {
 
             <div className="outfit-details">
               <div className="current-temperature">{weather?.current?.temperature ?? 'N/A'}°C</div>
-              <h2 className="outfit-name">{currentOutfitName}</h2>
-              <p className="outfit-subtext">{currentOutfitSubtext}</p>
+              <h2 className="outfit-name">{currentOutfitName}</h2> {/* Использовать currentOutfitName */}
+              <p className="outfit-subtext">{currentOutfitSubtext}</p> {/* Использовать currentOutfitSubtext */}
               {/* <p className="weather-condition-summary">{weather?.current?.description ?? 'Weather data unavailable'}</p> */}
               {/* Можно добавить больше деталей о погоде тут */}
             </div>

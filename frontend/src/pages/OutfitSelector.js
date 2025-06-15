@@ -41,23 +41,64 @@ export default function OutfitSelector() {
 
   const handleUseItem = (item) => {
     console.log('Use item:', item);
+    // Проверка на category:
     if (!item.category) {
-        console.warn("Item category is not defined for:", item.name, "Defaulting to top slot.");
-        setSelectedTop(item); 
+        console.warn(`Item category is not defined for: ${item.name}. Assigning to top slot by default.`);
+        setSelectedTop(item); // Если категория отсутствует, кладем в 'top'
         return;
     }
-    switch (item.category.toLowerCase()) {
-      case 'headwear': setSelectedHeadwear(item); break;
-      case 'top': setSelectedTop(item); break;
-      case 'outerwear': setSelectedOuterwear(item); break;
-      case 'bottom': setSelectedBottom(item); break;
-      case 'shoes': setSelectedFootwear(item); break;
-      default: 
-        console.log(`Unknown category or no specific slot for: ${item.category}`);
-        setSelectedTop(item); 
+
+    // Нормализация категории к нижнему регистру для сравнения
+    const normalizedCategory = item.category.toLowerCase();
+
+    switch (normalizedCategory) {
+      case 'headwear':
+      case 'cap':         // Если вы будете использовать категорию 'cap' для головных уборов
+      case 'hat':         // Если 'hat'
+      case 'accessory':   // Если аксессуары тоже могут быть головными уборами (как шарф, который идет на голову)
+        setSelectedHeadwear(item);
+        break;
+      
+      case 'outerwear':
+      case 'jacket':      // Если хотите, чтобы 'jacket' также указывал на outerwear
+      case 'hoodie':      // Если 'hoodie' также указывает на outerwear
+      case 'coat':        // Если 'coat'
+        setSelectedOuterwear(item);
+        break;
+      
+      case 'top':
+      case 't-shirt':     // Если 't-shirt' также указывает на top
+      case 'shirt':       // Если 'shirt'
+      case 'blouse':      // Если 'blouse'
+      case 'sweatshirt':  // Если 'sweatshirt'
+      case 'longsleeve':  // Если 'longsleeve'
+        setSelectedTop(item);
+        break;
+      
+      case 'bottom':
+      case 'pants':       // <--- ВОТ ЭТО ОЧЕНЬ ВАЖНО, так как у ваших джоггеров 'category: 'pants'
+      case 'shorts':      // Если 'shorts'
+      case 'jeans':       // Если 'jeans'
+      case 'joggers':     // Если 'joggers'
+      case 'trousers':    // Если 'trousers'
+        setSelectedBottom(item);
+        break;
+        
+      case 'shoes':
+      case 'footwear':    // Если 'footwear' также указывает на shoes
+      case 'sneakers':    // Если 'sneakers'
+      case 'boots':       // Если 'boots'
+      case 'sandals':     // Если 'sandals'
+        setSelectedFootwear(item);
+        break;
+      
+      default:
+        console.warn(`Category '${item.category}' not recognized for item: ${item.name}. Item not assigned to a slot.`);
+        // Можно добавить запасной вариант, если не удалось распознать:
+        // setSelectedTop(item); // По умолчанию в 'top' если не найдена подходящая категория
     }
     setHoveredItemId(null); 
-  };
+};
 
   const handleDeleteItem = (itemId) => {
     console.log('Delete item ID:', itemId);
@@ -183,11 +224,41 @@ export default function OutfitSelector() {
       };
 
       return (
-        // !!! ИЗМЕНЕНО: КОРНЕВОЙ ТЕГ БЫЛ <main>, СТАЛ <div className="os-main-content"> (без внешнего outfit-selector-page div) !!!
-        // Это важный шаг для корректной вложенности в <main className="app-main-content"> в App.js.
         <div className="os-main-content"> 
-          {/* === Левая колонка === */}
-          <div className="os-left-sidebar">
+          {/* === Left Column: Clothing Grid === */}
+          <div className="os-clothing-grid-wrapper">
+            <div className="os-intro-text-container">
+              <p className="os-intro-text">{t('youCouldPickClothes')}</p>
+            </div>
+
+            <div className="os-clothing-grid-container">
+              <div className="os-clothing-grid">
+                {userCloset.length > 0 ? userCloset.map(item => (
+                  <div 
+                    key={item.id} 
+                    className="os-clothing-item-card"
+                    onMouseEnter={() => setHoveredItemId(item.id)}
+                    onMouseLeave={() => setHoveredItemId(null)}
+                    tabIndex={0} 
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleUseItem(item); } }}
+                  >
+                    <img src={item.imageUrl} alt={item.name || 'Clothing item'} className="os-item-image" />
+                    {hoveredItemId === item.id && (
+                      <div className="os-item-actions">
+                        <button className="os-action-btn use-btn" onClick={(e) => { e.stopPropagation(); handleUseItem(item);}}>{t('use')}</button>
+                        <button className="os-action-btn delete-btn" onClick={(e) => { e.stopPropagation(); handleDeleteItem(item.id);}}>{t('delete')}</button>
+                      </div>
+                    )}
+                  </div>
+                )) : (
+                  <p className="os-empty-closet-message">{t('emptyClosetMessage')}</p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* === Middle Column: Mannequin Area & Presets === */}
+          <div className="os-mannequin-and-presets-wrapper"> 
             <div className="os-dropdown-container presets-dropdown-container">
               <label htmlFor="savedPresets" className="os-label visually-hidden">{t('yourSavedPresets')}</label>
               <select 
@@ -196,7 +267,7 @@ export default function OutfitSelector() {
                 value={selectedPreset}
                 onChange={(e) => setSelectedPreset(e.target.value)}
               >
-                <option value="">{t('yourSavedPresets')}</option> {/* Локализация */}
+                <option value="">{t('yourSavedPresets')}</option> 
                 {savedPresets.map(preset => (
                   <option key={preset.id} value={preset.id}>{preset.name}</option>
                 ))}
@@ -238,12 +309,8 @@ export default function OutfitSelector() {
             </div>
           </div>
 
-          {/* === Центральная колонка === */}
-          <div className="os-center-content">
-            <div className="os-intro-text-container">
-              <p className="os-intro-text">{t('youCouldPickClothes')}</p>
-            </div>
-
+          {/* === Right Column: Info / AI Action === */}
+          <div className="os-info-column">
             {weatherData && (
               <div className="os-weather-info">
                 <p>{t('weatherInfo', { weatherDescription: weatherData.description, temperature: weatherData.temperature })}</p>
@@ -251,31 +318,6 @@ export default function OutfitSelector() {
               </div>
             )}
 
-            <div className="os-clothing-grid-container">
-              <div className="os-clothing-grid">
-                {userCloset.length > 0 ? userCloset.map(item => (
-                  <div 
-                    key={item.id} 
-                    className="os-clothing-item-card"
-                    onMouseEnter={() => setHoveredItemId(item.id)}
-                    onMouseLeave={() => setHoveredItemId(null)}
-                    tabIndex={0} 
-                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleUseItem(item); } }}
-                  >
-                    <img src={item.imageUrl} alt={item.name || 'Clothing item'} className="os-item-image" />
-                    {hoveredItemId === item.id && (
-                      <div className="os-item-actions">
-                        <button className="os-action-btn use-btn" onClick={(e) => { e.stopPropagation(); handleUseItem(item);}}>{t('use')}</button>
-                        <button className="os-action-btn delete-btn" onClick={(e) => { e.stopPropagation(); handleDeleteItem(item.id);}}>{t('delete')}</button>
-                      </div>
-                    )}
-                  </div>
-                )) : (
-                  <p className="os-empty-closet-message">{t('emptyClosetMessage')}</p>
-                )}
-              </div>
-            </div>
-            
             <div className="os-ai-action"> 
               <button className="os-ai-button" onClick={generateOutfitViaAI}>
                 {t('makeOutfitViaAI')}

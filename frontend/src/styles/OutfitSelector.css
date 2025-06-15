@@ -17,10 +17,18 @@
 }
   
 .os-main-content {
-    flex-grow: 1;
-    display: flex;
-    padding: 25px;
-    gap: 25px; 
+  display: flex; /* Если он уже flex, оставьте. Если нет, добавьте для лучшего распределения контента. */
+  flex-direction: column; /* Если элементы внутри идут сверху вниз */
+  justify-content: space-between; /* Распределить пространство, если нужно */
+  
+  /* --- КЛЮЧЕВОЕ ИЗМЕНЕНИЕ ДЛЯ ПРИЖАТИЯ ФУТЕРА НА ЭТОЙ СТРАНИЦЕ --- */
+  min-height: calc(100vh - var(--navbar-height) - var(--footer-height) - var(--app-main-content-padding-vertical));
+  /* Эта формула гарантирует, что os-main-content заполнит оставшееся пространство */
+  /* 100vh - (высота навбара) - (высота футера) - (суммарный padding app-main-content) */
+
+  /* Убедитесь, что padding и box-sizing здесь не конфликтуют с .app-main-content */
+  padding: 20px; /* Пример: добавьте свой внутренний padding для этой страницы */
+  box-sizing: border-box; 
 }
 
 /* --- Левая колонка --- */
@@ -119,6 +127,9 @@
   line-height: 1;
   color: var(--main-block-text-secondary);
 }
+
+
+
 
 .os-preset-controls {
   margin-top: 20px; 

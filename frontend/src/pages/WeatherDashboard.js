@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWeather } from '../hooks/useWeather';
 import '../styles/WeatherDashboard.css';
-import Navbar from '../components/Navbar';
+
 
 // ... (твои импорты иконок, картинок и т.д. остаются) ...
 import calendarIcon from '../assets/images/calendar.png';
@@ -81,7 +81,6 @@ export default function WeatherDashboard() {
   if (loading && !weather) { // Добавил !weather, чтобы не показывать лоадер если данные уже есть
     return (
       <div className="weather-dashboard-container">
-        <Navbar />
         <div className="loading-message">Loading weather data...</div>
       </div>
     );
@@ -90,7 +89,6 @@ export default function WeatherDashboard() {
   if (error) {
     return (
       <div className="weather-dashboard-container">
-        <Navbar />
         <div className="error-message">Error: {error}</div>
       </div>
     );
@@ -99,7 +97,7 @@ export default function WeatherDashboard() {
   // Основной рендер компонента
   return (
     <div className="weather-dashboard-container"> {/* Общий контейнер страницы */}
-      <Navbar />
+
       
       <main className="dashboard-content"> {/* Контент между Navbar и Footer */}
         {/* Tabs (оставляем как есть, если нужны) */}
@@ -224,35 +222,6 @@ export default function WeatherDashboard() {
           </div>
         </section>
       </main> {/* Конец dashboard-content */}
-
-      <footer className="app-footer">
-        <div className="footer-content">
-          <div className="footer-logo">SMART STYLE</div>
-          <div className="footer-links">
-            <a href="/about">About</a>
-            <a href="/services">Services</a>
-            <a href="/technologies">Technologies</a>
-            <a href="/join">Join Us</a>
-            <a href="/conditions">Conditions</a>
-            <a href="/licenses">Licenses</a>
-            <a href="/faq">F.A.Q</a>
-            <a href="/sitemap">Sitemap</a>
-          </div>
-          <div className="footer-social">
-            <span>SOCIALIZE WITH US</span>
-            <div className="social-icons">
-              {/* Здесь должны быть SVG иконки или <img> */}
-              <a href="#" aria-label="Instagram"><span className="social-icon placeholder-icon">IG</span></a>
-              <a href="#" aria-label="Twitter"><span className="social-icon placeholder-icon">TW</span></a>
-              <a href="#" aria-label="LinkedIn"><span className="social-icon placeholder-icon">IN</span></a>
-            </div>
-          </div>
-        </div>
-        <div className="footer-copyright">
-          2023 © MADE - BY ARTEM FILATOV - ALL RIGHTS RESERVED
-        </div>
-      </footer>
-
     </div> // Конец weather-dashboard-container
   );
 }

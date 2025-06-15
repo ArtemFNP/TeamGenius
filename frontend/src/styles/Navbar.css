@@ -1,195 +1,253 @@
 /* src/styles/Navbar.css */
+
+/* --- ОБЩИЕ СТИЛИ НАВБАРА --- */
 .navbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: var(--navbar-padding-top, 20px); /* Уменьшим немного по умолчанию */
-    padding-left: var(--logo-padding-left, 20px); /* Уменьшим отступы по умолчанию */
-    padding-right: var(--action-padding-right, 20px); /* Переименовал для ясности */
-    padding-bottom: 15px;
-    width: 100%;
-    box-sizing: border-box;
-    position: relative; /* Для абсолютного позиционирования мобильного меню */
-    z-index: 100; /* Чтобы навбар был выше другого контента */
-  }
-  
-  .navbar-left-section { /* Контейнер для лого и гамбургера на мобильных */
-    display: flex;
-    align-items: center;
-    gap: 15px; /* Расстояние между гамбургером и лого, если гамбургер не абсолютный */
-  }
-  
-  .hamburger-menu-button {
-    display: none; /* Скрыт по умолчанию на десктопах */
-    background: none;
-    border: none;
-    color: var(--navbar-text-color, #EAE6FF);
-    font-size: 28px; /* Размер иконки гамбургера/крестика */
-    cursor: pointer;
-    padding: 5px;
-    line-height: 1;
-    z-index: 110; /* Выше, чем мобильное меню, чтобы всегда был кликабелен */
-  }
-  
-  .navbar-logo-area {
-    display: flex;
-    align-items: center;
-  }
-  
-  .logo-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none; 
-    color: var(--navbar-text-color, #EAE6FF);
-  }
-  
-  .dragon-logo-img {
-    height: 36px; /* Чуть меньше для баланса с текстом */
-    width: auto; 
-    margin-right: 8px;
-  }
-  
-  .smart-style-text {
-    font-family: var(--font-primary);
-    font-size: 30px; /* Немного уменьшим */
-    font-weight: 700; 
-    color: var(--navbar-text-color, #EAE6FF);
-  }
-  
-  /* Ссылки на десктопе */
-  .navbar-links {
-    display: flex;
-    gap: 50px; /* Уменьшим немного */
-    position: absolute; 
-    left: 50%;
-    transform: translateX(-50%); 
-  }
-  
-  .navbar-link-item {
-    font-family: var(--font-primary);
-    color: var(--navbar-text-color, #EAE6FF);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: calc(var(--navbar-link-font-size, 30px) * 0.9); /* Уменьшим немного, например 27px */
-    transition: color 0.2s ease-in-out;
-    white-space: nowrap; /* Чтобы текст не переносился */
-  }
-  
-  .navbar-link-item:hover {
-    color: var(--navbar-link-hover, #BDA5FF);
-  }
-  
-  .navbar-action-icon {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .logout-icon-mobile-menu {
-    display: none; /* Скрыта по умолчанию */
-    align-items: center; /* Для текста рядом с иконкой в моб меню */
-    gap: 10px;
-    padding: 15px 20px;
-    font-size: 1.1em;
-  }
-  .logout-icon-mobile-menu .action-icon-img {
-    /* Размеры уже заданы для .action-icon-img */
-  }
-  
-  
-  .action-icon-img {
-    height: 28px; 
-    width: 28px;
-    object-fit: contain;
-    transition: transform 0.2s ease;
-  }
-  .navbar-action-icon:hover .action-icon-img {
-    transform: scale(1.1);
-  }
-  
-  /* Медиа-запрос для планшетов и мобильных телефонов */
-  @media (max-width: 1200px) { /* Точка останова - подбери ее под свой дизайн */
-    .navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--navbar-padding-top);
+  padding-left: var(--logo-padding-left);
+  padding-right: var(--action-padding-right);
+  padding-bottom: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative; /* Для абсолютного позиционирования мобильного меню */
+  z-index: 100; /* Чтобы навбар был выше другого контента */
+}
+
+.navbar-left-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.hamburger-menu-button {
+  display: none; /* Скрыт по умолчанию на десктопах */
+  background: none;
+  border: none;
+  color: var(--navbar-text-color);
+  font-size: 28px;
+  cursor: pointer;
+  padding: 5px;
+  line-height: 1;
+  z-index: 110;
+}
+
+.navbar-logo-area {
+  display: flex;
+  align-items: center;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none; 
+  color: var(--navbar-text-color);
+}
+
+.dragon-logo-img {
+  height: 36px;
+  width: auto; 
+  margin-right: 8px;
+}
+
+.smart-style-text {
+  font-family: var(--font-primary);
+  font-size: 30px;
+  font-weight: 700; 
+  color: var(--navbar-text-color);
+}
+
+/* Ссылки на десктопе */
+.navbar-links {
+  display: flex;
+  gap: 50px;
+  position: absolute; 
+  left: 50%;
+  transform: translateX(-50%); 
+}
+
+.navbar-link-item {
+  font-family: var(--font-primary);
+  color: var(--navbar-text-color);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: calc(var(--navbar-link-font-size) * 0.9);
+  transition: color 0.2s ease-in-out;
+  white-space: nowrap; /* Чтобы текст не переносился */
+}
+
+.navbar-link-item:hover {
+  color: var(--navbar-link-hover);
+}
+
+.navbar-action-icon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Стили для иконок внутри кнопок действий */
+.action-icon-img {
+  height: 28px; 
+  width: 28px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+.navbar-action-icon:hover .action-icon-img {
+  transform: scale(1.1);
+}
+
+/* --- Стили для переключателя языка (SELECT) --- */
+.navbar-language-selector select {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: 1px solid var(--navbar-text-color);
+  background-color: transparent; /* Прозрачный фон */
+  color: var(--navbar-text-color);
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  cursor: pointer;
+  outline: none; /* Убираем стандартный outline при фокусе */
+  /* Кастомизация стрелки дропдауна */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22%23EAE6FF%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 20px;
+}
+.navbar-language-selector select:hover {
+  border-color: var(--navbar-link-hover);
+}
+.navbar-language-selector select option {
+  background-color: var(--main-block-bg); /* Фон опций выпадающего списка */
+  color: var(--navbar-text-color);
+}
+
+/* --- Контейнер для десктопных элементов (язык + выход) --- */
+.navbar-desktop-actions {
+  display: flex; /* Показываем на десктопе */
+  align-items: center;
+  gap: 20px; /* Расстояние между переключателем языка и иконкой выхода */
+}
+/* Скрываем десктопные элементы по умолчанию на мобильных */
+.navbar-desktop-actions,
+.logout-icon-desktop,
+.desktop-language-selector {
+  display: none; /* Скрыты по умолчанию на мобильных/планшетах, будет переопределено в медиа-запросе */
+}
+
+
+/* --- Медиа-запросы для адаптивности --- */
+
+/* Точка останова для планшетов и мобильных телефонов (меньше или равно 1200px) */
+@media (max-width: 1200px) {
+  .navbar-container {
       padding-left: 15px;
       padding-right: 15px;
-    }
-  
-    .smart-style-text {
-      font-size: 26px; /* Еще меньше на мобильных */
-    }
-    .dragon-logo-img {
+  }
+
+  .smart-style-text {
+      font-size: 26px;
+  }
+  .dragon-logo-img {
       height: 32px;
-    }
-  
-    .navbar-links { /* Основные изменения для мобильного меню */
-      display: none; /* По умолчанию скрыты */
+  }
+
+  /* Мобильное меню: скрыто по умолчанию, появляется при open */
+  .navbar-links {
+      display: none; /* Скрыты по умолчанию */
       position: absolute;
       top: 100%; /* Начинается сразу под навбаром */
       left: 0;
       right: 0;
-      background-color: var(--main-block-bg, #5A4194); /* Фон мобильного меню, можно взять --background-deep-purple */
+      background-color: var(--main-block-bg); /* Фон мобильного меню */
       flex-direction: column;
       align-items: center;
       padding: 20px 0;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      gap: 0; /* Убираем gap, ссылки будут идти друг под другом */
-      transform: none; /* Отменяем центрирование */
-    }
-  
-    .navbar-links.open {
+      gap: 0; /* Убираем gap, элементы будут идти друг под другом */
+      transform: none; /* Отменяем горизонтальное центрирование */
+      z-index: 99; /* Ниже, чем гамбургер, но выше контента страницы */
+  }
+  .navbar-links.open {
       display: flex; /* Показываем, когда меню открыто */
-    }
-  
-    .navbar-link-item {
+  }
+
+  .navbar-link-item {
       padding: 15px 20px; /* Увеличиваем кликабельную область */
       width: 100%;
       text-align: center;
       font-size: 1.1em; /* Увеличиваем шрифт для мобильного меню */
-    }
-    .navbar-link-item:hover {
-      background-color: var(--navbar-link-hover, #7D64E1); /* Фон при наведении на ссылку в моб.меню */
-    }
-  
-  
-    .hamburger-menu-button {
-      display: block; /* Показываем кнопку гамбургера */
-    }
-  
-    /* Кнопка выхода на десктопе скрывается, а для мобильного меню появляется другая */
-    .logout-icon-desktop {
+  }
+  .navbar-link-item:hover {
+      background-color: var(--navbar-link-hover); /* Фон при наведении на ссылку в моб.меню */
+  }
+
+  /* Показываем кнопку гамбургера на мобильных */
+  .hamburger-menu-button {
+      display: block;
+  }
+
+  /* Скрываем десктопные элементы */
+  .navbar-desktop-actions {
       display: none;
-    }
-    .logout-icon-mobile-menu { /* Которая была в .navbar-links */
-      display: flex; 
+  }
+  .logout-icon-desktop,
+  .desktop-language-selector { /* Эти селекторы уже подпадают под navbar-desktop-actions, но для ясности */
+      display: none;
+  }
+
+  /* Показываем мобильные элементы */
+  .logout-icon-mobile-menu { /* Теперь это элемент внутри .navbar-links */
+      display: flex;
       color: var(--navbar-text-color); /* Чтобы текст logout был виден */
       width: 100%;
       justify-content: center;
-    }
-    .logout-icon-mobile-menu:hover {
-       background-color: var(--navbar-link-hover, #7D64E1);
-    }
+      padding: 15px 20px; /* Соответствует padding ссылок */
+      font-size: 1.1em;
+      gap: 10px;
   }
-  
-  @media (max-width: 480px) { /* Для очень маленьких экранов */
-    .navbar-container {
+  .logout-icon-mobile-menu:hover {
+      background-color: var(--navbar-link-hover);
+  }
+
+  .navbar-language-selector.mobile-menu-language-selector {
+      display: block; /* Показываем мобильный переключатель языка */
+      width: 100%; /* Занимает всю ширину мобильного меню */
+      text-align: center;
+      margin-top: 15px; /* Отступ от предыдущего элемента (кнопки выхода) */
+      padding: 10px 0;
+  }
+  .navbar-language-selector.mobile-menu-language-selector select {
+      width: 80%; /* Размер самого select в мобильном меню */
+      max-width: 250px; /* Чтобы не растягивался слишком сильно на планшетах */
+  }
+}
+
+/* Для очень маленьких экранов (меньше или равно 480px) */
+@media (max-width: 480px) { 
+  .navbar-container {
       padding-top: 15px;
       padding-bottom: 10px;
-    }
-    .smart-style-text {
+  }
+  .smart-style-text {
       font-size: 22px;
-    }
-    .dragon-logo-img {
+  }
+  .dragon-logo-img {
       height: 28px;
       margin-right: 6px;
-    }
-    .hamburger-menu-button {
+  }
+  .hamburger-menu-button {
       font-size: 24px;
-    }
-    .action-icon-img { /* Общая иконка выхода */
+  }
+  .action-icon-img {
       height: 24px;
       width: 24px;
-    }
-    .navbar-left-section {
-        gap: 10px;
-    }
   }
+  .navbar-left-section {
+      gap: 10px;
+  }
+}

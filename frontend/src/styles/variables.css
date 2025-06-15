@@ -1,43 +1,47 @@
-/* src/styles/variables.css */
 :root {
-    --background-deep-purple: #3C2A70; 
-    --navbar-text-color: #EAE6FF;     
-    --navbar-link-hover: #BDA5FF;    
-    
-    /* Основной блок с одеждой */
-    --main-block-bg: #5A4194; /* Цвет фона из твоего скриншота */
-    --main-block-text-primary: #FFFFFF; /* Основной яркий текст на блоке */
-    --main-block-text-secondary: #D0C8FF; /* Менее яркий текст на блоке */
-    --main-block-glow: rgba(100, 100, 220, 0.45); /* Мягкое сине-фиолетовое свечение, интенсивность можно настроить */
-    --main-block-border-radius: 50px; /* "Rounded 75" из Figma (это значение для CSS может отличаться, 50px - хороший старт) */
+  --background-deep-purple: #3C2A70; 
+  --navbar-text-color: #EAE6FF;     
+  --navbar-link-hover: #BDA5FF;    
   
-    /* Блоки даты и времени на основной карточке */
-    --info-pill-bg: rgba(10, 5, 25, 0.65); /* Темный фон для "таблеток" даты/времени */
-    --info-pill-text: #E0D9FF;
-    --info-pill-border-radius: 25px; /* Делает их похожими на пилюли */
-  
-    /* Кнопка "Add Clothes" (уже может быть определена) */
-    --button-primary-bg: #7D64E1;     
-    --button-primary-text: #FFFFFF;  
-  
-    /* Сердечко */
-    --heart-icon-default: #EAE6FF;
-    --heart-icon-active: #FF69B4; 
-  
-   
-    /* ... твои существующие переменные ... */
-    --footer-bg: rgba(25, 15, 45, 0.75); /* Фон чуть плотнее сделал */
-    --footer-text: #B0A8CC;
-    --footer-link-hover: #FFFFFF;
+  /* Основной блок с одеждой */
+  --main-block-bg: #5A4194; /* Цвет фона из твоего скриншота */
+  --main-block-text-primary: #FFFFFF; /* Основной яркий текст на блоке */
+  --main-block-text-secondary: #D0C8FF; /* Менее яркий текст на блоке */
+  --main-block-glow: rgba(100, 100, 220, 0.45); /* Мягкое сине-фиолетовое свечение */
+  --main-block-border-radius: 50px; /* "Rounded 75" из Figma */
 
-  
-    --font-primary: 'Montserrat', sans-serif;
-    --navbar-link-font-size: 30px;
-  
-    --navbar-padding-top: 25px;
-    --logo-padding-left: 40px;
-    --profile-padding-right: 40px;
-  }
+  /* Блоки даты и времени на основной карточке */
+  --info-pill-bg: rgba(10, 5, 25, 0.65); /* Темный фон для "таблеток" даты/времени */
+  --info-pill-text: #E0D9FF;
+  --info-pill-border-radius: 25px; /* Делает их похожими на пилюли */
+
+  /* Кнопка "Add Clothes" */
+  --button-primary-bg: #7D64E1;     
+  --button-primary-text: #FFFFFF;  
+
+  /* Сердечко */
+  --heart-icon-default: #EAE6FF;
+  --heart-icon-active: #FF69B4; 
+
+  /* Футер */
+  --footer-bg: rgba(25, 15, 45, 0.75); /* Фон чуть плотнее */
+  --footer-text: #B0A8CC;
+  --footer-link-hover: #FFFFFF;
+
+  /* Шрифты */
+  --font-primary: 'Montserrat', sans-serif;
+  --navbar-link-font-size: 30px;
+
+  /* Отступы Navbar */
+  --navbar-padding-top: 25px;
+  --logo-padding-left: 40px;
+  --profile-padding-right: 40px; /* У вас было action-padding-right, я оставил profile, если это то же самое */
+
+  /* --- ВАЖНО: Добавленные переменные для высот --- */
+  --navbar-height: 80px;  /* <-- ЗАМЕНИТЕ НА ВАШЕ ИЗМЕРЕННОЕ ЗНАЧЕНИЕ */
+  --footer-height: 120px; /* <-- ЗАМЕНИТЕ НА ВАШЕ ИЗМЕРЕННОЕ ЗНАЧЕНИЕ */
+  --app-main-content-padding-vertical: 40px; /* <-- ЗАМЕНИТЕ НА ВАШЕ ИЗМЕРЕННОЕ ЗНАЧЕНИЕ (верхний+нижний padding .app-main-content) */
+}
   
   body {
     background-color: var(--background-deep-purple);

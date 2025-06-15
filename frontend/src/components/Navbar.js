@@ -1,33 +1,33 @@
 // src/components/Navbar.js
-import React, { useState, useEffect, useRef } from 'react'; // Добавили useState, useEffect, useRef
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../styles/Navbar.css'; 
-import { useLanguage } from '../contexts/LanguageContext';
+import '../styles/Navbar.css'; // <-- CSS файл остается
+import { useLanguage } from '../contexts/LanguageContext'; // <-- Импорт хука языка
 
-import dragonLogoImg from '../assets/images/dragonlogo.png'; 
-import logoutIconImg from '../assets/images/logout.png';   
-
-// Можно использовать SVG для гамбургера или текстовый символ
-// import hamburgerIcon from '../assets/images/hamburger-icon.svg'; // Если есть SVG
+import dragonLogoImg from '../assets/images/dragonlogo.png'; // Убедитесь, что путь к логотипу правильный
+import logoutIconImg from '../assets/images/logout.png';   // Убедитесь, что путь к иконке правильный
 
 const Navbar = () => {
-  
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef(null); // Для закрытия меню по клику вне
   const navigate = useNavigate();
 
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage, t } = useLanguage(); // Использование хука для доступа к языку и функции перевода
 
+  // Обновляем navLinks для использования ключей локализации
+  // Внимание: пути /closet и /outfit-selector. Убедитесь, что это ваши актуальные пути.
+  // В предыдущих ответах я использовал /wardrobe и /clothes-fitter, исходя из вашей структуры.
   const navLinks = [
-    { path: '/', text: 'HOME' },
-    { path: '/closet', text: 'WARDROBE' },
-    { path: '/outfit-selector', text: 'CLOTHES FITTER' },
+    { path: '/', textKey: 'home' },
+    { path: '/closet', textKey: 'wardrobe' }, // <-- Здесь 'wardrobe' - это ключ в файлах локализации
+    { path: '/outfit-selector', textKey: 'clothesFitter' }, // <-- Здесь 'clothesFitter' - это ключ
   ];
 
   const handleLogoutClick = () => {
     console.log('Logout clicked - implement logout logic');
-    setIsMobileMenuOpen(false); // Закрыть меню при клике
-    // navigate('/login'); 
+    // Пример: localStorage.removeItem('authToken');
+    // navigate('/login'); // Раскомментировать, когда будет страница входа
+    closeMobileMenu(); // Закрыть меню при клике на выход
   };
 
   const toggleMobileMenu = () => {
@@ -43,18 +43,14 @@ const Navbar = () => {
     closeMobileMenu(); // Можно закрыть меню после смены языка (опционально)
   };
   
-
-  
   // Закрытие мобильного меню по клику вне его области
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // Проверяем, что меню открыто, клик был не по кнопке гамбургера и не внутри самого меню
-      if (isMobileMenuOpen && mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
-        // Дополнительно проверим, что клик не был по самой кнопке гамбургера, 
-        // чтобы избежать немедленного закрытия при открытии
-        if (!event.target.closest('.hamburger-menu-button')) {
-           closeMobileMenu();
-        }
+      // Проверяем, что меню открыто И клик был вне мобильного меню И не по кнопке гамбургера
+      if (isMobileMenuOpen && mobileMenuRef.current && 
+          !mobileMenuRef.current.contains(event.target) && 
+          !event.target.closest('.hamburger-menu-button')) {
+         closeMobileMenu();
       }
     };
 
@@ -64,64 +60,87 @@ const Navbar = () => {
     };
   }, [isMobileMenuOpen]);
 
-
   return (
     <header className="navbar-container">
-      <div className="navbar-left-section"> {/* Объединим лого и гамбургер для мобилок */}
+      <div className="navbar-left-section">
         <button 
           className="hamburger-menu-button" 
           onClick={toggleMobileMenu}
-          aria-label="Toggle navigation menu"
+          aria-label={t(isMobileMenuOpen ? 'closeMenu' : 'openMenu')}
           aria-expanded={isMobileMenuOpen}
         >
-          {/* Простой символ гамбургера или ваша SVG иконка */}
-          {isMobileMenuOpen ? <span>✕</span> : <span>☰</span>} {/* Крестик и гамбургер */}
-          {/* <img src={hamburgerIcon} alt="Menu" /> */}
+          {isMobileMenuOpen ? <span>✕</span> : <span>☰</span>}
         </button>
         <div className="navbar-logo-area">
           <Link to="/" className="logo-link" onClick={closeMobileMenu}> 
-            <img src={dragonLogoImg} alt="Dragon Logo" className="dragon-logo-img" />
-            <span className="smart-style-text">SMART STYLE</span>
+            <img src={dragonLogoImg} alt="Dragon Logo" className="dragon-logo-img" /> 
+            <span className="smart-style-text">SMART STYLE</span> 
           </Link>
         </div>
       </div>
       
-      {/* Для десктопа ссылки будут здесь, для мобильных они будут в выпадающем меню */}
+      {/* Ссылки и мобильное/десктопное меню */}
       <nav className={`navbar-links ${isMobileMenuOpen ? 'open' : ''}`} ref={mobileMenuRef}>
         {navLinks.map((link) => (
           <Link 
-            key={link.text} 
+            key={link.textKey}
             to={link.path} 
             className="navbar-link-item"
-            onClick={closeMobileMenu} // Закрывать меню при клике на ссылку
+            onClick={closeMobileMenu}
           >
-            {link.text}
+            {t(link.textKey)}
           </Link>
         ))}
-        {/* Можно добавить кнопку выхода в мобильное меню, если она не видна отдельно */}
+
+        <div className="navbar-language-selector mobile-menu-language-selector">
+          <select 
+            value={language} 
+            onChange={handleLanguageChange} 
+            aria-label={t('selectLanguage')}
+          >
+            <option value="en">English</option>
+            <option value="uk">Українська</option>
+          </select>
+        </div>
+
         <div 
           className="navbar-action-icon logout-icon-mobile-menu" 
           onClick={handleLogoutClick} 
           role="button" 
           tabIndex={0}  
           onKeyDown={(e) => e.key === 'Enter' && handleLogoutClick()}
-          aria-label="Logout"
+          aria-label={t('logout')}
         >
-          <img src={logoutIconImg} alt="Logout" className="action-icon-img" />
-          <span>Logout</span>
+          <img src={logoutIconImg} alt={t('logout')} className="action-icon-img" />
+          <span>{t('logout')}</span>
         </div>
       </nav>
 
-      {/* Иконка выхода, видимая на десктопе */}
-      <div 
-        className="navbar-action-icon logout-icon-desktop" 
-        onClick={handleLogoutClick} 
-        role="button" 
-        tabIndex={0}  
-        onKeyDown={(e) => e.key === 'Enter' && handleLogoutClick()}
-        aria-label="Logout"
-      >
-        <img src={logoutIconImg} alt="Logout" className="action-icon-img" />
+      {/* Контейнер для десктопных элементов (переключатель языка и выход) */}
+      <div className="navbar-desktop-actions">
+        {/* Переключатель языка для ДЕСКТОПА */}
+        <div className="navbar-language-selector desktop-language-selector">
+          <select 
+            value={language} 
+            onChange={handleLanguageChange} 
+            aria-label={t('selectLanguage')}
+          >
+            <option value="en">English</option>
+            <option value="uk">Українська</option>
+          </select>
+        </div>
+
+        {/* Иконка выхода для ДЕСКТОПА */}
+        <div 
+          className="navbar-action-icon logout-icon-desktop" 
+          onClick={handleLogoutClick} 
+          role="button" 
+          tabIndex={0}  
+          onKeyDown={(e) => e.key === 'Enter' && handleLogoutClick()}
+          aria-label={t('logout')}
+        >
+          <img src={logoutIconImg} alt={t('logout')} className="action-icon-img" />
+        </div>
       </div>
     </header>
   );

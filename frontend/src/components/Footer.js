@@ -1,8 +1,11 @@
 // src/components/Footer.js
 import React from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 import '../styles/Footer.css'; // Стили будут в отдельном файле
 
 const Footer = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="app-footer">
       <div className="footer-content">
@@ -11,18 +14,18 @@ const Footer = () => {
           <div className="footer-logo-text">SMART STYLE</div> 
         </div>
         <div className="footer-section footer-links-section">
-          <a href="/about">About</a>
-          <a href="/services">Services</a>
-          <a href="/technologies">Technologies</a>
-          <a href="/join">Join Us</a>
-          <a href="/conditions">Conditions</a>
-          <a href="/licenses">Licenses</a>
-          <a href="/faq">F.A.Q</a>
-          <a href="/sitemap">Sitemap</a>
+          <a href="/about">{t('about')}</a>
+          <a href="/services">{t('services')}</a>
+          <a href="/technologies">{t('technologies')}</a>
+          <a href="/join">{t('joinUs')}</a>
+          <a href="/conditions">{t('conditions')}</a>
+          <a href="/licenses">{t('licenses')}</a>
+          <a href="/faq">{t('faq')}</a>
+          <a href="/sitemap">{t('sitemap')}</a>
         </div>
         <div className="footer-section footer-social-section">
-          <div className="social-title">BUILD YOUR WORLD</div> {/* Изменил заголовок согласно макету */}
-          <span>SOCIALIZE WITH US</span>
+          <div className="social-title">{t('buildYourWorld')}</div> {/* Изменил заголовок согласно макету */}
+          <span>{t('socializeWithUs')}</span>
           <div className="social-icons">
             {/* Замени на свои SVG или <img> иконки */}
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><span className="social-icon placeholder-icon">IG</span></a>
@@ -32,7 +35,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="footer-copyright">
-        2023 © MADE - BY ARTEM FILATOV - ALL RIGHTS RESERVED
+        {t('copyright', { year: new Date().getFullYear(), author: 'ARTEM FILATOV' })}
       </div>
     </footer>
   );

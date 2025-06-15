@@ -1,38 +1,48 @@
-.App {
-  text-align: center;
+/* src/styles/App.css */
+
+/* Global body styles for the application's visual theme */
+body {
+  background-color: var(--background-deep-purple); /* Фон берем из переменных */
+  font-family: var(--font-primary); /* Основной шрифт приложения */
+  color: var(--navbar-text-color); /* Основной цвет текста приложения */
+  /* Margin, padding, height, box-sizing for body are handled in index.css */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Sticky footer layout (your existing .app-content-wrapper) */
+.app-content-wrapper { /* Использование вашего класса вместо app-layout */
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-direction: column; /* Элементы (Navbar, Main, Footer) располагаются в колонку */
+  min-height: 100vh; /* Минимальная высота - 100% высоты окна браузера */
+  /* background-color: var(--background-deep-purple);  Можно удалить, т.к. уже на body */
 }
 
-.App-link {
-  color: #61dafb;
+/* Main content area, которая будет "растягиваться" */
+.app-main-content {
+  flex-grow: 1; /* Этот элемент займет все доступное вертикальное пространство, толкая футер вниз */
+  padding: 20px; /* Общий padding для всех страниц. Это дает 20px сверху и 20px снизу */
+  width: 100%;
+  max-width: 1200px; /* Ограничиваем максимальную ширину контента */
+  margin: 0 auto; /* Центрируем контент */
+  box-sizing: border-box; /* Учитываем padding в расчете ширины/высоты */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+/* Responsive adjustments for main content */
+@media (max-width: 1200px) {
+  .app-main-content {
+    padding: 15px; /* Меньший padding на средних экранах */
   }
 }
+
+@media (max-width: 480px) {
+  .app-main-content {
+    padding: 10px; /* Еще меньший padding на очень маленьких экранах */
+  }
+}
+
+/* Удаляем старые boilerplate стили App, если они не используются и не нужны */
+/* .App { text-align: center; } */
+/* .App-logo { height: 40vmin; pointer-events: none; } */
+/* @media (prefers-reduced-motion: no-preference) { .App-logo { animation: App-logo-spin infinite 20s linear; } } */
+/* .App-header { background-color: #282c34; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: calc(10px + 2vmin); color: white; } */
+/* .App-link { color: #61dafb; } */
+/* @keyframes App-logo-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } } */

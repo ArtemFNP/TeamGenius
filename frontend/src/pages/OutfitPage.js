@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import homeIcon from '../assets/images/home.png';
 import closetIcon from '../assets/images/closet1.png';
 import photoIcon from '../assets/images/photo.png';
-import '../styles/WeatherDashboard.css';
-import Navbar from '../components/Navbar';
-import '../styles/OutfitDisplay.css';
+// import '../styles/WeatherDashboard.css';
+// import Navbar from '../components/Navbar';
+// import '../styles/OutfitDisplay.css';
 
 export default function OutfitPage() {
   const navigate = useNavigate();

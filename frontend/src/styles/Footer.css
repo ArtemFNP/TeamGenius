@@ -1,104 +1,123 @@
 /* src/styles/Footer.css */
 .app-footer {
-    background-color: var(--footer-bg, rgba(25, 15, 45, 0.7)); /* Фоллбэк если переменная не загрузилась */
-    color: var(--footer-text, #B0A8CC);
-    padding: 40px 20px 20px; 
-    text-align: center;
-    font-size: 0.9em;
-    width: 100%;
-    box-sizing: border-box;
-    margin-top: auto; /* Критично для прижатия к низу */
-  }
-  
-  .footer-content {
+    background-color: var(--footer-bg-color);
+    color: var(--footer-text-color);
+    padding: 40px 20px 20px;
+    margin-top: auto;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
-    justify-content: space-between; /* Попробуем так для макета с 3 секциями */
-    align-items: flex-start; 
-    flex-wrap: wrap; 
-    gap: 30px; /* Пространство между секциями */
-    max-width: 1100px;
-    margin: 0 auto 30px auto; 
-    text-align: left; 
-  }
-  
-  .footer-section {
-    flex: 1; /* Позволит секциям растягиваться */
-    min-width: 200px; /* Минимальная ширина для переноса на мобильных */
-  }
-  
-  .footer-logo-section .footer-logo-text { /* Если лого текстовое */
-    font-size: 1.6em;
-    font-weight: 700; /* Жирнее для лого */
-    color: var(--navbar-text-color, #EAE6FF); /* Ярче */
-    margin-bottom: 15px;
-  }
-  
-  .footer-links-section {
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Адаптивные колонки */
-    gap: 10px 20px; 
-    font-size: 0.95em;
-  }
-  
-  .footer-links-section a {
-    color: var(--footer-text, #B0A8CC);
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-logo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.footer-links-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-links-section a {
+    color: var(--footer-text-color);
     text-decoration: none;
-    transition: color 0.3s;
-  }
-  
-  .footer-links-section a:hover {
-    color: var(--footer-link-hover, #FFFFFF);
-  }
-  
-  .footer-social-section .social-title {
-    font-size: 1.1em;
-    font-weight: 600;
-    color: var(--navbar-text-color, #EAE6FF); /* Ярче */
-    background-color: rgba(255, 255, 255, 0.1); /* Светлый фон как на макете */
-    padding: 8px 15px;
-    border-radius: 20px; /* Закругленный фон */
-    text-align: center;
-    margin-bottom: 15px;
-    display: inline-block; /* Чтобы не растягивался на всю ширину */
-  }
-  
-  .footer-social-section span { /* "SOCIALIZE WITH US" */
-    display: block;
-    margin-bottom: 10px;
-    font-weight: 500;
-    font-size: 0.9em;
-  }
-  
-  .social-icons {
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+
+.footer-links-section a:hover {
+    color: var(--navbar-link-hover);
+}
+
+.footer-social-section {
     display: flex;
-    gap: 15px;
-    justify-content: flex-start; /* или center, если нужно */
-  }
-  
-  .social-icon.placeholder-icon { 
-    display: inline-flex; /* Для выравнивания текста внутри */
+    flex-direction: column;
+    gap: 16px;
+}
+
+.social-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 16px;
+}
+
+.social-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    background-color: rgba(255,255,255,0.15);
+    background-color: var(--navbar-text-color);
+    color: var(--footer-bg-color);
     border-radius: 50%;
-    color: #FFFFFF;
-    text-align: center;
-    font-weight: bold;
-    font-size: 0.9em;
-    transition: background-color 0.3s;
-    text-decoration: none;
-  }
-  
-  .social-icon.placeholder-icon:hover {
-    background-color: var(--button-primary-bg, #7D64E1);
-  }
-  
-  .footer-copyright {
-    font-size: 0.85em;
+    font-size: 12px;
+    font-weight: 600;
+    transition: transform 0.2s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+}
+
+.footer-copyright {
+    max-width: 1200px;
+    margin: 40px auto 0;
     padding-top: 20px;
-    margin-top: 20px; /* Добавляем отступ перед линией */
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--main-block-text-secondary, #D0C8FF); 
-  }
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .footer-section {
+        width: 100%;
+        text-align: center;
+    }
+
+    .footer-logo-section {
+        align-items: center;
+    }
+
+    .footer-links-section {
+        align-items: center;
+    }
+
+    .footer-social-section {
+        align-items: center;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+}

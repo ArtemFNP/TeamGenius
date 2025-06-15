@@ -1,7 +1,5 @@
 // src/pages/OutfitSelector.js
 import React, { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import '../styles/OutfitSelector.css'; 
 
 import dropdownArrowIcon from '../assets/images/dropdown-arrow.png'; 
@@ -118,7 +116,6 @@ export default function OutfitSelector() {
 
   return (
     <div className="outfit-selector-page">
-      <Navbar />
       <main className="os-main-content">
         {/* === Левая колонка === */}
         <div className="os-left-sidebar">
@@ -212,7 +209,6 @@ export default function OutfitSelector() {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 }

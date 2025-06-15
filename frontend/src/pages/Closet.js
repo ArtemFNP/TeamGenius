@@ -1,7 +1,6 @@
 // src/pages/Closet.js
 import React, { useRef, useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+
 import '../styles/Closet.css'; 
 import uploadIcon from '../assets/images/uploadicon.png'; 
 
@@ -84,7 +83,7 @@ export default function Closet() {
 
   return (
     <div className="closet-page-container">
-      <Navbar />
+      
       <main className="closet-main-content">
         <h1 className="closet-title">
           Your upload new clothes - click on that button!
@@ -158,7 +157,6 @@ export default function Closet() {
         </div>
       )}
 
-      <Footer />
     </div>
   );
 }

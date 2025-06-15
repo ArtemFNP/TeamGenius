@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/WeatherDashboard.css'; // keeps global styles
 import '../styles/TimelineSelector.css';
-import Navbar from '../components/Navbar';
+
 
 export default function TimelineSelector() {
   const navigate = useNavigate();
@@ -51,7 +51,6 @@ export default function TimelineSelector() {
 
   return (
     <div className="weather-dashboard wide">
-      <Navbar />
 
       {/* Timeline card without search & tabs */}
       <section className="weather-main-card large wide">

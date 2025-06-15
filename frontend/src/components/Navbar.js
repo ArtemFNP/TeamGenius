@@ -74,7 +74,7 @@ const Navbar = () => {
         <div className="navbar-logo-area">
           <Link to="/" className="logo-link" onClick={closeMobileMenu}> 
             <img src={dragonLogoImg} alt="Dragon Logo" className="dragon-logo-img" /> 
-            <span className="smart-style-text">SMART STYLE</span> 
+            <span className="smart-style-text">{t('smartStyleLogo')}</span> 
           </Link>
         </div>
       </div>
@@ -98,8 +98,8 @@ const Navbar = () => {
             onChange={handleLanguageChange} 
             aria-label={t('selectLanguage')}
           >
-            <option value="en">English</option>
-            <option value="uk">Українська</option>
+            <option value="en">{t('languageEnglish')}</option>
+            <option value="uk">{t('languageUkrainian')}</option>
           </select>
         </div>
 
@@ -125,8 +125,8 @@ const Navbar = () => {
             onChange={handleLanguageChange} 
             aria-label={t('selectLanguage')}
           >
-            <option value="en">English</option>
-            <option value="uk">Українська</option>
+            <option value="en">{t('languageEnglish')}</option>
+            <option value="uk">{t('languageUkrainian')}</option>
           </select>
         </div>
 

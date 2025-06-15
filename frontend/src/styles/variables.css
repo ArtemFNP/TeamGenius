@@ -1,3 +1,4 @@
+/* src/styles/variables.css */
 :root {
   --background-deep-purple: #3C2A70; 
   --navbar-text-color: #EAE6FF;     
@@ -24,7 +25,7 @@
   --heart-icon-active: #FF69B4; 
 
   /* Футер */
-  --footer-bg: rgba(25, 15, 45, 0.75); /* Фон чуть плотнее */
+  --footer-bg: rgba(25, 15, 45, 0.75); /* Фон чуть плотнее сделал */
   --footer-text: #B0A8CC;
   --footer-link-hover: #FFFFFF;
 
@@ -35,26 +36,10 @@
   /* Отступы Navbar */
   --navbar-padding-top: 25px;
   --logo-padding-left: 40px;
-  --profile-padding-right: 40px; /* У вас было action-padding-right, я оставил profile, если это то же самое */
+  --profile-padding-right: 40px; /* Было action-padding-right, оставлено profile-padding-right как у вас было */
 
-  /* --- ВАЖНО: Добавленные переменные для высот --- */
-  --navbar-height: 80px;  /* <-- ЗАМЕНИТЕ НА ВАШЕ ИЗМЕРЕННОЕ ЗНАЧЕНИЕ */
-  --footer-height: 120px; /* <-- ЗАМЕНИТЕ НА ВАШЕ ИЗМЕРЕННОЕ ЗНАЧЕНИЕ */
-  --app-main-content-padding-vertical: 40px; /* <-- ЗАМЕНИТЕ НА ВАШЕ ИЗМЕРЕННОЕ ЗНАЧЕНИЕ (верхний+нижний padding .app-main-content) */
+  /* --- ИСПРАВЛЕНО: ПЕРЕМЕННЫЕ ДЛЯ ВЫСОТЫ (измерено по вашим скриншотам) --- */
+  --navbar-height: 77px;  /* Точная высота Navbar */
+  --footer-height: 343px; /* Точная высота Footer */
+  --app-main-content-padding-vertical: 40px; /* 20px top + 20px bottom padding из .app-main-content */
 }
-  
-  body {
-    background-color: var(--background-deep-purple);
-    font-family: var(--font-primary);
-    color: var(--navbar-text-color); 
-    margin: 0;
-    padding: 0;
-    display: flex; /* Для прижатия футера книзу */
-    flex-direction: column; /* Для прижатия футера книзу */
-    min-height: 100vh; /* Для прижатия футера книзу */
-  }
-  
-  /* Глобальный контейнер для контента, чтобы футер прижался */
-  .app-content-wrapper {
-    flex-grow: 1; /* Занимает все доступное пространство */
-  }

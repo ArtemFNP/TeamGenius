@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWeather } from '../hooks/useWeather';
+import { useLanguage } from '../contexts/LanguageContext';
 import '../styles/WeatherDashboard.css';
 
 
@@ -33,6 +34,7 @@ export default function WeatherDashboard() {
   const [dropdownOpen, setOpen] = useState(false);
   const [activePhoto, setActive] = useState(0); // Индекс для карусели основного фото
   const { weather, loading, error, city, setCity } = useWeather();
+  const { t } = useLanguage();
 
   // Состояние для текущей даты и времени (чтобы они обновлялись)
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
@@ -61,13 +63,13 @@ export default function WeatherDashboard() {
   // partslyCloudyIcon тут використовується як приклад заглушки зображення.
   // В ідеалі варто мати окремий файл з плейсхолдером "без зображення".
   const defaultPlaceholderImage = partlyCloudyIcon; // Або будь-яка інша імпортована заглушка
-  const defaultPlaceholderName = "No outfit available";
-  const defaultPlaceholderSubtext = "Add clothes to your closet to see suggestions!";
+  const defaultPlaceholderName = t('noOutfitAvailable');
+  const defaultPlaceholderSubtext = t('addClothesToClosetSuggestion');
 
   const currentOutfitImage = currentOutfit ? currentOutfit.imageUrl : defaultPlaceholderImage;
   const currentOutfitName = currentOutfit ? currentOutfit.name : defaultPlaceholderName;
   // Підтекст можна змінювати залежно від того, чи доступний об'єкт вбрання
-  const currentOutfitSubtext = currentOutfit ? "That option is going to be good!" : defaultPlaceholderSubtext;
+  const currentOutfitSubtext = currentOutfit ? t('goodOutfitOption') : defaultPlaceholderSubtext;
   // --- КІНЕЦЬ ВИПРАВЛЕНЬ ---
   
   // Read selected period from localStorage
@@ -81,7 +83,7 @@ export default function WeatherDashboard() {
   if (loading && !weather) { // Добавил !weather, чтобы не показывать лоадер если данные уже есть
     return (
       <div className="weather-dashboard-container">
-        <div className="loading-message">Loading weather data...</div>
+        <div className="loading-message">{t('loadingWeatherData')}</div>
       </div>
     );
   }
@@ -89,7 +91,7 @@ export default function WeatherDashboard() {
   if (error) {
     return (
       <div className="weather-dashboard-container">
-        <div className="error-message">Error: {error}</div>
+        <div className="error-message">{t('weatherDataError')} {error}</div>
       </div>
     );
   }
@@ -102,8 +104,8 @@ export default function WeatherDashboard() {
       <main className="dashboard-content"> {/* Контент между Navbar и Footer */}
         {/* Tabs (оставляем как есть, если нужны) */}
         <div className="tabs-container">
-          {['Inside','Mix','Outside'].map(tab => (
-            <div key={tab} className={`tab${tab==='Mix' ? ' active':''}`}>{tab}</div>
+          {[t('insideTab'),t('mixTab'),t('outsideTab')].map(tab => (
+            <div key={tab} className={`tab${tab===t('mixTab') ? ' active':''}`}>{tab}</div>
           ))}
         </div>
 
@@ -113,14 +115,14 @@ export default function WeatherDashboard() {
           let suggestion = "Placeholder suggestion"; // getOutfitSuggestion(temp);
           // Эта логика у тебя была, просто немного упрощаю для фокуса на дизайне главного блока
           if (temp < 15) {
-            suggestion = 'T-shirt and hoodie would be a nice option!';
+            suggestion = t('tShirtHoodieSuggestion');
           } else {
-            suggestion = 'White t-shirt would be a nice option!';
+            suggestion = t('whiteTShirtSuggestion');
           }
           return (
             <div className="timeline-suggestion-banner">
-              <span>Selected: <b>{selectedPeriod.start}–{selectedPeriod.end}</b> ({selectedPeriod.desc})</span>
-              <span>Temp: <b>{temp}°C</b> — Suggestion: <b>{suggestion}</b></span>
+              <span>{t('selectedPeriodLabel')} <b>{selectedPeriod.start}–{selectedPeriod.end}</b> ({selectedPeriod.desc})</span>
+              <span>{t('temperatureLabel')} <b>{temp}{t('celsiusSymbol')}</b> — {t('suggestionLabel')} <b>{suggestion}</b></span>
             </div>
           );
         })()}
@@ -149,7 +151,7 @@ export default function WeatherDashboard() {
                       key={idx}
                       className={`dot${idx === activePhoto ? ' active' : ''}`}
                       onClick={() => setActive(idx)}
-                      aria-label={`Show outfit ${idx + 1}`}
+                      aria-label={`${t('showOutfit')} ${idx + 1}`}
                     />
                   ))}
                 </div>
@@ -157,7 +159,7 @@ export default function WeatherDashboard() {
             </div>
 
             <div className="outfit-details">
-              <div className="current-temperature">{weather?.current?.temperature ?? 'N/A'}°C</div>
+              <div className="current-temperature">{weather?.current?.temperature ?? 'N/A'}{t('celsiusSymbol')}</div>
               <h2 className="outfit-name">{currentOutfitName}</h2> {/* Использовать currentOutfitName */}
               <p className="outfit-subtext">{currentOutfitSubtext}</p> {/* Использовать currentOutfitSubtext */}
               {/* <p className="weather-condition-summary">{weather?.current?.description ?? 'Weather data unavailable'}</p> */}
@@ -179,7 +181,7 @@ export default function WeatherDashboard() {
         {/* Кнопка Add Clothes (под основной карточкой) */}
         <button className="add-clothes-button" onClick={() => navigate('/closet')}> {/* Уточни путь для добавления */}
           {/* <img src={plusIcon} alt="" className="plus-icon"/> */}
-          <span>+ Add clothes</span>
+          <span>{t('addClothesButton')}</span>
         </button>
 
 
@@ -188,8 +190,8 @@ export default function WeatherDashboard() {
           <div className="daily-alert-clickable" onClick={() => navigate('/timeline')}>
             <img src={calendarIcon} alt="calendar" className="calendar-icon-small" />
             <div>
-              <div className="alert-title"><b>Adjust your day schedule</b></div>
-              <div className="alert-desc">Get most relevant suggestions</div>
+              <div className="alert-title"><b>{t('adjustDayScheduleTitle')}</b></div>
+              <div className="alert-desc">{t('getRelevantSuggestions')}</div>
             </div>
           </div>
         </div>
@@ -197,9 +199,9 @@ export default function WeatherDashboard() {
         {/* Hourly forecast (оставляем твою логику) */}
         <section className="weather-hourly-forecast">
           <div className="forecast-header">
-            <h2>Weather for the day</h2>
+            <h2>{t('weatherForTheDay')}</h2>
             <div className="location-dropdown-container" onClick={() => setOpen(o => !o)}>
-              📍 {city} ▼
+              {t('locationSymbol')} {city} ▼
               {dropdownOpen && (
                 <div className="city-dropdown">
                   {cities.filter(c => c !== city).map((c,i) => (

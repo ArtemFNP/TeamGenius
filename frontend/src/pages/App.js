@@ -21,7 +21,7 @@ import FAQModal from '../components/FAQModal';
 // Импортируем глобальные стили. Пути скорректированы, так как App.js в src/pages.
 import '../styles/App.css';       // <-- Для .app-content-wrapper и .app-main-content
 import '../styles/variables.css'; // <-- Для ваших CSS переменных (только variables)
-// import '../styles/Navbar.css'; // <-- УДАЛЕН: должен быть только в Navbar.js
+
 
 import { LanguageProvider } from '../contexts/LanguageContext';
 

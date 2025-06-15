@@ -10,13 +10,16 @@ import '../styles/App.css';
 import '../styles/variables.css';
 import '../styles/Navbar.css';
 import TimelineSelector from './TimelineSelector';
+import { LanguageProvider } from '../contexts/LanguageContext';
 
 function App() {
   return (
+    <LanguageProvider>
     <Router>
        <div className="app-content-wrapper"> {/* Эта обертка для прижатия футера */}
       <Routes>
           {/* <Navbar /> */} 
+
         <Route path="/" element={<WeatherDashboard />} />
         <Route path="/outfit-selector" element={<OutfitSelector />} />
         <Route path="/closet" element={<Closet />} />
@@ -25,6 +28,7 @@ function App() {
       </Routes>
       </div>
     </Router>
+    </LanguageProvider>
   );
 }
 

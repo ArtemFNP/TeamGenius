@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react'; // Добавили useState, useEffect, useRef
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Navbar.css'; 
+import { useLanguage } from '../contexts/LanguageContext';
 
 import dragonLogoImg from '../assets/images/dragonlogo.png'; 
 import logoutIconImg from '../assets/images/logout.png';   
@@ -10,9 +11,12 @@ import logoutIconImg from '../assets/images/logout.png';
 // import hamburgerIcon from '../assets/images/hamburger-icon.svg'; // Если есть SVG
 
 const Navbar = () => {
-  const navigate = useNavigate();
+  
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef(null); // Для закрытия меню по клику вне
+  const navigate = useNavigate();
+
+  const { language, setLanguage, t } = useLanguage();
 
   const navLinks = [
     { path: '/', text: 'HOME' },
@@ -33,6 +37,13 @@ const Navbar = () => {
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
+
+  const handleLanguageChange = (e) => {
+    setLanguage(e.target.value); // Обновляем состояние языка через контекст
+    closeMobileMenu(); // Можно закрыть меню после смены языка (опционально)
+  };
+  
+
   
   // Закрытие мобильного меню по клику вне его области
   useEffect(() => {

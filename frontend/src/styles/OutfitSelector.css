@@ -6,77 +6,49 @@
 /* .os-main-content теперь является корневым элементом компонента OutfitSelector */
 /* Он находится внутри .app-main-content в App.js, который управляет центрированием и общими padding */
 .os-main-content {
-  display: grid; /* Changed to grid for a 3-column layout */
-  grid-template-columns: 1.5fr 1fr 1.5fr; /* Example: Left column 1.5fr, middle mannequin 1fr, right info 1.5fr */
+  display: grid; 
+  grid-template-columns: 3fr 8fr; /* Mannequin Area (3fr), Right Panel Wrapper (8fr) - increased values */
   grid-template-areas:
-    "clothing-grid mannequin-area info-column"; /* Define named grid areas */
-  padding: 25px; /* Сохраняем ваш внутренний padding */
-  gap: 25px; /* Отступ между левой и правой колонками */
-  box-sizing: border-box; /* Учитываем padding в расчетах ширины/высоты */
-  width: 100%; /* Убедимся, что он занимает всю доступную ширину родительского .app-main-content */
+    "mannequin-area right-panel-wrapper"; /* Define named grid areas */
+  padding: 25px;
+  gap: 40px; /* Increased gap between columns */
+  box-sizing: border-box;
+  width: 100%;
   min-height: calc(100vh - var(--navbar-height) - var(--footer-height) - var(--app-main-content-padding-vertical) - 50px);
-  align-items: start; /* Align items to the start of their grid area */
+  align-items: start;
 }
 
-/* --- Left Column: Clothing Grid --- */
-.os-clothing-grid-wrapper { /* New wrapper for the clothing grid */
-  grid-area: clothing-grid;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  background-color: var(--main-block-bg);
-  border-radius: var(--main-block-border-radius);
-  padding: 30px;
-  overflow-y: auto;
-  box-shadow: 0 0 35px 10px var(--main-block-glow);
-  min-height: 400px; /* Adjust min-height as needed */
-  /* Remove flex-grow: 1 as grid handles sizing */
-}
-.os-clothing-grid-wrapper .os-intro-text-container {
-    width: 100%;
-    padding: 0 5px;
-    box-sizing: border-box;
-    margin-bottom: 15px; /* Add some space below intro text */
-}
-.os-clothing-grid-wrapper .os-intro-text {
-    font-size: 0.95em;
-    color: var(--main-block-text-secondary);
-    line-height: 1.4;
-    text-align: left;
-}
-
-/* --- Middle Column: Mannequin Area & Presets --- */
-.os-mannequin-and-presets-wrapper { /* Renamed from os-left-sidebar */
+/* --- Left Column: Mannequin Area & Presets --- */
+.os-mannequin-and-presets-wrapper { 
   grid-area: mannequin-area;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  /* Adjust width/flex-basis if not using grid-template-columns */
-  /* Remove flex: 0 0 300px; as grid handles sizing */
+  /* Removed max-width here, letting grid control width */
 }
 
 .os-mannequin-area {
-  flex-grow: 1; /* Растягивает манекен, чтобы заполнить оставшееся место в сайдбаре */
+  flex-grow: 1; 
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Increased gap between slots for larger appearance */
+  gap: 15px;
   background-color: var(--main-block-bg);
-  padding: 30px; /* Increased padding */
-  border-radius: 40px; /* More rounded */
-  min-height: 500px; /* Double height - example */
-  justify-content: space-around; /* Distribute space evenly */
+  padding: 30px;
+  border-radius: 40px;
+  min-height: 500px; /* Keeping mannequin height as is */
+  justify-content: space-around;
 }
 
 .mannequin-slot {
   background-color: var(--main-block-bg);
   border: 2px dashed var(--main-block-text-secondary);
-  border-radius: 25px; /* More rounded */
-  min-height: 100px; /* Increased min-height */
+  border-radius: 25px;
+  min-height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--main-block-text-secondary);
-  font-size: 1em; /* Slightly larger font */
+  font-size: 1em;
   overflow: hidden;
   cursor: pointer;
   transition: border-color 0.2s, background-color 0.2s;
@@ -84,30 +56,29 @@
 }
 .mannequin-slot:hover {
   border-color: var(--button-primary-bg);
-  background-color: color-mix(in srgb, var(--main-block-bg) 85%, black); /* Slightly stronger hover */
+  background-color: color-mix(in srgb, var(--main-block-bg) 85%, black);
 }
 .mannequin-slot img {
   width: 100%;
   height: 100%;
-  max-height: 150px; /* Increased max-height for images */
-  object-fit: contain; /* Сохраняет пропорции, вписывая изображение */
+  max-height: 150px;
+  object-fit: contain;
 }
 .slot-placeholder {
-  opacity: 0.8; /* Slightly less opaque */
-  padding: 15px; /* Increased padding */
+  opacity: 0.8;
+  padding: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 10px; /* Increased gap */
+  gap: 10px;
 }
 .slot-placeholder .plus-icon {
-  font-size: 2.2em; /* Larger plus icon */
+  font-size: 2.2em;
   font-weight: 300;
   line-height: 1;
   color: var(--main-block-text-secondary);
 }
-
 
 .os-preset-controls {
   margin-top: 20px;
@@ -115,6 +86,7 @@
   padding: 20px;
   border-radius: 30px;
 }
+
 .os-label { 
   display: block;
   margin-bottom: 10px;
@@ -154,39 +126,157 @@
 }
 .os-button-save:hover { background-color: #2DA06E; }
 
-/* --- Right Column: Info / AI Action --- */
-.os-info-column { /* New wrapper for weather info and AI button */
-  grid-area: info-column;
+/* --- Right Panel Wrapper (new container for info + clothing grid) --- */
+.os-right-panel-wrapper {
+  grid-area: right-panel-wrapper;
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  gap: 10px; /* Gap between info column and clothing grid */
+  /* Removed background/padding here, as children have their own */
+  width: 100%;
+}
+
+/* --- Info Column (now inside right panel) --- */
+.os-info-column { 
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  align-items: center; /* Center items in this column */
-  /* Add background/padding if desired, similar to other blocks */
+  gap: 10px;
+  align-items: center;
+  background-color:transparent; /* Changed to transparent to remove the purple background */
+  padding: 0; /* Removed padding */
+  border-radius: 0; /* Removed border-radius */
+  box-shadow: none; /* Removed box-shadow */
 }
 .os-weather-info {
     background-color: rgba(0, 0, 0, 0.1);
-    padding: 15px 20px; /* Increased padding */
+    padding: 15px 20px;
     border-radius: 15px;
     color: var(--info-pill-text);
-    font-size: 0.95em; /* Slightly larger font */
-    margin-top: 0; /* Remove top margin if grid handles spacing */
-    width: 100%; /* Ensure it fills column width */
+    font-size: 0.95em;
+    margin-top: 0;
+    width: 100%;
     box-sizing: border-box;
 }
 .os-weather-info p {
-margin: 0;
-line-height: 1.4;
+  margin: 0;
+  line-height: 1.4;
 }
 .os-weather-info .ai-recommendation-text {
-font-weight: bold;
-color: var(--navbar-link-hover);
+  font-weight: bold;
+  color: var(--navbar-link-hover);
+}
+.os-ai-action {
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+.os-ai-button {
+  background-color: #4d15e8; /* Solid very dark grey, matching the provided image */
+  color: var(--navbar-text-color);
+  border: none; /* No border as per image */
+  padding: 10px 18px; 
+  border-radius: 20px; 
+  font-family: 'Righteous', cursive; 
+  font-size: 1.05em; 
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+  box-shadow: none; /* No shadow as per image */
+  transition: transform 0.2s, opacity 0.2s; /* Subtle transition for hover */
+  position: relative;
+}
+.os-ai-button:hover {
+  background-color: #4d15e8; /* Background remains the same on hover */
+  transform: translateY(-1px);
+  box-shadow: none; /* No shadow on hover */
+  opacity: 0.9; /* Slight opacity change on hover */
+}
+.os-ai-button::after {
+  content: '✕'; /* Re-adding the X symbol */
+  font-size: 0.8em;
+  margin-left: 8px;
+  font-weight: bold;
+  color: var(--main-block-text-secondary); /* Color of the X */
+  opacity: 0.7;
+}
+
+/* --- Clothing Grid (now inside right panel and larger) --- */
+.os-clothing-grid-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: var(--main-block-bg);
+  border-radius: var(--main-block-border-radius);
+  padding: 30px;
+  overflow-y: auto;
+  box-shadow: 0 0 35px 10px var(--main-block-glow);
+  min-height: 750px; /* Significantly increased min-height */
+  flex-grow: 1; /* Allow it to grow within the right panel */
+}
+.os-clothing-grid-wrapper .os-intro-text-container {
+    width: 100%;
+    padding: 0 5px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+.os-clothing-grid-wrapper .os-intro-text {
+    font-size: 0.95em;
+    color: var(--main-block-text-secondary);
+    line-height: 1.4;
+    text-align: left;
+}
+
+/* Existing dropdown styles */
+.presets-dropdown-container {
+  width: 100%;
+  position: relative;
+}
+
+.os-dropdown {
+  width: 100%;
+  padding: 12px 40px 12px 18px;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--main-block-bg);
+  color: var(--navbar-text-color);
+  font-family: var(--font-primary);
+  font-size: 1em;
+  font-weight: 500;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  background-image: url('../assets/images/dropdown-arrow.png'); 
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 16px 16px;
+  outline: none;
+  line-height: 1.5;
+}
+.os-dropdown:focus {
+  box-shadow: 0 0 0 2px var(--button-primary-bg);
+}
+
+/* Existing clothing grid styles */
+.os-clothing-grid-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.os-empty-closet-message {
+  margin: auto;
+  font-size: 1.1em;
+  color: var(--main-block-text-secondary);
 }
 
 .os-clothing-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 20px; /* Increased gap */
-  flex-grow: 1; /* Allow the grid to grow and fill space */
+  gap: 20px; /* Reverted gap to 20px */
+  flex-grow: 1; /* Reverted flex-grow to 1 */
 }
 .os-clothing-item-card:focus-visible .os-item-actions {
   opacity: 1;
@@ -194,7 +284,7 @@ color: var(--navbar-link-hover);
 
 .os-clothing-item-card {
   aspect-ratio: 1 / 1;
-  background-color: var(--background-deep-purple); /* Changed background for grid items */
+  background-color: var(--background-deep-purple);
   border-radius: 18px;
   overflow: hidden;
   position: relative;
@@ -250,129 +340,46 @@ color: var(--navbar-link-hover);
 }
 .delete-btn:hover { background-color: #e53935; }
 
-.os-ai-action {
-  margin-top: auto; /* Прижимает к низу os-center-content */
-  padding-top: 20px;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  box-sizing: border-box;
-}
-.os-ai-button {
-  background-color: #35285A; 
-  color: var(--navbar-text-color);
-  border: none; 
-  padding: 10px 18px; 
-  border-radius: 20px; 
-  font-family: 'Righteous', cursive; 
-  font-size: 1.05em; 
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px; 
-  box-shadow: 0 2px 7px rgba(0,0,0,0.2);
-  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
-  position: relative;
-}
-.os-ai-button:hover {
-  background-color: var(--button-primary-bg); 
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-}
-.os-ai-button::after {
-  content: '✕';
-  font-size: 0.8em;
-  margin-left: 8px;
-  font-weight: bold;
-  color: var(--main-block-text-secondary);
-  opacity: 0.7;
-}
-
-/* Existing dropdown styles (need to be preserved but moved outside of .os-left-sidebar) */
-.presets-dropdown-container {
-  width: 100%;
-  position: relative;
-}
-
-.os-dropdown {
-  width: 100%;
-  padding: 12px 40px 12px 18px;
-  border-radius: 10px;
-  border: none;
-  background-color: var(--main-block-bg);
-  color: var(--navbar-text-color);
-  font-family: var(--font-primary);
-  font-size: 1em;
-  font-weight: 500;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  cursor: pointer;
-  background-image: url('../assets/images/dropdown-arrow.png'); /* ПРОВЕРЬ ПУТЬ К ИКОНКЕ СТРЕЛКИ! */
-  background-repeat: no-repeat;
-  background-position: right 15px center;
-  background-size: 16px 16px;
-  outline: none;
-  line-height: 1.5;
-}
-.os-dropdown:focus {
-  box-shadow: 0 0 0 2px var(--button-primary-bg);
-}
-
-/* Existing clothing grid styles (moved from .os-center-content) */
-.os-clothing-grid-container {
-  flex-grow: 1; /* Растягивает контейнер сетки с одеждой, чтобы он занял оставшееся место в центре */
-  /* Removed explicit background, padding, box-shadow, min-height from here as it's now on .os-clothing-grid-wrapper */
-  display: flex;
-  flex-direction: column;
-}
-.os-empty-closet-message {
-  margin: auto; /* Center the message */
-  font-size: 1.1em;
-  color: var(--main-block-text-secondary);
-}
-
 /* --- Адаптивность --- */
 
 /* ПО УМОЛЧАНИЮ (Медиа-запрос для экранов ДО 1024px) */
-/* Для ширины меньше или равной 1024px, os-main-content будет в колонку */
 @media (max-width: 1024px) {
   .os-main-content {
     grid-template-columns: 1fr; /* Stack columns vertically on smaller screens */
     grid-template-areas:
       "mannequin-area"
-      "clothing-grid"
-      "info-column";
+      "right-panel-wrapper"; /* New area for combined right content */
     gap: 25px;
-    padding: 15px; /* Adjust padding */
+    padding: 15px;
   }
 
   .os-mannequin-and-presets-wrapper {
     order: 1; /* Mannequin first */
     width: 100%;
-    max-width: 600px; /* Max width for central column on smaller screens */
-    margin: 0 auto;
-  }
-  .os-clothing-grid-wrapper {
-    order: 2; /* Clothing grid second */
-    width: 100%;
-    max-width: 700px; /* Max width for grid on smaller screens */
-    margin: 0 auto;
-  }
-  .os-info-column {
-    order: 3; /* Info column last */
-    width: 100%;
     max-width: 600px;
     margin: 0 auto;
   }
+  .os-right-panel-wrapper {
+    order: 2; /* Combined right panel second */
+    width: 100%;
+    max-width: 700px; /* Adjusted max-width for the combined panel */
+    margin: 0 auto;
+    gap: 20px; /* Reduced gap for smaller screens */
+  }
+  /* Remove specific order/width for clothing-grid-wrapper and info-column as they are now children of right-panel-wrapper */
 
   .os-mannequin-area {
-    min-height: 400px; /* Adjust min-height for smaller screens */
+    min-height: 400px; 
   }
   .mannequin-slot img {
     max-height: 120px;
   }
-  /* Remaining media queries can stay, they adjust element sizes further */
+  .os-clothing-grid-wrapper {
+    min-height: 500px; /* Adjusted for smaller screens */
+  }
+  .os-info-column {
+    padding: 20px; /* Adjusted for smaller screens */
+  }
 }
 
 @media (max-width: 600px) {

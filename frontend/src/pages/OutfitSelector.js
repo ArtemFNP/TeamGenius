@@ -225,39 +225,7 @@ export default function OutfitSelector() {
 
       return (
         <div className="os-main-content"> 
-          {/* === Left Column: Clothing Grid === */}
-          <div className="os-clothing-grid-wrapper">
-            <div className="os-intro-text-container">
-              <p className="os-intro-text">{t('youCouldPickClothes')}</p>
-            </div>
-
-            <div className="os-clothing-grid-container">
-              <div className="os-clothing-grid">
-                {userCloset.length > 0 ? userCloset.map(item => (
-                  <div 
-                    key={item.id} 
-                    className="os-clothing-item-card"
-                    onMouseEnter={() => setHoveredItemId(item.id)}
-                    onMouseLeave={() => setHoveredItemId(null)}
-                    tabIndex={0} 
-                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleUseItem(item); } }}
-                  >
-                    <img src={item.imageUrl} alt={item.name || 'Clothing item'} className="os-item-image" />
-                    {hoveredItemId === item.id && (
-                      <div className="os-item-actions">
-                        <button className="os-action-btn use-btn" onClick={(e) => { e.stopPropagation(); handleUseItem(item);}}>{t('use')}</button>
-                        <button className="os-action-btn delete-btn" onClick={(e) => { e.stopPropagation(); handleDeleteItem(item.id);}}>{t('delete')}</button>
-                      </div>
-                    )}
-                  </div>
-                )) : (
-                  <p className="os-empty-closet-message">{t('emptyClosetMessage')}</p>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* === Middle Column: Mannequin Area & Presets === */}
+          {/* === Left Column: Mannequin Area & Presets === */}
           <div className="os-mannequin-and-presets-wrapper"> 
             <div className="os-dropdown-container presets-dropdown-container">
               <label htmlFor="savedPresets" className="os-label visually-hidden">{t('yourSavedPresets')}</label>
@@ -309,19 +277,54 @@ export default function OutfitSelector() {
             </div>
           </div>
 
-          {/* === Right Column: Info / AI Action === */}
-          <div className="os-info-column">
-            {weatherData && (
-              <div className="os-weather-info">
-                <p>{t('weatherInfo', { weatherDescription: weatherData.description, temperature: weatherData.temperature })}</p>
-                {aiRecommendation && <p className="ai-recommendation-text">{aiRecommendation}</p>}
+          {/* === Right Panel Wrapper: Info Column + Clothing Grid === */}
+          <div className="os-right-panel-wrapper">
+            {/* Clothing Grid (now part of the right panel) */}
+            <div className="os-clothing-grid-wrapper">
+              <div className="os-intro-text-container">
+                <p className="os-intro-text">{t('youCouldPickClothes')}</p>
               </div>
-            )}
 
-            <div className="os-ai-action"> 
-              <button className="os-ai-button" onClick={generateOutfitViaAI}>
-                {t('makeOutfitViaAI')}
-              </button>
+              <div className="os-clothing-grid-container">
+                <div className="os-clothing-grid">
+                  {userCloset.length > 0 ? userCloset.map(item => (
+                    <div 
+                      key={item.id} 
+                      className="os-clothing-item-card"
+                      onMouseEnter={() => setHoveredItemId(item.id)}
+                      onMouseLeave={() => setHoveredItemId(null)}
+                      tabIndex={0} 
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleUseItem(item); } }}
+                    >
+                      <img src={item.imageUrl} alt={item.name || 'Clothing item'} className="os-item-image" />
+                      {hoveredItemId === item.id && (
+                        <div className="os-item-actions">
+                          <button className="os-action-btn use-btn" onClick={(e) => { e.stopPropagation(); handleUseItem(item);}}>{t('use')}</button>
+                          <button className="os-action-btn delete-btn" onClick={(e) => { e.stopPropagation(); handleDeleteItem(item.id);}}>{t('delete')}</button>
+                        </div>
+                      )}
+                    </div>
+                  )) : (
+                    <p className="os-empty-closet-message">{t('emptyClosetMessage')}</p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Info Column (now part of the right panel) */}
+            <div className="os-info-column">
+              {weatherData && (
+                <div className="os-weather-info">
+                  <p>{t('weatherInfo', { weatherDescription: weatherData.description, temperature: weatherData.temperature })}</p>
+                  {aiRecommendation && <p className="ai-recommendation-text">{aiRecommendation}</p>}
+                </div>
+              )}
+
+              <div className="os-ai-action"> 
+                <button className="os-ai-button" onClick={generateOutfitViaAI}>
+                  {t('makeOutfitViaAI')}
+                </button>
+              </div>
             </div>
           </div>
         </div>

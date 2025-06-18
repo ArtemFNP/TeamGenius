@@ -125,5 +125,13 @@
   "confirmDeleteItem": "Are you sure you want to delete this item?",
   "newItemName": "New Item",
   "itemAddedToCloset": "«{{name}}» added to your closet!",
-  "notEnoughClothes": "Not enough clothes in your closet to create a full outfit based on the current weather. Please add more items!"
+  "notEnoughClothes": "Not enough clothes in your closet to create a full outfit based on the current weather. Please add more items!",
+  "noHourlyWeatherData": "No hourly weather data available.",
+  "today": "Today",
+  "tomorrow": "Tomorrow",
+  "timelineAverageTemperature": "Average temperature for selected period: {{temperature}}°C",
+  "timelineAverageTemperatureShort": "Avg. for period",
+  "currentSituationTab": "Current Situation",
+  "noWeatherSuggestion": "No weather-based suggestion available.",
+  "selectedCityLabel": "Selected City"
 }

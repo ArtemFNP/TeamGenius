@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
-const cities = ['Antwerp, Belgium', 'Berlin, Germany', 'Paris, France'];
 const goals = ['School', 'Gym', 'Walk', 'Work', 'Party', 'Other'];
 
 export default function Timeline() {
-  const [city, setCity] = useState(cities[0]);
+  // Read the city from localStorage (from weather data)
+  const [weatherData] = useLocalStorage('lastWeatherData', null);
+  const currentCity = weatherData?.current?.city || 'Antwerp, Belgium'; // Fallback to a default city
+
   const [startTime, setStartTime] = useState('08:00');
   const [endTime, setEndTime] = useState('13:00');
   const [goal, setGoal] = useState('');
@@ -12,6 +15,24 @@ export default function Timeline() {
   const [suggestion, setSuggestion] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Use useLocalStorage to persist timeline selection
+  const [lastTimelineSelection, setLastTimelineSelection] = useLocalStorage('lastTimelineSelection', {
+    city: currentCity, // Use the city from localStorage
+    startTime: '08:00',
+    endTime: '13:00',
+    goal: ''
+  });
+
+  // Update local storage whenever relevant state changes
+  useEffect(() => {
+    setLastTimelineSelection({
+      city: currentCity, // Ensure city is updated here too
+      startTime,
+      endTime,
+      goal
+    });
+  }, [currentCity, startTime, endTime, goal, setLastTimelineSelection]);
 
   // Simulate timeline selection
   const handleTimelineChange = (e, type) => {
@@ -37,7 +58,7 @@ export default function Timeline() {
       const res = await fetch('http://localhost:5500/api/ai/timeline-suggestion', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ city, startTime, endTime, goal })
+        body: JSON.stringify({ city: currentCity, startTime, endTime, goal }) // Use currentCity
       });
       const data = await res.json();
       if (data.suggestion) setSuggestion(data.suggestion);
@@ -53,12 +74,8 @@ export default function Timeline() {
     <div style={{ maxWidth: 900, margin: '40px auto', padding: 24 }}>
       <div style={{ background: 'linear-gradient(120deg, #4f8cff 60%, #6ea8fe)', borderRadius: 28, padding: 32, color: '#fff', marginBottom: 32 }}>
         <h2 style={{ fontSize: 36, fontWeight: 700, marginBottom: 16 }}>Select Your Day's Period (06:00–24:00)</h2>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 16 }}>
-          <label>City:</label>
-          <select value={city} onChange={e => setCity(e.target.value)} style={{ fontSize: 18, padding: 8, borderRadius: 8 }}>
-            {cities.map(c => <option key={c} value={c}>{c}</option>)}
-          </select>
-        </div>
+        {/* City selection removed - city will be taken from WeatherDashboard */}
+        <div style={{ fontSize: 22, fontWeight: 600, marginBottom: 16 }}>{t('selectedCityLabel')}: {currentCity}</div> {/* Display current city */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 16 }}>
           <label>From:</label>
           <input type="time" value={startTime} min="06:00" max="24:00" step="1800" onChange={e => handleTimelineChange(e, 'start')} style={{ fontSize: 18, padding: 8, borderRadius: 8 }} />

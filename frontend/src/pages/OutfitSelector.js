@@ -7,7 +7,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { useUserCloset } from '../hooks/useUserCloset';
 import { useOutfitPresets } from '../hooks/useOutfitPresets';
 import { useMannequinSlots } from '../hooks/useMannequinSlots';
-import { useLocalStorage } from '../hooks/useLocalStorage'; // для weatherData
+import { useLocalStorage } from '../hooks/useLocalStorage'; // for weatherData and timeline data
 import { useOutfitRecommendation } from '../hooks/useOutfitRecommendation';
 
 
@@ -38,8 +38,41 @@ export default function OutfitSelector() {
   } = useMannequinSlots(); 
 
 
-  const [weatherData, setWeatherData] = useLocalStorage('lastWeatherData', null);
-  const { aiRecommendation, generateOutfitViaAI } = useOutfitRecommendation(userCloset, weatherData);
+  const [weatherData] = useLocalStorage('lastWeatherData', null);
+  const [lastTimelineSelection] = useLocalStorage('lastTimelineSelection', null);
+
+  // Calculate average temperature for the selected timeline period
+  const getAverageTemperatureForTimeline = () => {
+    if (!lastTimelineSelection || !weatherData || !weatherData.hourly || weatherData.hourly.length === 0) {
+      return null;
+    }
+
+    const startHour = parseInt(lastTimelineSelection.startTime.split(':')[0], 10);
+    const endHour = parseInt(lastTimelineSelection.endTime.split(':')[0], 10);
+
+    let sumTemp = 0;
+    let count = 0;
+
+    weatherData.hourly.forEach(hourData => {
+      const forecastHour = parseInt(hourData.time, 10);
+      if (startHour <= endHour) { // Period does not cross midnight
+        if (forecastHour >= startHour && forecastHour <= endHour) {
+          sumTemp += hourData.temperature;
+          count++;
+        }
+      } else { // Period crosses midnight (e.g., 22:00 - 04:00)
+        if (forecastHour >= startHour || forecastHour <= endHour) {
+          sumTemp += hourData.temperature;
+          count++;
+        }
+      }
+    });
+
+    return count > 0 ? Math.round(sumTemp / count) : null;
+  };
+
+  const timelineAvgTemp = getAverageTemperatureForTimeline();
+  const { aiRecommendation, generateOutfitViaAI } = useOutfitRecommendation(userCloset, weatherData, timelineAvgTemp);
 
 
   // ********** Эффекты и хэндлеры **********
@@ -103,14 +136,14 @@ export default function OutfitSelector() {
 
 
   const handleGenerateOutfitClick = () => {
-      // Передаем функции-сеттеры в хук для обновления слотов
+      // Pass the calculated average temperature to the outfit generation
       generateOutfitViaAI({
           setSelectedHeadwear,
           setSelectedTop,
           setSelectedOuterwear,
           setSelectedBottom,
           setSelectedFootwear
-      });
+      }, timelineAvgTemp);
   };
 
   // Локальное состояние для визуального эффекта наведения (не относится к функционалу манекена)
@@ -216,7 +249,11 @@ export default function OutfitSelector() {
         <div className="os-info-column">
           {weatherData ? (
             <div className="os-weather-info">
-              <p>{t('weatherInfo', { weatherDescription: weatherData.current.description, temperature: weatherData.current.temperature })}</p>
+              {timelineAvgTemp !== null ? (
+                <p>{t('weatherInfo', { weatherDescription: weatherData.current.description, temperature: timelineAvgTemp })} ({t('timelineAverageTemperatureShort')})</p>
+              ) : (
+                <p>{t('weatherInfo', { weatherDescription: weatherData.current.description, temperature: weatherData.current.temperature })}</p>
+              )}
               {aiRecommendation && <p className="ai-recommendation-text">{aiRecommendation}</p>}
             </div>
           ) : (

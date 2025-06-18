@@ -7,13 +7,13 @@
 /* Он находится внутри .app-main-content в App.js, который управляет центрированием и общими padding */
 .os-main-content {
   display: grid; 
-  grid-template-columns: 3fr 8fr; /* Mannequin Area (3fr), Right Panel Wrapper (8fr) - increased values */
+  grid-template-columns: 1fr 4fr; /* Adjusted for wider clothing panel, e.g., 1 part for mannequin, 4 parts for clothing */
   grid-template-areas:
     "mannequin-area right-panel-wrapper"; /* Define named grid areas */
   padding: 25px;
-  gap: 40px; /* Increased gap between columns */
+  gap: 30px; /* Adjusted gap between columns */
   box-sizing: border-box;
-  width: 100%;
+  /* Removed width: 150%; to ensure responsiveness */
   min-height: calc(100vh - var(--navbar-height) - var(--footer-height) - var(--app-main-content-padding-vertical) - 50px);
   align-items: start;
 }
@@ -262,21 +262,24 @@
 
 /* Existing clothing grid styles */
 .os-clothing-grid-container {
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
+  gap: 15px; /* Added gap to stack the intro text and the grid */
 }
 .os-empty-closet-message {
-  margin: auto;
-  font-size: 1.1em;
   color: var(--main-block-text-secondary);
+  text-align: center;
+  padding: 20px;
 }
 
 .os-clothing-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 20px; /* Reverted gap to 20px */
-  flex-grow: 1; /* Reverted flex-grow to 1 */
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px; /* Reduced gap between clothing items */
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  align-items: start; /* Align items to the start of their grid area */
 }
 .os-clothing-item-card:focus-visible .os-item-actions {
   opacity: 1;

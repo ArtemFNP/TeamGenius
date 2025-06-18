@@ -4,7 +4,8 @@ import img2 from './clothes/2.png';
 import img3 from './clothes/3.png';           
 import imgHoodie from './clothes/hoodie.png';
 import imgTshirtBlack from './clothes/tshirtblack.png';
-import imgTshirtWhite from './clothes/tshirtwhite123.png'; 
+import imgTshirtWhite from './clothes/tshirtwhite123.png';
+import placeholderFootwear from './clothes/placeholder_footwear.png';
 
 const allClosetItems = [
   // Все ваши предметы, которые вы ранее предоставили, они тегированы корректно
@@ -15,7 +16,7 @@ const allClosetItems = [
   { id: 'c4', imageUrl: imgHoodie, name: 'Comfy Hoodie', category: 'outerwear', warmthRating: 3, isWaterproof: false, isClosedToe: false, style: 'casual', color: 'navy', pattern: 'solid', occasion: 'daily', gender: 'unisex' },
   { id: 'c5', imageUrl: imgTshirtBlack, name: 'Black T-Shirt', category: 'top', warmthRating: 1, isWaterproof: false, isClosedToe: false, style: 'casual', color: 'black', pattern: 'solid', occasion: 'daily', gender: 'unisex' },
   { id: 'c6', imageUrl: imgTshirtWhite, name: 'Classic White T-Shirt', category: 'top', warmthRating: 1, isWaterproof: false, isClosedToe: false, style: 'casual', color: 'white', pattern: 'solid', occasion: 'daily', gender: 'unisex' },
-  { id: 'c7', imageUrl: './clothes/placeholder_footwear.png', name: 'Placeholder Sneakers', category: 'footwear', warmthRating: 1, isWaterproof: false, isClosedToe: true, style: 'casual', color: 'grey', pattern: 'solid', occasion: 'daily', gender: 'unisex' }
+  { id: 'c7', imageUrl: placeholderFootwear, name: 'Placeholder Sneakers', category: 'footwear', warmthRating: 1, isWaterproof: false, isClosedToe: true, style: 'casual', color: 'grey', pattern: 'solid', occasion: 'daily', gender: 'unisex' }
 ];
 
 export default allClosetItems;

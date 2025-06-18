@@ -5,24 +5,25 @@ import { useLanguage } from '../contexts/LanguageContext'; // Предполаг
 
 const getRandomItem = (items) => items[Math.floor(Math.random() * items.length)];
 
-export function useOutfitRecommendation(userCloset, weatherData) {
+export function useOutfitRecommendation(userCloset, weatherData, timelineAvgTemp = null) {
   const { t } = useLanguage();
   const [aiRecommendation, setAiRecommendation] = useState('');
 
   const generateOutfitViaAI = (setSelectedSlotFns) => { // setSelectedSlotFns - это функции-сеттеры из useMannequinSlots
-    if (!weatherData || !weatherData.current) {
-      // Сообщение о погоде теперь отображается в UI, alert не нужен
+    const tempToUse = timelineAvgTemp !== null ? timelineAvgTemp : (weatherData?.current?.temperature ?? null);
+
+    if (tempToUse === null) {
       setAiRecommendation(t('weatherDataNotAvailable'));
       return;
     }
 
-    const { temperature, description: weatherCondition } = weatherData.current; // Деструктурируем из weatherData.current
+    const { description: weatherCondition } = weatherData?.current || {}; // Деструктурируем из weatherData.current, добавил защиту
     let recommendedOutfit = {};
     let recommendationMessage = '';
     let outfitComplete = true; // Флаг для проверки полноты образа
 
     // Логика подбора остается та же, но теперь работает с userCloset
-    if (temperature < 10) {
+    if (tempToUse < 10) {
       recommendationMessage = t('coldWeatherWarning');
       const warmOuterwear = userCloset.filter(item => item.category === 'outerwear' && item.warmthRating >= 3);
       const warmTops = userCloset.filter(item => item.category === 'top' && item.warmthRating >= 2);
@@ -34,7 +35,7 @@ export function useOutfitRecommendation(userCloset, weatherData) {
       recommendedOutfit.bottom = warmBottoms.length > 0 ? getRandomItem(warmBottoms) : null;
       recommendedOutfit.footwear = warmFootwear.length > 0 ? getRandomItem(warmFootwear) : null;
 
-    } else if (temperature >= 10 && temperature <= 20) { // Например, для 12 градусов
+    } else if (tempToUse >= 10 && tempToUse <= 20) { // Например, для 12 градусов
       recommendationMessage = t('mildWeatherNotice');
       const mildOuterwear = userCloset.filter(item => item.category === 'outerwear' && item.warmthRating >= 2);
       const mildTops = userCloset.filter(item => item.category === 'top' && item.warmthRating >= 1);
@@ -72,7 +73,7 @@ export function useOutfitRecommendation(userCloset, weatherData) {
     }
 
     // Если для холодной/умеренной погоды не нашлось верхней одежды
-    if (temperature < 20 && !recommendedOutfit.outerwear) { // Использовать 20 градусов как порог для нужды в верхней одежде
+    if (tempToUse < 20 && !recommendedOutfit.outerwear) { // Использовать 20 градусов как порог для нужды в верхней одежде
         outfitComplete = false;
     }
 

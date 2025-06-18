@@ -21,7 +21,7 @@ body {
   flex-grow: 1; /* Этот элемент займет все доступное вертикальное пространство, толкая футер вниз */
   padding: 20px; /* Общий padding для всех страниц. Это дает 20px сверху и 20px снизу */
   width: 100%;
-  max-width: 1200px; /* Ограничиваем максимальную ширину контента */
+  max-width: 1600px; /* Increased max-width to allow OutfitSelector to be wider */
   margin: 0 auto; /* Центрируем контент */
   box-sizing: border-box; /* Учитываем padding в расчете ширины/высоты */
 }

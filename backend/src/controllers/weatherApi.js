@@ -22,8 +22,7 @@ const weatherIconMap = {
 
 function formatTime(timestamp) {
   const date = new Date(timestamp * 1000);
-  const hours = date.getHours();
-  return hours === 0 ? '00:00' : `${hours}:00`;
+  return date.getHours().toString();
 }
 
 export async function getWeather(city = 'Antwerp, Belgium') {
@@ -51,24 +50,18 @@ export async function getWeather(city = 'Antwerp, Belgium') {
       throw new Error(forecastData.message || 'Failed to fetch forecast data');
     }
 
-    // Get current time and round up to nearest hour
-    const now = new Date();
-    const currentHour = now.getHours();
-    const nextHour = Math.ceil(currentHour / 2) * 2;
-
     // Filter and format hourly forecast
     const hourlyForecast = forecastData.list
-      .filter(item => {
-        const itemHour = new Date(item.dt * 1000).getHours();
-        return itemHour % 2 === 0; // Only get even hours
-      })
-      .slice(0, 6) // Get next 6 time slots
+      .slice(0, 12)
       .map(item => ({
         time: formatTime(item.dt),
+        date: item.dt_txt.split(' ')[0],
         temperature: Math.round(item.main.temp),
         weatherIcon: weatherIconMap[item.weather[0].main] || 'partly_cloudy.png',
         description: item.weather[0].description
       }));
+
+    console.log('Hourly Forecast sent from backend:', hourlyForecast);
 
     // Format the response
     return {

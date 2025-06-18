@@ -57,7 +57,7 @@ export const login = async (req, res) => {
     const token = jwt.sign(
       { userId: user.id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: '1h' } // Токен буде дійсний 1 годину
+      { expiresIn: '7d' } // Токен буде дійсний 7 днів
     );
     
     res.status(200).json({

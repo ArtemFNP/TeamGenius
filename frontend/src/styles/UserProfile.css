@@ -1,0 +1,87 @@
+.user-profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - var(--navbar-height) - var(--footer-height));
+  background-color: var(--main-bg-color);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.user-profile-card {
+  background-color: var(--secondary-bg-color);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+  color: var(--main-text-color);
+}
+
+.user-profile-card h2 {
+  color: var(--accent-color);
+  margin-bottom: 25px;
+  font-size: 2.2em;
+  font-weight: 700;
+}
+
+.avatar-display {
+  margin-bottom: 20px;
+}
+
+.diamond-avatar-placeholder {
+  width: 100px;
+  height: 100px;
+  background-color: var(--accent-color); /* Purple background for the diamond */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3em;
+  font-weight: bold;
+  color: white;
+  overflow: hidden; /* Ensures content stays within the diamond */
+  transform: rotate(45deg); /* Rotates the square to make it a diamond */
+  margin: 0 auto; /* Center the diamond */
+  border-radius: 10px; /* Slight border-radius for softer edges */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.diamond-avatar-placeholder span {
+  transform: rotate(-45deg); /* Rotates the content back to normal */
+  display: block; /* Ensures rotation applies correctly */
+}
+
+.user-profile-card p {
+  color: var(--secondary-text-color);
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+.user-profile-card strong {
+  color: var(--main-text-color);
+}
+
+@media (max-width: 600px) {
+  .user-profile-card {
+    padding: 25px;
+  }
+
+  .user-profile-card h2 {
+    font-size: 1.8em;
+  }
+
+  .diamond-avatar-placeholder {
+    width: 80px;
+    height: 80px;
+    font-size: 2.5em;
+  }
+
+  .user-profile-card p {
+    font-size: 1em;
+  }
+} 

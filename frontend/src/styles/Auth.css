@@ -1,0 +1,126 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - var(--navbar-height) - var(--footer-height)); /* Full viewport height minus header/footer */
+  background-color: var(--main-bg-color); /* Use your app's main background color */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.auth-form {
+  background-color: #7965C1; /* Changed to #bfebff as requested */
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+  color: var(--main-text-color);
+}
+
+.auth-form h2 {
+  color: var(--accent-color);
+  margin-bottom: 25px;
+  font-size: 2em;
+  font-weight: 700;
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"] {
+  padding: 15px;
+  border: 1px solid white; /* Changed border to white for better visibility */
+  border-radius: 8px;
+  background-color: var(--input-bg-color);
+  color: var(--input-text-color);
+  font-size: 1em;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Slightly more prominent shadow */
+}
+
+.auth-form input[type="text"]:focus,
+.auth-form input[type="email"]:focus,
+.auth-form input[type="password"]:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(var(--accent-color-rgb), 0.3), 0 5px 15px rgba(0, 0, 0, 0.3); /* Enhanced shadow on focus */
+  outline: none;
+}
+
+.auth-form input::placeholder {
+  color: var(--placeholder-text-color);
+  opacity: 0.8;
+}
+
+.auth-form button[type="submit"] {
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+  padding: 15px 25px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.auth-form button[type="submit"]:hover {
+  background-color: var(--button-hover-bg-color);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.auth-form .error-message {
+  color: var(--error-color); /* Define --error-color in your variables.css if not already */
+  font-size: 0.9em;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.auth-form p {
+  color: var(--secondary-text-color);
+  font-size: 0.95em;
+}
+
+.auth-form p a {
+  color: var(--link-color); /* Define --link-color in your variables.css */
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.auth-form p a:hover {
+  color: var(--link-hover-color); /* Define --link-hover-color in your variables.css */
+  text-decoration: underline;
+}
+
+/* Ensure variables are defined in variables.css or equivalent */
+/* Example addition to variables.css */
+/*
+:root {
+  --main-bg-color: #282c34; 
+  --secondary-bg-color: #3a3f47; 
+  --main-text-color: #e0e0e0; 
+  --secondary-text-color: #a0a0a0;
+  --accent-color: #6a0dad; // Purple
+  --accent-color-rgb: 106, 13, 221;
+  --button-bg-color: #6a0dad; // Purple
+  --button-text-color: #ffffff;
+  --button-hover-bg-color: #8a2be2; // Lighter purple
+  --input-bg-color: #4a4f57;
+  --input-text-color: #e0e0e0;
+  --placeholder-text-color: #a0a0a0;
+  --border-color: #5a5f67;
+  --error-color: #ff6b6b;
+  --link-color: #bb86fc;
+  --link-hover-color: #d0a4ff;
+  --navbar-height: 60px; // Example value, adjust based on your Navbar.css
+  --footer-height: 80px; // Example value, adjust based on your Footer.css
+}
+*/

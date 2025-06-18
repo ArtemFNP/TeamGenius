@@ -12,7 +12,9 @@ import Closet from './Closet';
 import OutfitSelector from './OutfitSelector';
 import OutfitPage from './OutfitPage';
 import TimelineSelector from './TimelineSelector';
-import AboutPage from './AboutPage'; // <-- Импорт новой страницы AboutPage
+import AboutPage from './AboutPage';
+import LoginPage from './LoginPage'; // Import LoginPage
+import RegisterPage from './RegisterPage'; // Import RegisterPage
 
 // Импорт модальных окон
 import LicensesModal from '../components/LicensesModal';
@@ -22,8 +24,9 @@ import FAQModal from '../components/FAQModal';
 import '../styles/App.css';       // <-- Для .app-content-wrapper и .app-main-content
 import '../styles/variables.css'; // <-- Для ваших CSS переменных (только variables)
 
-
 import { LanguageProvider } from '../contexts/LanguageContext';
+import { AuthProvider } from '../hooks/useAuth'; // Import AuthProvider
+import PrivateRoutes from '../components/PrivateRoutes'; // Import PrivateRoutes
 
 function App() {
   const [isLicensesModalOpen, setIsLicensesModalOpen] = useState(false);
@@ -38,33 +41,40 @@ function App() {
   return (
     <LanguageProvider>
       <Router>
-        {/* Это ваша обертка для прижатия футера (sticky footer) */}
-        <div className="app-content-wrapper">
-          <Navbar /> {/* Navbar рендерится здесь один раз, глобально */}
+        <AuthProvider> {/* Wrap the entire application with AuthProvider */}
+          {/* Это ваша обертка для прижатия футера (sticky footer) */}
+          <div className="app-content-wrapper">
+            <Navbar /> {/* Navbar рендерится здесь один раз, глобально */}
 
-          {/* Основной контент страниц. Этот контейнер будет "растягиваться". */}
-          <main className="app-main-content">
-            <Routes>
-              <Route path="/" element={<WeatherDashboard />} />
-              <Route path="/outfit-selector" element={<OutfitSelector />} />
-              <Route path="/closet" element={<Closet />} />
-              <Route path="/outfit" element={<OutfitPage />} />
-              <Route path="/timeline" element={<TimelineSelector />} />
-              <Route path="/about" element={<AboutPage />} /> {/* Новый маршрут для About */}
-              {/* Добавьте другие маршруты, если они у вас есть */}
-            </Routes>
-          </main>
+            {/* Основной контент страниц. Этот контейнер будет "растягиваться". */}
+            <main className="app-main-content">
+              <Routes>
+                <Route path="/login" element={<LoginPage />} /> {/* Public Login Route */}
+                <Route path="/register" element={<RegisterPage />} /> {/* Public Register Route */}
+                
+                <Route element={<PrivateRoutes />}> {/* Protected Routes */}
+                  <Route path="/" element={<WeatherDashboard />} />
+                  <Route path="/outfit-selector" element={<OutfitSelector />} />
+                  <Route path="/closet" element={<Closet />} />
+                  <Route path="/outfit" element={<OutfitPage />} />
+                  <Route path="/timeline" element={<TimelineSelector />} />
+                  <Route path="/about" element={<AboutPage />} />
+                  {/* Add more protected routes here if needed */}
+                </Route>
+              </Routes>
+            </main>
 
-          {/* Передаем функции открытия модалок в Footer */}
-          <Footer 
-            openLicensesModal={openLicensesModal} 
-            openFAQModal={openFAQModal} 
-          />
+            {/* Передаем функции открытия модалок в Footer */}
+            <Footer 
+              openLicensesModal={openLicensesModal} 
+              openFAQModal={openFAQModal} 
+            />
 
-          {/* Рендеринг модальных окон (скрыты, если isOpen = false) */}
-          <LicensesModal isOpen={isLicensesModalOpen} onClose={closeLicensesModal} />
-          <FAQModal isOpen={isFAQModalOpen} onClose={closeFAQModal} />
-        </div>
+            {/* Рендеринг модальных окон (скрыты, если isOpen = false) */}
+            <LicensesModal isOpen={isLicensesModalOpen} onClose={closeLicensesModal} />
+            <FAQModal isOpen={isFAQModalOpen} onClose={closeFAQModal} />
+          </div>
+        </AuthProvider>
       </Router>
     </LanguageProvider>
   );

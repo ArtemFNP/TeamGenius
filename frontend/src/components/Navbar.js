@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Navbar.css'; // <-- CSS файл остается
 import { useLanguage } from '../contexts/LanguageContext'; // <-- Импорт хука языка
+import { useAuth } from '../hooks/useAuth'; // Import useAuth
 
 import dragonLogoImg from '../assets/images/dragonlogo.png'; // Убедитесь, что путь к логотипу правильный
 import logoutIconImg from '../assets/images/logout.png';   // Убедитесь, что путь к иконке правильный
@@ -13,6 +14,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const { language, setLanguage, t } = useLanguage(); // Использование хука для доступа к языку и функции перевода
+  const { user, logout } = useAuth(); // Get user and logout from auth context
 
   // Обновляем navLinks для использования ключей локализации
   // Внимание: пути /closet и /outfit-selector. Убедитесь, что это ваши актуальные пути.
@@ -21,12 +23,12 @@ const Navbar = () => {
     { path: '/', textKey: 'home' },
     { path: '/closet', textKey: 'wardrobe' }, // <-- Здесь 'wardrobe' - это ключ в файлах локализации
     { path: '/outfit-selector', textKey: 'clothesFitter' }, // <-- Здесь 'clothesFitter' - это ключ
+    { path: '/timeline', textKey: 'timeline' }, // Add timeline route
+    { path: '/about', textKey: 'about' }, // Add about route
   ];
 
   const handleLogoutClick = () => {
-    console.log('Logout clicked - implement logout logic');
-    // Пример: localStorage.removeItem('authToken');
-    // navigate('/login'); // Раскомментировать, когда будет страница входа
+    logout(); // Use the logout function from useAuth
     closeMobileMenu(); // Закрыть меню при клике на выход
   };
 
@@ -103,17 +105,44 @@ const Navbar = () => {
           </select>
         </div>
 
-        <div 
-          className="navbar-action-icon logout-icon-mobile-menu" 
-          onClick={handleLogoutClick} 
-          role="button" 
-          tabIndex={0}  
-          onKeyDown={(e) => e.key === 'Enter' && handleLogoutClick()}
-          aria-label={t('logout')}
-        >
-          <img src={logoutIconImg} alt={t('logout')} className="action-icon-img" />
-          <span>{t('logout')}</span>
-        </div>
+        {user && (
+          <Link 
+            to="/profile" 
+            className="navbar-action-icon profile-icon-mobile-menu" 
+            onClick={closeMobileMenu}
+            aria-label={t('userProfile')}
+          >
+            <div className="diamond-avatar-placeholder-small">
+              <span>{user.username ? user.username.charAt(0).toUpperCase() : 'U'}</span>
+            </div>
+            <span>{t('profile')}</span>
+          </Link>
+        )}
+
+        {user && (
+          <div 
+            className="navbar-action-icon logout-icon-mobile-menu" 
+            onClick={handleLogoutClick} 
+            role="button" 
+            tabIndex={0}  
+            onKeyDown={(e) => e.key === 'Enter' && handleLogoutClick()}
+            aria-label={t('logout')}
+          >
+            <img src={logoutIconImg} alt={t('logout')} className="action-icon-img" />
+            <span>{t('logout')}</span>
+          </div>
+        )}
+
+        {!user && (
+          <Link 
+            to="/login" 
+            className="navbar-action-icon login-icon-mobile-menu" 
+            onClick={closeMobileMenu}
+            aria-label={t('login')}
+          >
+            <span>{t('login')}</span>
+          </Link>
+        )}
       </nav>
 
       {/* Контейнер для десктопных элементов (переключатель языка и выход) */}
@@ -130,17 +159,40 @@ const Navbar = () => {
           </select>
         </div>
 
-        {/* Иконка выхода для ДЕСКТОПА */}
-        <div 
-          className="navbar-action-icon logout-icon-desktop" 
-          onClick={handleLogoutClick} 
-          role="button" 
-          tabIndex={0}  
-          onKeyDown={(e) => e.key === 'Enter' && handleLogoutClick()}
-          aria-label={t('logout')}
-        >
-          <img src={logoutIconImg} alt={t('logout')} className="action-icon-img" />
-        </div>
+        {user && (
+          <Link 
+            to="/profile" 
+            className="navbar-action-icon profile-icon-desktop" 
+            aria-label={t('userProfile')}
+          >
+            <div className="diamond-avatar-placeholder-small">
+              <span>{user.username ? user.username.charAt(0).toUpperCase() : 'U'}</span>
+            </div>
+          </Link>
+        )}
+
+        {user && (
+          <div 
+            className="navbar-action-icon logout-icon-desktop" 
+            onClick={handleLogoutClick} 
+            role="button" 
+            tabIndex={0}  
+            onKeyDown={(e) => e.key === 'Enter' && handleLogoutClick()}
+            aria-label={t('logout')}
+          >
+            <img src={logoutIconImg} alt={t('logout')} className="action-icon-img" />
+          </div>
+        )}
+
+        {!user && (
+          <Link 
+            to="/login" 
+            className="navbar-action-icon login-icon-desktop" 
+            aria-label={t('login')}
+          >
+            <span>{t('login')}</span>
+          </Link>
+        )}
       </div>
     </header>
   );

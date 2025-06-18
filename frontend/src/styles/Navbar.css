@@ -139,6 +139,62 @@
   display: none; /* Скрыты по умолчанию на мобильных/планшетах, будет переопределено в медиа-запросе */
 }
 
+/* Стили для маленького ромбовидного аватара в навбаре */
+.diamond-avatar-placeholder-small {
+  width: 32px; /* Adjusted size for navbar */
+  height: 32px; /* Adjusted size for navbar */
+  background-color: var(--accent-color); /* Use your app's accent color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1em; /* Adjust font size for initials */
+  font-weight: bold;
+  color: white;
+  overflow: hidden;
+  transform: rotate(45deg);
+  border-radius: 5px; /* Slightly less rounded than the larger one */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0; /* Prevent shrinking in flex containers */
+}
+
+.diamond-avatar-placeholder-small span {
+  transform: rotate(-45deg);
+  display: block;
+}
+
+/* New styles for login/profile links in mobile and desktop */
+.login-icon-mobile-menu,
+.profile-icon-mobile-menu {
+  display: flex;
+  color: var(--navbar-text-color);
+  width: 100%;
+  justify-content: center;
+  padding: 15px 20px;
+  font-size: 1.1em;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.login-icon-mobile-menu:hover,
+.profile-icon-mobile-menu:hover {
+  background-color: var(--navbar-link-hover);
+}
+
+.profile-icon-desktop,
+.login-icon-desktop {
+  display: flex;
+  align-items: center;
+  color: var(--navbar-text-color);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: calc(var(--navbar-link-font-size) * 0.9);
+  transition: color 0.2s ease-in-out;
+}
+
+.profile-icon-desktop:hover,
+.login-icon-desktop:hover {
+  color: var(--navbar-link-hover);
+}
 
 /* --- Медиа-запросы для адаптивности --- */
 

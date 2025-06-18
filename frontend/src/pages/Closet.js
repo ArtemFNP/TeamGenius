@@ -14,14 +14,11 @@ import { useUserCloset } from '../hooks/useUserCloset';
 
 const CLOTH_TYPES = [
   { value: '', label: 'Select type' },
-  { value: 'top', label: 'T-Shirt' },       // Используем общие категории для `value`
-  { value: 'bottom', label: 'Pants' },
-  { value: 'outerwear', label: 'Hoodie' },
-  { value: 'outerwear', label: 'Jacket' },
-  { value: 'top', label: 'Dress' },         
-  { value: 'shoes', label: 'Shoes' },
-  { value: 'accessory', label: 'Accessory' },
-  { value: 'headwear', label: 'Cap' }
+  { value: 'headwear', label: 'Headwear' },
+  { value: 'outerwear', label: 'Outer Layer' },
+  { value: 'top', label: 'Main Top' },
+  { value: 'bottom', label: 'Bottoms' },
+  { value: 'footwear', label: 'Footwear' },
 ];
 
 export default function Closet() {

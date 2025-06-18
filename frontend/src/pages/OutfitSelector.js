@@ -22,29 +22,31 @@ export default function OutfitSelector() {
     setSelectedPresetId,
     newPresetName,
     setNewPresetName,
-    savePreset, // Эта функция теперь содержит Alert
+    savePreset, // Эта функция теперь содержит Alert внутри
     loadPreset
   } = useOutfitPresets(userCloset);
 
-  // Инициализация слотов манекена
+  // Инициализация слотов манекена. ЭТО ВАЖНО, чтобы selectedXxx были объявлены
   const {
     selectedHeadwear, setSelectedHeadwear,
     selectedTop, setSelectedTop,
     selectedOuterwear, setSelectedOuterwear,
     selectedBottom, setSelectedBottom,
     selectedFootwear, setSelectedFootwear,
-    setItemInSlot, // Используется для 'Use item'
-    resetAllSlots // Используется при выборе пустого пресета
-  } = useMannequinSlots(); // <<< ХУК ДЛЯ СЛОТОВ ДОЛЖЕН БЫТЬ ОБЪЯВЛЕН ДО ИСПОЛЬЗОВАНИЯ ЕГО ЗНАЧЕНИЙ
+    setItemInSlot,
+    resetAllSlots
+  } = useMannequinSlots(); 
 
 
   const [weatherData, setWeatherData] = useLocalStorage('lastWeatherData', null);
   const { aiRecommendation, generateOutfitViaAI } = useOutfitRecommendation(userCloset, weatherData);
 
 
-  // ********** Эффекты и хэндлеры, теперь использующие хуки **********
+  // ********** Эффекты и хэндлеры **********
 
-  // При изменении выбранного пресета, загружаем его
+  // При изменении выбранного пресета, загружаем его.
+  // Добавление userCloset в зависимости необходимо для корректной работы
+  // loadPreset, так как он ищет элементы внутри userCloset.
   useEffect(() => {
     if (selectedPresetId) {
         const outfit = loadPreset(selectedPresetId);
@@ -54,35 +56,34 @@ export default function OutfitSelector() {
         setSelectedOuterwear(outfit.outerwear);
         setSelectedBottom(outfit.bottom);
         setSelectedFootwear(outfit.footwear);
-    } else {
-        // Если выбран "Пустой пресет" или ничего не выбрано
-        resetAllSlots();
-    }
-  }, [selectedPresetId, loadPreset, resetAllSlots,
-      setSelectedHeadwear, setSelectedTop, setSelectedOuterwear, // set-функции тоже нужны в зависимостях
-      setSelectedBottom, setSelectedFootwear
+    } 
+  }, [
+      selectedPresetId, 
+      loadPreset,
+      setSelectedHeadwear, setSelectedTop, setSelectedOuterwear,
+      setSelectedBottom, setSelectedFootwear,
+      userCloset // КРИТИЧНО: эта зависимость должна быть, чтобы пресеты правильно загружались из актуального гардероба
   ]);
 
   const handleUseItem = (item) => {
     console.log('Use item:', item);
-    setItemInSlot(item);
-    setHoveredItemId(null); // Это только для визуального эффекта
+    setItemInSlot(item); // Устанавливаем предмет в соответствующий слот
+    setHoveredItemId(null); // Сброс hover-состояния
   };
 
   const handleDeleteItem = (itemId) => {
     console.log('Delete item ID:', itemId);
     removeUserItem(itemId); // Удаляем из общего гардероба
-    // Если удаленный элемент был на манекене, тоже убираем его
+    // Также очищаем слоты манекена, если удаленный предмет был на нем
     if(selectedHeadwear?.id === itemId) setSelectedHeadwear(null);
     if(selectedTop?.id === itemId) setSelectedTop(null);
     if(selectedOuterwear?.id === itemId) setSelectedOuterwear(null);
     if(selectedBottom?.id === itemId) setSelectedBottom(null);
     if(selectedFootwear?.id === itemId) setSelectedFootwear(null);
-    // setHoveredItemId(null); // Если это состояние используется для ховера, то оно локальное, иначе не нужно
   };
 
   const handleSaveCurrentPreset = () => {
-    // !!! ЭТОТ БЛОК КОДА ПРИНАДЛЕЖИТ СЮДА !!!
+    // !!! ЭТОТ БЛОК КОДА ПРИНАДЛЕЖИТ СЮДА И ТОЛЬКО СЮДА !!!
     if (!newPresetName.trim()) {
         alert(t('pleaseEnterPresetName'));
         return;
@@ -94,12 +95,15 @@ export default function OutfitSelector() {
         bottomId: selectedBottom?.id || null,
         footwearId: selectedFootwear?.id || null,
     };
-    savePreset(currentOutfitConfig, newPresetName); // Теперь savePreset из хука уже содержит Alert
-    // alert(t('presetSavedAlert', { name: newPresetName })); // <<< ЭТО УДАЛЯЕМ, ОНО ДУБЛИРУЕТСЯ ВНУТРИ ХУКА savePreset
+    savePreset(currentOutfitConfig, newPresetName); // Вызываем функцию из хука
+    // Alert уже вызывается внутри savePreset в useOutfitPresets.js, так что эта строка ниже должна быть удалена,
+    // если она у вас есть из-за прошлых копирований:
+    // alert(t('presetSavedAlert', { name: newPresetName })); 
   };
 
 
   const handleGenerateOutfitClick = () => {
+      // Передаем функции-сеттеры в хук для обновления слотов
       generateOutfitViaAI({
           setSelectedHeadwear,
           setSelectedTop,
@@ -109,12 +113,12 @@ export default function OutfitSelector() {
       });
   };
 
+  // Локальное состояние для визуального эффекта наведения (не относится к функционалу манекена)
   const [hoveredItemId, setHoveredItemId] = useState(null);
 
 
   return (
     <div className="os-main-content">
-      {/* ... (остальной JSX остается как был) ... */}
       {/* === Left Column: Mannequin Area & Presets === */}
       <div className="os-mannequin-and-presets-wrapper">
         <div className="os-dropdown-container presets-dropdown-container">
@@ -123,7 +127,13 @@ export default function OutfitSelector() {
             id="savedPresets"
             className="os-dropdown"
             value={selectedPresetId}
-            onChange={(e) => setSelectedPresetId(e.target.value)}
+            onChange={(e) => {
+              const newId = e.target.value;
+              setSelectedPresetId(newId);
+              if (!newId) { // Если выбрано пустое значение (т.е. "No Preset Selected")
+                resetAllSlots(); // Тогда явно сбросим слоты манекена
+              }
+            }}
           >
             <option value="">{t('yourSavedPresets')}</option>
             {savedPresets.map(preset => (
@@ -169,7 +179,7 @@ export default function OutfitSelector() {
 
       {/* === Right Panel Wrapper: Info Column + Clothing Grid === */}
       <div className="os-right-panel-wrapper">
-        {/* Clothing Grid (now part of the right panel) */}
+        {/* Clothing Grid */}
         <div className="os-clothing-grid-wrapper">
           <div className="os-intro-text-container">
             <p className="os-intro-text">{t('youCouldPickClothes')}</p>
@@ -195,13 +205,14 @@ export default function OutfitSelector() {
                   )}
                 </div>
               )) : (
+                // Используйте свой пустой текст, я не стал менять.
                 <p className="os-empty-closet-message">{t('emptyClosetMessage')}</p>
               )}
             </div>
           </div>
         </div>
 
-        {/* Info Column (now part of the right panel) */}
+        {/* Info Column */}
         <div className="os-info-column">
           {weatherData && (
             <div className="os-weather-info">

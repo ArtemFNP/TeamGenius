@@ -1,7 +1,8 @@
 // src/hooks/useOutfitPresets.js
 import { useState } from 'react';
 import { useLocalStorage } from './useLocalStorage';
-import { useLanguage } from '../contexts/LanguageContext'; // <<< ДОБАВИТЬ: импортируем useLanguage
+import { useLanguage } from '../contexts/LanguageContext'; // <<< ЭТОТ ИМПОРТ ОБЯЗАТЕЛЕН
+
 
 const mockInitialPresets = [ // Стартовые пресеты (только если localStorage пуст!)
   { id: 'preset1', name: 'Summer Chill Vibe', config: { headwearId: null, topId: null, outerwearId: null, bottomId: null, footwearId: null } },
@@ -9,17 +10,16 @@ const mockInitialPresets = [ // Стартовые пресеты (только 
 ];
 
 
-export function useOutfitPresets(userCloset) { // Зависимость от userCloset для загрузки
-  const { t } = useLanguage(); // <<< ДОБАВИТЬ: инициализируем хук языка
+export function useOutfitPresets(userCloset) {
+  const { t } = useLanguage(); // <<< Инициализация useLanguage
 
   const [savedPresets, setSavedPresets] = useLocalStorage('savedPresets', mockInitialPresets);
   const [selectedPresetId, setSelectedPresetId] = useState('');
   const [newPresetName, setNewPresetName] = useState('');
 
-  // Логика сохранения пресета
   const savePreset = (currentOutfitConfig, presetName) => {
     if (!presetName.trim()) {
-      alert(t('pleaseEnterPresetName')); // Алерт теперь вызывается прямо здесь
+      alert(t('pleaseEnterPresetName')); // Алерт вызывается здесь
       return; // Прекращаем выполнение
     }
     const newPresetData = {
@@ -33,7 +33,6 @@ export function useOutfitPresets(userCloset) { // Зависимость от us
     alert(t('presetSavedAlert', { name: newPresetData.name })); // Алерт об успешном сохранении тоже здесь
   };
 
-  // Логика загрузки пресета
   const loadPreset = (presetId) => {
     const presetToLoad = savedPresets.find(p => p.id === presetId);
     if (presetToLoad && presetToLoad.config) {
@@ -49,10 +48,9 @@ export function useOutfitPresets(userCloset) { // Зависимость от us
             outerwear: loadedOuterwear,
             bottom: loadedBottom,
             footwear: loadedFootwear,
-            name: presetToLoad.name // Возвращаем название для потенциального использования
+            name: presetToLoad.name
         };
     }
-    // Если пресет не найден или пустой, возвращаем null для всех слотов
     return {
         headwear: null, top: null, outerwear: null, bottom: null, footwear: null, name: ''
     };

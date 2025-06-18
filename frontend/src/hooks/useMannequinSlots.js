@@ -66,10 +66,8 @@ export function useMannequinSlots() {
         setSelectedFootwear(item);
         break;
 
-      // Если предмет попадает сюда (например, 'accessory' или другие), он не будет присвоен.
       default:
-        console.warn(`Category '${item.category}' not recognized or has no designated mannequin slot for item: ${item.name}. Item not assigned.`);
-        // НЕ делаем setSelectedTop(item) здесь, чтобы избежать нелогичных присвоений
+        console.warn(`Category '${item.category}' for item: ${item.name} not assigned to any specific mannequin slot. It will not be displayed on the mannequin.`);
     }
   };
 

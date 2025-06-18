@@ -214,10 +214,14 @@ export default function OutfitSelector() {
 
         {/* Info Column */}
         <div className="os-info-column">
-          {weatherData && (
+          {weatherData ? (
             <div className="os-weather-info">
-              <p>{t('weatherInfo', { weatherDescription: weatherData.description, temperature: weatherData.temperature })}</p>
+              <p>{t('weatherInfo', { weatherDescription: weatherData.current.description, temperature: weatherData.current.temperature })}</p>
               {aiRecommendation && <p className="ai-recommendation-text">{aiRecommendation}</p>}
+            </div>
+          ) : (
+            <div className="os-weather-info">
+              <p className="ai-recommendation-text">{t('weatherDataNotAvailable')}</p>
             </div>
           )}
 

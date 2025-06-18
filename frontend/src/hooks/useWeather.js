@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useLocalStorage } from './useLocalStorage';
 
 const API_URL = 'http://localhost:5500/api/weather';
 
 export function useWeather(initialCity = 'Antwerp, Belgium') {
-  const [weather, setWeather] = useState(null);
+  const [weather, setWeather] = useLocalStorage('lastWeatherData', null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [city, setCity] = useState(initialCity);
@@ -21,13 +22,14 @@ export function useWeather(initialCity = 'Antwerp, Belgium') {
         setWeather(data);
       } catch (err) {
         setError(err.message);
+        setWeather(null);
       } finally {
         setLoading(false);
       }
     };
 
     fetchWeather();
-  }, [city]);
+  }, [city, setWeather]);
 
   return { weather, loading, error, city, setCity };
 } 

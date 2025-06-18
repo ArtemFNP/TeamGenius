@@ -124,5 +124,6 @@
   "no": "No",
   "confirmDeleteItem": "Are you sure you want to delete this item?",
   "newItemName": "New Item",
-  "itemAddedToCloset": "«{{name}}» added to your closet!"
+  "itemAddedToCloset": "«{{name}}» added to your closet!",
+  "notEnoughClothes": "Not enough clothes in your closet to create a full outfit based on the current weather. Please add more items!"
 }

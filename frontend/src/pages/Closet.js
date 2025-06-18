@@ -67,8 +67,8 @@ export default function Closet() {
         };
 
         // Специальная логика для isClosedToe, если выбрана категория обуви, но нет UI для выбора
-        if (newItem.category === 'shoes') {
-             newItem.isClosedToe = false; // Обувь по умолчанию без закрытого носка, если пользователь не указал
+        if (newItem.category === 'footwear') {
+             newItem.isClosedToe = true; // Теперь по умолчанию true для новой обуви
         }
 
         addUserItem(newItem); // <-- ДОБАВЛЕНИЕ НОВОГО ПРЕДМЕТА ЧЕРЕЗ ОБЩИЙ ХУК

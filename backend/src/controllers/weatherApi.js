@@ -50,9 +50,10 @@ export async function getWeather(city = 'Antwerp, Belgium') {
       throw new Error(forecastData.message || 'Failed to fetch forecast data');
     }
 
+    console.log('Raw forecastData.list length from OpenWeatherMap (backend):', forecastData.list.length);
+
     // Filter and format hourly forecast
     const hourlyForecast = forecastData.list
-      .slice(0, 12)
       .map(item => ({
         time: formatTime(item.dt),
         date: item.dt_txt.split(' ')[0],

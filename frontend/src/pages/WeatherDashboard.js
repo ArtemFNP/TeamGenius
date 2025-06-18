@@ -5,25 +5,20 @@ import { useWeather } from '../hooks/useWeather';
 import { useLanguage } from '../contexts/LanguageContext';
 import '../styles/WeatherDashboard.css';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { useOutfitRecommendation } from '../hooks/useOutfitRecommendation';
 
-
-// ... (твои импорты иконок, картинок и т.д. остаются) ...
+// ... (ваши импорты иконок, картинок и т.д. остаются) ...
 import calendarIcon from '../assets/images/calendar.png';
 import rainIcon from '../assets/images/rainy.png';
 import thunderIcon from '../assets/images/rain_storm.png';
 import cloudIcon from '../assets/images/cloud.png';
 import partlyCloudyIcon from '../assets/images/partly_cloudy.png';
-// Переконайтеся, що імпортуємо те, що експортується з gallery.js
-import allPhotos from '../assets/images/gallery'; // Це тепер масив об'єктів { id, imageUrl, name }
-
-// Добавляем иконку сердца, если она будет использоваться
-// import heartIconOutline from '../assets/images/heart-outline.svg';
-// import heartIconFilled from '../assets/images/heart-filled.svg';
+import allPhotos from '../assets/images/gallery';
+import sunnyIcon from '../assets/images/sunny.png';
 
 const cities = ['Antwerp, Belgium', 'Berlin, Germany', 'Paris, France', 'Kyiv, Ukraine', 'Kharkiv, Ukraine'];
 
 const weatherIcons = {
+  'sunny.png': sunnyIcon,
   'partly_cloudy.png': partlyCloudyIcon,
   'rainy.png': rainIcon,
   'rain_storm.png': thunderIcon,
@@ -32,58 +27,44 @@ const weatherIcons = {
 
 export default function WeatherDashboard() {
   const navigate = useNavigate();
-  const [search, setSearch] = useState('');
+  // const [search, setSearch] = useState(''); // Не используется, можно убрать
   const [dropdownOpen, setOpen] = useState(false);
-  const [activePhoto, setActive] = useState(0); // Индекс для карусели основного фото
+  const [activePhoto, setActive] = useState(0);
   const { weather, loading, error, city, setCity } = useWeather();
   const { t } = useLanguage();
 
-  const [displayDay, setDisplayDay] = useState('today'); // New state for 'today' or 'tomorrow'
+  const [displayDay, setDisplayDay] = useState('today');
 
-  // Read selected period from localStorage
   const [lastTimelineSelection] = useLocalStorage('lastTimelineSelection', null);
 
-  // Состояние для текущей даты и времени (чтобы они обновлялись)
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
 
   useEffect(() => {
-    const timerId = setInterval(() => setCurrentDateTime(new Date()), 60000); // Обновлять время каждую минуту
+    const timerId = setInterval(() => setCurrentDateTime(new Date()), 60000);
     return () => clearInterval(timerId);
   }, []);
   
   const formatDate = (date) => {
-    return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }); // Формат "10 April 2025"
+    return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
   };
 
   const formatTime = (date) => {
-    return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }); // Формат "15:10"
+    return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
   };
 
-  // --- ПОЧАТОК ВИПРАВЛЕНЬ ---
-  // Отримуємо поточний об'єкт вбрання з масиву allPhotos за індексом activePhoto
   const currentOutfit = allPhotos && allPhotos.length > 0 && activePhoto < allPhotos.length
                         ? allPhotos[activePhoto]
                         : null;
 
-  // Визначаємо зображення, назву та підтекст
-  // Якщо немає об'єктів у allPhotos, використовуємо заглушки.
-  // partslyCloudyIcon тут використовується як приклад заглушки зображення.
-  // В ідеалі варто мати окремий файл з плейсхолдером "без зображення".
-  const defaultPlaceholderImage = partlyCloudyIcon; // Або будь-яка інша імпортована заглушка
+  const defaultPlaceholderImage = partlyCloudyIcon;
   const defaultPlaceholderName = t('noOutfitAvailable');
   const defaultPlaceholderSubtext = t('addClothesToClosetSuggestion');
 
   const currentOutfitImage = currentOutfit ? currentOutfit.imageUrl : defaultPlaceholderImage;
   const currentOutfitName = currentOutfit ? currentOutfit.name : defaultPlaceholderName;
-  // Підтекст можна змінювати залежно від того, чи доступний об'єкт вбрання
   const currentOutfitSubtext = currentOutfit ? t('goodOutfitOption') : defaultPlaceholderSubtext;
-  // --- КІНЕЦЬ ВИПРАВЛЕНЬ ---
-  
-  // ... (остальная твоя логика getMockTemp, getOutfitSuggestion, getOutfitImage, outfitSets остается без изменений) ...
 
-  console.log('Weather data received:', weather);
-
-  if (loading && !weather) { // Добавил !weather, чтобы не показывать лоадер если данные уже есть
+  if (loading && !weather) {
     return (
       <div className="weather-dashboard-container">
         <div className="loading-message">{t('loadingWeatherData')}</div>
@@ -99,19 +80,13 @@ export default function WeatherDashboard() {
     );
   }
 
-  // Основной рендер компонента
   return (
-    <div className="weather-dashboard-container"> {/* Общий контейнер страницы */}
-
-      
-      <main className="dashboard-content"> {/* Контент между Navbar и Footer */}
-        {/* Tabs (оставляем как есть, если нужны) */}
+    <div className="weather-dashboard-container">
+      <main className="dashboard-content">
         <div className="tabs-container">
-          {/* Remove "Inside" and "Outside" tabs, rename "Mix" to "Current Situation" */}
           <div key="currentSituation" className="tab active">{t('currentSituationTab')}</div>
         </div>
 
-        {/* Блок предложений по выбранному периоду времени (из TimelineSelector) */}
         {lastTimelineSelection && weather?.hourly?.length > 0 && (() => {
           const startHour = parseInt(lastTimelineSelection.startTime.split(':')[0], 10);
           const endHour = parseInt(lastTimelineSelection.endTime.split(':')[0], 10);
@@ -122,13 +97,12 @@ export default function WeatherDashboard() {
 
           weather.hourly.forEach(hourData => {
             const forecastHour = parseInt(hourData.time, 10);
-            // This logic should match the one in OutfitSelector.js for consistency
-            if (startHour <= endHour) { // Period does not cross midnight
+            if (startHour <= endHour) {
               if (forecastHour >= startHour && forecastHour <= endHour) {
                 sumTemp += hourData.temperature;
                 count++;
               }
-            } else { // Period crosses midnight (e.g., 22:00 - 04:00)
+            } else {
               if (forecastHour >= startHour || forecastHour <= endHour) {
                 sumTemp += hourData.temperature;
                 count++;
@@ -138,7 +112,6 @@ export default function WeatherDashboard() {
 
           const periodTemp = count > 0 ? Math.round(sumTemp / count) : 'N/A';
 
-          // Fallback suggestion based on temperature if no goal is set
           let suggestion = periodDescription; 
           if (!suggestion) {
             if (periodTemp !== 'N/A') {
@@ -148,7 +121,7 @@ export default function WeatherDashboard() {
                 suggestion = t('whiteTShirtSuggestion');
               }
             } else {
-              suggestion = t('noWeatherSuggestion'); // New translation key needed
+              suggestion = t('noWeatherSuggestion');
             }
           }
 
@@ -160,8 +133,6 @@ export default function WeatherDashboard() {
           );
         })()}
 
-
-        {/* Основная карточка с одеждой, погодой - НОВЫЙ ДИЗАЙН */}
         <section className="outfit-display-card">
           <div className="outfit-card-header-pills">
             <div className="info-pill date-pill">{formatDate(currentDateTime)}</div>
@@ -170,13 +141,11 @@ export default function WeatherDashboard() {
 
           <div className="outfit-card-body">
             <div className="outfit-image-carousel">
-              {/* Карусель изображений */}
               <img 
-                src={currentOutfitImage} // Использовать currentOutfitImage, определенное выше
-                alt={currentOutfitName} // Использовать currentOutfitName, определенное выше
+                src={currentOutfitImage}
+                alt={currentOutfitName}
                 className="current-outfit-image"
               />
-              {/* Точки для навигации по карусели, если фото больше одного */}
               {allPhotos && allPhotos.length > 1 && (
                 <div className="carousel-dots">
                   {allPhotos.map((_, idx) => (
@@ -193,32 +162,22 @@ export default function WeatherDashboard() {
 
             <div className="outfit-details">
               <div className="current-temperature">{weather?.current?.temperature ?? 'N/A'}{t('celsiusSymbol')}</div>
-              <h2 className="outfit-name">{currentOutfitName}</h2> {/* Использовать currentOutfitName */}
-              <p className="outfit-subtext">{currentOutfitSubtext}</p> {/* Использовать currentOutfitSubtext */}
-              {/* <p className="weather-condition-summary">{weather?.current?.description ?? 'Weather data unavailable'}</p> */}
-              {/* Можно добавить больше деталей о погоде тут */}
+              <h2 className="outfit-name">{currentOutfitName}</h2>
+              <p className="outfit-subtext">{currentOutfitSubtext}</p>
             </div>
           </div>
           
           <div className="outfit-card-actions">
-            {/* <button className="heart-button">🤍</button> {/* Иконка сердца */}
-             {/* ИЛИ SVG/IMG иконка */}
              <span className="heart-icon" role="button" tabIndex={0} onClick={() => console.log('Heart clicked!')}>
-                {/* Вставить SVG сердца сюда или использовать текстовый символ */}
-                {/* Например: <img src={heartIconOutline} alt="Favorite" /> */}
                 ♡ 
              </span>
           </div>
         </section>
         
-        {/* Кнопка Add Clothes (под основной карточкой) */}
-        <button className="add-clothes-button" onClick={() => navigate('/closet')}> {/* Уточни путь для добавления */}
-          {/* <img src={plusIcon} alt="" className="plus-icon"/> */}
+        <button className="add-clothes-button" onClick={() => navigate('/closet')}>
           <span>{t('addClothesButton')}</span>
         </button>
 
-
-        {/* Daily alert (оставляем твою логику) */}
         <div className="daily-alert-row">
           <div className="daily-alert-clickable" onClick={() => navigate('/timeline')}>
             <img src={calendarIcon} alt="calendar" className="calendar-icon-small" />
@@ -229,7 +188,9 @@ export default function WeatherDashboard() {
           </div>
         </div>
 
-        {/* Hourly forecast (оставляем твою логику) */}
+        {/* ====================================================================== */}
+        {/* ======================= НАЧАЛО ИСПРАВЛЕННОГО БЛОКА ======================= */}
+        {/* ====================================================================== */}
         <section className="weather-hourly-forecast">
           <div className="forecast-header">
             <h2>{t('weatherForTheDay')}</h2>
@@ -248,7 +209,7 @@ export default function WeatherDashboard() {
               </span>
             </div>
             <div className="location-dropdown-container" onClick={() => setOpen(o => !o)}>
-              {t('locationSymbol')} {city} ▼
+              📍 {city} ▼
               {dropdownOpen && (
                 <div className="city-dropdown">
                   {cities.filter(c => c !== city).map((c, i) => (
@@ -266,55 +227,83 @@ export default function WeatherDashboard() {
                 return <p className="no-hourly-data-message">{t('noHourlyWeatherData')}</p>;
               }
 
+              const HOURS_TO_SHOW = 6;
+              const TOMORROW_START_HOUR = 8;
+             
               const today = new Date();
-              const todayFormatted = today.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-'); // YYYY-MM-DD
-              const currentHour = new Date().getHours();
+              const todayFormatted = today.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
+              const currentHour = today.getHours();
 
               const tomorrow = new Date(today);
               tomorrow.setDate(today.getDate() + 1);
-              const tomorrowFormatted = tomorrow.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-'); // YYYY-MM-DD
+              // Correct date formatting to YYYY-MM-DD to match backend data
+              const tomorrowFormatted = tomorrow.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
 
-              const todayForecasts = weather.hourly.filter(hourData => {
-                console.log('Filtering Today: hourData.date=', hourData.date, 'todayFormatted=', todayFormatted, 'forecastHour=', parseInt(hourData.time, 10), 'currentHour=', currentHour);
-                const forecastHour = parseInt(hourData.time, 10);
-                return hourData.date === todayFormatted && forecastHour >= currentHour;
-              }).slice(0, 6);
+              console.log('Raw hourly weather data from backend:', weather?.hourly);
+              console.log('Today formatted:', todayFormatted, 'Tomorrow formatted:', tomorrowFormatted);
 
-              console.log('Today\'s raw forecasts:', todayForecasts);
-
-              const tomorrowForecasts = weather.hourly.filter(hourData => {
-                console.log('Filtering Tomorrow: hourData.date=', hourData.date, 'tomorrowFormatted=', tomorrowFormatted);
-                return hourData.date === tomorrowFormatted;
-              }).slice(0, 6);
-
-              console.log('Tomorrow\'s raw forecasts:', tomorrowForecasts);
-
-              const forecastsToDisplay = displayDay === 'today' ? todayForecasts : tomorrowForecasts;
+              const todayForecasts = weather.hourly
+                .filter(hourData => {
+                  const forecastHour = parseInt(hourData.time, 10);
+                  return hourData.date === todayFormatted && forecastHour >= currentHour;
+                });
               
+              console.log('Today raw forecasts after filter:', todayForecasts);
+
+              const tomorrowForecasts = weather.hourly
+                .filter(hourData => {
+                  const forecastHour = parseInt(hourData.time, 10);
+                  // Filter for 8:00 to 23:00 for tomorrow
+                  return hourData.date === tomorrowFormatted && forecastHour >= TOMORROW_START_HOUR && forecastHour <= 23;
+                })
+                .sort((a, b) => parseInt(a.time, 10) - parseInt(b.time, 10));
+
+              console.log('Tomorrow raw forecasts after filter (before slice):', tomorrowForecasts);
+
+              const finalTodayForecasts = todayForecasts.slice(0, HOURS_TO_SHOW);
+              const finalTomorrowForecasts = tomorrowForecasts.slice(0, HOURS_TO_SHOW);
+
+              const forecastsToDisplay = displayDay === 'today' ? finalTodayForecasts : finalTomorrowForecasts;
+              
+              console.log('Forecasts to display (final):', forecastsToDisplay);
+
               if (forecastsToDisplay.length === 0) {
-                return <p className="no-hourly-data-message">{t('noHourlyWeatherData')}</p>;
+                const message = displayDay === 'today' 
+                  ? t('noMoreForecastsToday')
+                  : t('noForecastsForTomorrowMorning');
+                return <p className="no-hourly-data-message">{message}</p>;
               }
 
-              return forecastsToDisplay.map((hourData, index) => {
-                let displayIcon = hourData.weatherIcon ? weatherIcons[hourData.weatherIcon] : cloudIcon; // Default to cloud if no specific icon
-
-                // Adjust icon for rain if description includes rain
+              return forecastsToDisplay.map((hourData) => {
+                let displayIcon = sunnyIcon;
+                if (hourData.weatherIcon && weatherIcons[hourData.weatherIcon]) {
+                    displayIcon = weatherIcons[hourData.weatherIcon];
+                }
+                
+                if (hourData.description && hourData.description.toLowerCase().includes('clear') && !hourData.description.toLowerCase().includes('rain')) {
+                    displayIcon = sunnyIcon;
+                }
                 if (hourData.description && hourData.description.toLowerCase().includes('rain')) {
                   displayIcon = rainIcon;
                 }
+                
+                const displayTime = `${String(hourData.time).padStart(2, '0')}:00`;
 
                 return (
-                  <div className="hourly-forecast-item" key={index}>
+                  <div className="hourly-forecast-item" key={`${hourData.date}-${hourData.time}`}>
                     <img src={displayIcon} alt="Weather icon" className="forecast-item-icon" />
                     <div className="forecast-item-temp">{hourData.temperature}°</div>
-                    <div className="forecast-item-time">{hourData.time}:00</div> {/* Use actual hour from API */}
+                    <div className="forecast-item-time">{displayTime}</div>
                   </div>
                 );
               });
             })()}
           </div>
         </section>
-      </main> {/* Конец dashboard-content */}
-    </div> // Конец weather-dashboard-container
+        {/* ====================================================================== */}
+        {/* ======================== КОНЕЦ ИСПРАВЛЕННОГО БЛОКА ======================= */}
+        {/* ====================================================================== */}
+      </main>
+    </div>
   );
 }

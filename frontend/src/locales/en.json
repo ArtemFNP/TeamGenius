@@ -127,6 +127,8 @@
   "itemAddedToCloset": "«{{name}}» added to your closet!",
   "notEnoughClothes": "Not enough clothes in your closet to create a full outfit based on the current weather. Please add more items!",
   "noHourlyWeatherData": "No hourly weather data available.",
+  "noMoreForecastsToday": "No more hourly forecasts for today.",
+  "noForecastsForTomorrowMorning": "No hourly forecasts for tomorrow morning.",
   "today": "Today",
   "tomorrow": "Tomorrow",
   "timelineAverageTemperature": "Average temperature for selected period: {{temperature}}°C",

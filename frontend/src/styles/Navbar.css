@@ -109,6 +109,7 @@
   font-size: 1rem;
   cursor: pointer;
   outline: none; /* Убираем стандартный outline при фокусе */
+  width: 140px; /* Adjusted width for better display of long language names */
   /* Кастомизация стрелки дропдауна */
   -webkit-appearance: none;
   -moz-appearance: none;

@@ -155,5 +155,7 @@
     "userProfile.email": "Електронна пошта",
     "userProfile.displayName": "Відображуване ім'я",
     "userProfile.totalPresets": "Всього наборів образів",
-    "userProfile.totalClothingItems": "Всього предметів одягу"
+    "userProfile.totalClothingItems": "Всього предметів одягу",
+    "userProfile.changeLogoButton": "Змінити логотип",
+    "userProfile.savePresetsButton": "Зберегти набори"
 }

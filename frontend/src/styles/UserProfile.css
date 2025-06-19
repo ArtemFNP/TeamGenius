@@ -9,7 +9,7 @@
 }
 
 .user-profile-card {
-  background-color: var(--secondary-bg-color);
+  background-color: #5459AC;
   padding: 40px;
   border-radius: 12px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -30,6 +30,41 @@
   font-weight: 700;
 }
 
+.profile-header-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.change-logo-button {
+  margin-top: 35px;
+}
+
+.editable-username {
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--accent-color);
+}
+
+.username-input {
+  padding: 5px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: var(--input-bg);
+  color: var(--main-text-color);
+  font-size: 1.1em;
+  width: 200px; /* Adjust as needed */
+  text-align: center;
+}
+
+.presets-info-message {
+  margin-top: 25px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
 .avatar-display {
   margin-bottom: 20px;
 }
@@ -37,7 +72,7 @@
 .diamond-avatar-placeholder {
   width: 100px;
   height: 100px;
-  background-color: var(--accent-color); /* Purple background for the diamond */
+  background-color: #7965C1; /* Set to the requested color */
   display: flex;
   justify-content: center;
   align-items: center;

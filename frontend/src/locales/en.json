@@ -155,5 +155,7 @@
   "userProfile.email": "Email",
   "userProfile.displayName": "Display Name",
   "userProfile.totalPresets": "Total Outfits Presets",
-  "userProfile.totalClothingItems": "Total Clothing Items"
+  "userProfile.totalClothingItems": "Total Clothing Items",
+  "userProfile.changeLogoButton": "Change Logo",
+  "userProfile.savePresetsButton": "Save Presets"
 }

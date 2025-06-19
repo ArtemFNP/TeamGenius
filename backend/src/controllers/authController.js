@@ -91,3 +91,83 @@ export const login = async (req, res) => {
     res.status(500).json({ message: 'Server error during login.' });
   }
 };
+
+// Функція оновлення даних користувача
+export const updateUser = async (req, res) => {
+  const { userId } = req.params;
+  const { username, displayName } = req.body;
+  console.log(`[updateUser] Request received for userId: ${userId}, data:`, { username, displayName });
+
+  if (!userId) {
+    console.log(`[updateUser] Error: User ID is required.`);
+    return res.status(400).json({ message: 'User ID is required.' });
+  }
+
+  try {
+    // Build the query dynamically based on provided fields
+    let query = 'UPDATE users SET updated_at = NOW()';
+    const queryParams = [userId];
+    let paramIndex = 2;
+
+    if (username) {
+      query += `, username = $${paramIndex}`;
+      queryParams.push(username);
+      paramIndex++;
+    }
+    if (displayName) {
+      query += `, display_name = $${paramIndex}`;
+      queryParams.push(displayName);
+      paramIndex++;
+    }
+
+    query += ` WHERE id = $1 RETURNING id, username, email, display_name`;
+
+    console.log(`[updateUser] Executing query: ${query} with params:`, queryParams);
+    const updatedUserResult = await pool.query(query, queryParams);
+    const updatedUser = updatedUserResult.rows[0];
+
+    if (!updatedUser) {
+      console.log(`[updateUser] User not found for userId: ${userId}`);
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    console.log(`[updateUser] User updated successfully:`, updatedUser);
+    res.status(200).json({ user: updatedUser });
+  } catch (error) {
+    if (error.code === '23505') { // Unique violation
+      console.log(`[updateUser] Error: Username already exists for userId: ${userId}`);
+      return res.status(409).json({ message: 'Username already exists.' });
+    }
+    console.error('[updateUser] Server error during user update:', error);
+    res.status(500).json({ message: 'Server error during user update.' });
+  }
+};
+
+export const getMe = async (req, res) => {
+  console.log(`[getMe] Request received. User from token:`, req.user);
+  try {
+    const user = req.user;
+    if (!user || !user.userId) {
+      console.log(`[getMe] Error: Unauthorized - No user information found in token.`);
+      return res.status(401).json({ message: 'Unauthorized: No user information found in token.' });
+    }
+
+    console.log(`[getMe] Fetching user with ID: ${user.userId}`);
+    const userResult = await pool.query(
+      'SELECT id, username, email, display_name FROM users WHERE id = $1',
+      [user.userId]
+    );
+    const foundUser = userResult.rows[0];
+
+    if (!foundUser) {
+      console.log(`[getMe] User not found in DB for ID: ${user.userId}`);
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    console.log(`[getMe] User data retrieved successfully:`, foundUser);
+    res.status(200).json({ user: foundUser });
+  } catch (error) {
+    console.error('[getMe] Server error fetching user data:', error);
+    res.status(500).json({ message: 'Server error fetching user data.' });
+  }
+};

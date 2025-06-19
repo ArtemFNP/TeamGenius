@@ -7,6 +7,7 @@ import { useState, useEffect, useMemo } from 'react';
 import initialClosetItems from '../assets/images/gallery'; 
 
 export function useUserCloset() {
+  console.log('Value of initialClosetItems:', initialClosetItems);
   // Мы будем хранить *только* предметы, явно добавленные пользователем, в локальном хранилище.
   // Начальное значение для этого будет пустым массивом.
   const [userAddedItems, setUserAddedItems] = useLocalStorage('userAddedClothingItems', []);

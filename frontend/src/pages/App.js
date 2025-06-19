@@ -15,6 +15,7 @@ import TimelineSelector from './TimelineSelector';
 import AboutPage from './AboutPage';
 import LoginPage from './LoginPage'; // Import LoginPage
 import RegisterPage from './RegisterPage'; // Import RegisterPage
+import UserProfile from './UserProfile'; // Import UserProfile
 
 // Импорт модальных окон
 import LicensesModal from '../components/LicensesModal';
@@ -29,6 +30,7 @@ import { AuthProvider } from '../hooks/useAuth'; // Import AuthProvider
 import PrivateRoutes from '../components/PrivateRoutes'; // Import PrivateRoutes
 
 function App() {
+  console.log('App component mounted');
   const [isLicensesModalOpen, setIsLicensesModalOpen] = useState(false);
   const [isFAQModalOpen, setIsFAQModalOpen] = useState(false);
 
@@ -59,6 +61,7 @@ function App() {
                   <Route path="/outfit" element={<OutfitPage />} />
                   <Route path="/timeline" element={<TimelineSelector />} />
                   <Route path="/about" element={<AboutPage />} />
+                  <Route path="/profile" element={<UserProfile />} /> {/* Add UserProfile Route */}
                   {/* Add more protected routes here if needed */}
                 </Route>
               </Routes>

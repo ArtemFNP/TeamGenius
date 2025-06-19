@@ -139,5 +139,21 @@
   "timelineAverageTemperatureShort": "Avg. for period",
   "currentSituationTab": "Current Situation",
   "noWeatherSuggestion": "No weather-based suggestion available.",
-  "selectedCityLabel": "Selected City"
+  "selectedCityLabel": "Selected City",
+  "registerPage.title": "Registration",
+  "registerPage.usernamePlaceholder": "Username",
+  "registerPage.emailPlaceholder": "Email",
+  "registerPage.passwordPlaceholder": "Password",
+  "registerPage.registerButton": "Register",
+  "registerPage.alreadyHaveAccount": "Already have an account?",
+  "registerPage.loginLink": "Login",
+  "registerPage.registrationSuccess": "Registration successful! You can now log in.",
+  "registerPage.registrationError": "Registration error.",
+  "userProfile.loading": "Loading user data...",
+  "userProfile.title": "User Profile",
+  "userProfile.username": "Username",
+  "userProfile.email": "Email",
+  "userProfile.displayName": "Display Name",
+  "userProfile.totalPresets": "Total Outfits Presets",
+  "userProfile.totalClothingItems": "Total Clothing Items"
 }

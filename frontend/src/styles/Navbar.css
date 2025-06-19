@@ -143,7 +143,7 @@
 .diamond-avatar-placeholder-small {
   width: 32px; /* Adjusted size for navbar */
   height: 32px; /* Adjusted size for navbar */
-  background-color: var(--accent-color); /* Use your app's accent color */
+  background-color: #7965C1; /* Changed to requested color */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -152,7 +152,7 @@
   color: white;
   overflow: hidden;
   transform: rotate(45deg);
-  border-radius: 5px; /* Slightly less rounded than the larger one */
+  border-radius: 10px; /* Adjusted for more diamond shape */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   flex-shrink: 0; /* Prevent shrinking in flex containers */
 }

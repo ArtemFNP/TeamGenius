@@ -1,6 +1,7 @@
 // src/components/Footer.js
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { Link } from 'react-router-dom';
 import '../styles/Footer.css'; // Стили будут в отдельном файле
 
 const Footer = () => {
@@ -14,14 +15,8 @@ const Footer = () => {
           <div className="footer-logo-text">SMART STYLE</div> 
         </div>
         <div className="footer-section footer-links-section">
-          <a href="/about">{t('about')}</a>
-          <a href="/services">{t('services')}</a>
-          <a href="/technologies">{t('technologies')}</a>
-          <a href="/join">{t('joinUs')}</a>
-          <a href="/conditions">{t('conditions')}</a>
-          <a href="/licenses">{t('licenses')}</a>
-          <a href="/faq">{t('faq')}</a>
-          <a href="/sitemap">{t('sitemap')}</a>
+          <Link to="/about">{t('about')}</Link>
+          <Link to="/faq">{t('faq')}</Link>
         </div>
         <div className="footer-section footer-social-section">
           <div className="social-title">{t('buildYourWorld')}</div> {/* Изменил заголовок согласно макету */}

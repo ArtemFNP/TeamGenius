@@ -139,5 +139,21 @@
     "timelineAverageTemperatureShort": "Сер. за період",
     "currentSituationTab": "Поточна ситуація",
     "noWeatherSuggestion": "Немає пропозицій щодо погоди.",
-    "selectedCityLabel": "Вибране місто"
+    "selectedCityLabel": "Вибране місто",
+    "registerPage.title": "Реєстрація",
+    "registerPage.usernamePlaceholder": "Ім'я користувача",
+    "registerPage.emailPlaceholder": "Імейл",
+    "registerPage.passwordPlaceholder": "Пароль",
+    "registerPage.registerButton": "Зареєструватися",
+    "registerPage.alreadyHaveAccount": "Вже є акаунт?",
+    "registerPage.loginLink": "Увійти",
+    "registerPage.registrationSuccess": "Реєстрація успішна! Тепер ви можете увійти.",
+    "registerPage.registrationError": "Помилка реєстрації.",
+    "userProfile.loading": "Завантаження даних користувача...",
+    "userProfile.title": "Профіль користувача",
+    "userProfile.username": "Ім'я користувача",
+    "userProfile.email": "Електронна пошта",
+    "userProfile.displayName": "Відображуване ім'я",
+    "userProfile.totalPresets": "Всього наборів образів",
+    "userProfile.totalClothingItems": "Всього предметів одягу"
 }

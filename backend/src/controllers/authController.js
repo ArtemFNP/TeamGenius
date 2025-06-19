@@ -1,4 +1,4 @@
-import pool from '../database/db.js'; // Потрібно створити файл для підключення до БД
+import pool from '../../database/db.js'; // Потрібно створити файл для підключення до БД
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 

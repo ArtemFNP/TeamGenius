@@ -36,8 +36,10 @@ EXECUTE FUNCTION trigger_set_timestamp();
 -- 2. Таблица тегов (категории, типы, стили и т.д.)
 CREATE TABLE tags (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100) UNIQUE NOT NULL, -- Например: "T-Shirt", "Pants", "Hoodie", "Summer", "Cotton", "Formal"
-    type VARCHAR(50) -- Опционально, для группировки тегов (например: "category", "season", "material", "style")
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    name VARCHAR(100) NOT NULL,
+    type VARCHAR(50),
+    UNIQUE (name, user_id) -- Ensures uniqueness of tag name per user
 );
 
 -- Заполним предварительно некоторыми типами одежды (которые были в CLOTH_TYPES)
